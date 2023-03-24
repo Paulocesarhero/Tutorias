@@ -1,0 +1,27 @@
+﻿<Window
+    Title="Message"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Sistema_De_Tutorias.Views.Message"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <styles:Card Margin="16">
+            <StackPanel>
+                <TextBlock
+                    Classes="Headline6"
+                    Name="block_titulo"
+                    Text="lorem" />
+                <TextBlock
+                    Classes="Headline"
+                    Name="block_contenido"
+                    Text="Lorem ipsum isdsad " />
+            </StackPanel>
+        </styles:Card>
+    </StackPanel>
+
+</Window>

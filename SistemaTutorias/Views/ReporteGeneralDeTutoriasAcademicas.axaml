@@ -1,0 +1,82 @@
+﻿<Window
+    Title="ReporteGeneralDeTutoriasAcademicas"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Sistema_De_Tutorias.ReporteGeneralDeTutoriasAcademicas"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <styles:Card Margin="16">
+            <StackPanel>
+                <TextBlock Classes="Headline" Name="block_fechaDeTutoriaAcademica" />
+                <TextBlock Classes="Headline" Name="block_totalAsistencias" />
+                <TextBlock Classes="Headline6" Text="Reporte general de tutorias academicas" />
+                <DockPanel>
+                    <TextBlock
+                        Classes="Headline"
+                        Margin="10,10,10,10"
+                        Text="Numero de tutoria acaedmica:  " />
+                    <ComboBox Name="cb_numSesionDeTutoriaAcademica" SelectedIndex="0">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>3</ComboBoxItem>
+                    </ComboBox>
+
+                </DockPanel>
+
+
+            </StackPanel>
+        </styles:Card>
+
+        <styles:Card Margin="16">
+            <StackPanel>
+                <Grid>
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        Items="{Binding Problematica}"
+                        Name="dg_ProblematicaAcademica">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding id}" Header="ID" />
+                            <DataGridTextColumn Binding="{Binding numAlumnos}" Header="Numero de alumnos" />
+                            <DataGridTextColumn Binding="{Binding descripcion}" Header="Descripcion" />
+                            <DataGridTextColumn Binding="{Binding solucion.descripcion}" Header="Solucion" />
+                            <DataGridTextColumn Binding="{Binding experienciaEducativa.nrc}" Header="Experiencia Educativa" />
+                            <DataGridTextColumn Binding="{Binding reporteDeTutoria.fecha}" Header="Reporte de Tutoria" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Button Click="ClickSolucionarProblematica" Content="Solucionar problematica" />
+            </StackPanel>
+
+        </styles:Card>
+        <styles:Card Margin="16">
+            <Grid>
+                <DataGrid
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    Items="{Binding Reporte_De_Tutoria}"
+                    Name="dg_reporteDeTutoria">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Binding="{Binding tutorAcademico.nombres}"
+                            Header="Tutor academico"
+                            Width="Auto" />
+                        <DataGridTextColumn
+                            Binding="{Binding comentarios}"
+                            Header="Comentarios generales"
+                            Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </styles:Card>
+        <Button Content="Descargar" Margin="16" />
+    </StackPanel>
+
+
+
+</Window>

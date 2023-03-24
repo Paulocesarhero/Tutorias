@@ -1,0 +1,36 @@
+﻿<Window
+    Title="SesionesDeTutorias"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Sistema_De_Tutorias.SesionesDeTutorias"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="Sistema_De_tutorias"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel>
+        <styles:Card Margin="16">
+            <TextBlock Classes="Headline6" Text="Horario de sesiones de tutoria" />
+        </styles:Card>
+        <styles:Card>
+            <Grid>
+                <DataGrid
+                    AutoGenerateColumns="True"
+                    CellPointerPressed="Dg_periodo_Escolar_OnCellPointerPressed"
+                    IsReadOnly="True"
+                    Items="{Binding Periodo_Escolar}"
+                    Name="dg_periodo_Escolar" />
+            </Grid>
+
+        </styles:Card>
+
+        <Button
+            Click="Button_OnClick"
+            Content="Consultar"
+            Name="btn_consultar" />
+    </StackPanel>
+
+</Window>
