@@ -1,0 +1,25 @@
+﻿<Page x:Class="graphicLayer.Vistas.AdministrarEE"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:graphicLayer.Vistas"
+      mc:Ignorable="d" 
+      d:Background="Wheat"
+      xmlns:localControls="clr-namespace:graphicLayer.Controles"  
+      d:DesignHeight="450" d:DesignWidth="800"
+          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="AdministrarEE">
+
+    <Grid>
+        <localControls:MenuCoordinadora/>
+        <Grid>
+            <DockPanel>
+                
+
+
+            </DockPanel>
+        </Grid>
+
+    </Grid>
+</Page>
