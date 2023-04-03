@@ -1,7 +1,4 @@
-﻿using System;
-
-using System.Windows.Navigation;
-
+﻿using System.Windows.Navigation;
 
 namespace graphicLayer.Vistas
 {

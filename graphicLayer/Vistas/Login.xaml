@@ -43,6 +43,5 @@
                 <materialDesign:PackIcon Kind="LocationEnter" />
             </Button>
         </StackPanel>
-
     </Grid>
 </Page>

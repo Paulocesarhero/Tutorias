@@ -1,21 +1,7 @@
-﻿using Azure.Messaging;
-using MahApps.Metro.Controls.Dialogs;
-using MySqlX.XDevAPI.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Sistema_De_Tutorias.Utility;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Tutorias.BussinesLogic.Interface;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -38,6 +24,7 @@ namespace graphicLayer.Vistas
                 NavigateToUserWindow();
             }
         }
+
         private bool IsValidaUser()
         {
             string username = TbUsername.Text;
@@ -54,29 +41,55 @@ namespace graphicLayer.Vistas
             }
             return flag;
         }
+
         private void NavigateToUserWindow()
         {
-            Usuario result;
+            Usuario result = null;
             TutoriaManagement tutoriaManagement = new TutoriaManagement();
             string username = TbUsername.Text;
             string password = PbPassword.Password.ToString();
-            result = tutoriaManagement.Login(username, password);
-            switch (result.tipoUsuario.tipo)
+            try
             {
-                case "Jefe De Carrera":
-                    ReporteGeneralDeTutorias firstPageJefeDeCarrera = new ReporteGeneralDeTutorias();
-                    this.NavigationService.Navigate(firstPageJefeDeCarrera);
-                    break;
-                case "Coordinadora":
-                    AdministrarEE firstPageCoordinadora = new AdministrarEE();
-                    this.NavigationService.Navigate(firstPageCoordinadora);
-                    break;
-                case "Tutor academico":
-                    LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
-                    this.NavigationService.Navigate(firstPageTutorAcademico);
-                    break;
+                result = tutoriaManagement.Login(username, password);
 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error en la conexión con la base de datos",
+                    "No hay conexión a la base de datos en estos momentos",
+                    MessageBoxButton.OKCancel);
+            }
+            if (result != null)
+            {
+                switch (result.tipoUsuario.tipo)
+                {
+                    case "Jefe de carrera":
+                        ReporteGeneralDeTutorias firstPageJefeDeCarrera = new ReporteGeneralDeTutorias();
+                        CredencialesUsuario.Instance.Usuario = result;
+                        this.NavigationService.Navigate(firstPageJefeDeCarrera);
+                        break;
 
+                    case "Coordinadora":
+                        AdministrarEE firstPageCoordinadora = new AdministrarEE();
+                        CredencialesUsuario.Instance.Usuario = result;
+                        this.NavigationService.Navigate(firstPageCoordinadora);
+                        break;
+
+                    case "Tutor academico":
+                        LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
+                        CredencialesUsuario.Instance.Usuario = result;
+                        this.NavigationService.Navigate(firstPageTutorAcademico);
+                        break;
+                    default:
+                        MessageBox.Show("El usuario no tiene un tipo de usuario asignado",
+                            "Contacte al administrador para concederle los permisos adecuados");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("El usuario no se encuentra",
+                            "Verifique su usuario y contraseña");
             }
         }
     }

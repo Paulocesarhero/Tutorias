@@ -22,6 +22,7 @@ namespace graphicLayer.Controles
             Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
             pg.NavigationService.Navigate(login);
         }
+
         /// <summary>
 
         /// Walk visual tree to find the first DependencyObject  of the specific type.
@@ -32,7 +33,6 @@ namespace graphicLayer.Controles
 
         GetDependencyObjectFromVisualTree(DependencyObject startObject, Type type)
         {
-
             //Walk the visual tree to get the parent(ItemsControl)
 
             //of this control
@@ -42,19 +42,15 @@ namespace graphicLayer.Controles
             while (parent != null)
 
             {
-
                 if (type.IsInstanceOfType(parent))
 
                     break;
-
                 else
 
                     parent = VisualTreeHelper.GetParent(parent);
-
             }
 
             return parent;
-
         }
     }
 }

@@ -17,7 +17,6 @@ public sealed class CredencialesUsuario
 
     private CredencialesUsuario()
     {
-        // Constructor privado para prevenir instanciación externa
     }
 
     public static CredencialesUsuario Instance

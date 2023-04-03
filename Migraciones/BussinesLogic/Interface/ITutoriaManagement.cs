@@ -33,12 +33,12 @@ namespace Tutorias.BussinesLogic.Interface
 
 		
 
-		List<Catedratico> getCatedraticos();
-		List<Experiencia_Educativa> findExperienciaEducativaWithoutCatedratico();
+		List<Catedratico> GetCatedraticos();
+		List<Experiencia_Educativa> FindExperienciaEducativaWithoutCatedratico();
 
-		List<Periodo_Escolar> getPeriodosEscolares();
+		List<Periodo_Escolar> GetPeriodosEscolares();
 
-		public List<Problematica> findProblematicasAcademicas(Periodo_Escolar periodoEscolarSeleccionado,
+		public List<Problematica> FindProblematicasAcademicas(Periodo_Escolar periodoEscolarSeleccionado,
 			int numDeSesion);
 
 

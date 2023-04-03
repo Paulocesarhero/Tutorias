@@ -235,7 +235,7 @@ namespace Tutorias.BussinesLogic.Management
 			throw new System.NotImplementedException();
 		}
 
-		public List<Catedratico> getCatedraticos()
+		public List<Catedratico> GetCatedraticos()
 		{
 			List<Catedratico> catedraticos = new List<Catedratico>();
 			try
@@ -263,12 +263,12 @@ namespace Tutorias.BussinesLogic.Management
 			return catedraticos;
 		}
 
-		public List<Experiencia_Educativa> findExperienciaEducativaWithoutCatedratico()
+		public List<Experiencia_Educativa> FindExperienciaEducativaWithoutCatedratico()
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public List<Periodo_Escolar> getPeriodosEscolares()
+		public List<Periodo_Escolar> GetPeriodosEscolares()
 		{
 			List<Periodo_Escolar> periodosEscolares = new List<Periodo_Escolar>();
 			try
@@ -322,7 +322,7 @@ namespace Tutorias.BussinesLogic.Management
 			throw new NotImplementedException();
 		}
 
-		public List<Problematica> findProblematicasAcademicas(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion)
+		public List<Problematica> FindProblematicasAcademicas(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion)
 		{
 			List<Problematica> problematicasResult = new List<Problematica>();
 			try
