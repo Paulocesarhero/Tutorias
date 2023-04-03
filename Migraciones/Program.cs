@@ -6,9 +6,9 @@ using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
 TutoriaManagement tutoriaManagement = new TutoriaManagement();
-
+CreateDB();
 InsertData();
-//CreateDB();
+
 
 
 
@@ -49,11 +49,11 @@ static bool addPeriodoEscolares()
     TutoriaManagement tutoriaManagement = new TutoriaManagement();
     Periodo_Escolar periodoEscolar = new Periodo_Escolar
     {
-        fechaDeFin = new DateTime(2023,02,04),
-        fechaDeInicio = new DateTime(2023,06,24),
-        fechaDePrimeraTutoria = new DateTime(2023,03,24),
-        fechaDeSegundaTutoria = new DateTime(2023,04, 28),
-        fechaDeTerceraTutoria = new DateTime(2023,05,31)
+        FechaDeFin = new DateTime(2023,02,04),
+        FechaDeInicio = new DateTime(2023,06,24),
+        FechaDePrimeraTutoria = new DateTime(2023,03,24),
+        FechaDeSegundaTutoria = new DateTime(2023,04, 28),
+        FechaDeTerceraTutoria = new DateTime(2023,05,31)
             
     };
     try
@@ -77,12 +77,13 @@ static bool addExperienciaEducativa()
     Experiencia_Educativa experienciaEducativa = new Experiencia_Educativa
     {
 
-        nombre = "DESARROLLO DE SISTEMAS EN RED",
-        nrc = "78280",
-        catedratico = new Catedratico
+        Nombre = "DESARROLLO DE SISTEMAS EN RED",
+        Nrc = "78280",
+        Catedratico = new Catedratico
         {
-            nombreCompleto = "JORGE OCTAVIO OCHARAN HERNADEZ",
-        }
+            NombreCompleto = "JORGE OCTAVIO OCHARAN HERNADEZ",
+        },
+        Academia = new Academia("Desarrollos de sistema en red y aplicaciones")
     };
     
     using (TutoriasContext context = new TutoriasContext())
@@ -91,7 +92,7 @@ static bool addExperienciaEducativa()
         {
             
             Programa_Educativo programaEducativo = context.ProgramasEducativos.FirstOrDefault();
-            experienciaEducativa.programaEducativo = programaEducativo;
+            experienciaEducativa.ProgramaEducativo = programaEducativo;
             context.ExperienciasEducativas.Add(experienciaEducativa);
             context.SaveChanges();
             status = true;
@@ -118,15 +119,15 @@ static bool addProblematica()
     TutoriaManagement tutoriaManagement = new TutoriaManagement();
     Problematica problematica = new Problematica
     {
-        numAlumnos = 2,
-        descripcion = "La experiencia educativa se ha tornado repetitiva por el metodo de enseñanza del profesor"
+        NumAlumnos = 2,
+        Descripcion = "La experiencia educativa se ha tornado repetitiva por el metodo de enseñanza del profesor"
     };
     using (TutoriasContext context = new TutoriasContext())
     {
         try
         {
             Experiencia_Educativa experienciaEducativa = context.ExperienciasEducativas.FirstOrDefault();
-            problematica.experienciaEducativa = experienciaEducativa;
+            problematica.ExperienciaEducativa = experienciaEducativa;
             flag = true;
         }
         catch (DbUpdateException dbUpdateException)
@@ -154,19 +155,19 @@ static bool addTutorAcademico()
     TutoriaManagement tutoriaManagement = new TutoriaManagement();
     Tutor_Academico tutor = new Tutor_Academico
     {
-        nombres = "ISRRAEL DAVID",
-        apellidos = "LOPEZ CORZO",
-        usuario = new Usuario
+        Nombres = "ISRRAEL DAVID",
+        Apellidos = "LOPEZ CORZO",
+        Usuario = new Usuario
         {
-            password = "OT9nMRgsv2/OEp68hJ1sEIB7LyqxAMlsgCIBK4XSpxRBvNzMaXC9AlhnBLo0HNQNXSyEvAU8KerRN+ZvULZCF8CxeGcZwNpdgSKZSOHtN0T+PWOPovD9poJEYT2fwKN8g5gGYu9ljba0C2hdKrCptw",
-            username = "islopez",
+            Password = "OT9nMRgsv2/OEp68hJ1sEIB7LyqxAMlsgCIBK4XSpxRBvNzMaXC9AlhnBLo0HNQNXSyEvAU8KerRN+ZvULZCF8CxeGcZwNpdgSKZSOHtN0T+PWOPovD9poJEYT2fwKN8g5gGYu9ljba0C2hdKrCptw",
+            Username = "islopez",
             ProgramaEducativo = new Programa_Educativo
             {
                 ProgramaEducativo = "Ingenieria de software"
             },
-            tipoUsuario = new TipoUsuario
+            TipoUsuario = new TipoUsuario
             {
-                tipo = "Tutor academico"
+                Tipo = "Tutor academico"
             }
         }
     };
@@ -188,12 +189,12 @@ static bool addJefeDeCarrera()
     bool flag;
     Usuario usuario = new Usuario
     {
-        tipoUsuario = new TipoUsuario
+        TipoUsuario = new TipoUsuario
         {
-            tipo = "Jefe de carrera"
+            Tipo = "Jefe de carrera"
         },
-        username = "jocharan",
-        password = Security.HashSHA256("SoyElJefe")
+        Username = "jocharan",
+        Password = Security.HashSHA256("SoyElJefe")
     };
     using (TutoriasContext context = new TutoriasContext())
     {
@@ -227,12 +228,12 @@ static bool AddCoordinadora()
     bool flag;
     Usuario usuario = new Usuario
     {
-        tipoUsuario = new TipoUsuario
+        TipoUsuario = new TipoUsuario
         {
-            tipo = "Coordinadora"
+            Tipo = "Coordinadora"
         },
-        username = "aarenas",
-        password = Security.HashSHA256("SoyLaCoordinadora")
+        Username = "aarenas",
+        Password = Security.HashSHA256("SoyLaCoordinadora")
     };
     using (TutoriasContext context = new TutoriasContext())
     {
@@ -266,10 +267,10 @@ static bool addReporteDeTutoria(){
     TutoriaManagement tutoriaManagement = new TutoriaManagement();
     Reporte_De_Tutoria reporte = new Reporte_De_Tutoria
     {
-        fecha = new DateTime(2023,03,20),
-        comentarios = "Los alumnos en general no se siente satisfechos con su plan de estudios",
-        fechaDeCierre = new DateTime(2023,03,28),
-        numDeTutoria = 1,
+        Fecha = new DateTime(2023,03,20),
+        Comentarios = "Los alumnos en general no se siente satisfechos con su plan de estudios",
+        FechaDeCierre = new DateTime(2023,03,28),
+        NumDeTutoria = 1,
     };
     using (TutoriasContext context = new TutoriasContext())
     {
@@ -277,8 +278,8 @@ static bool addReporteDeTutoria(){
         {
             Tutor_Academico tutor = context.TutorAcademico.FirstOrDefault();
             Periodo_Escolar periodoEscolar = context.PeriodosEscolares.FirstOrDefault();
-            reporte.tutorAcademico = tutor;
-            reporte.periodoEscolar = periodoEscolar;
+            reporte.TutorAcademico = tutor;
+            reporte.PeriodoEscolar = periodoEscolar;
         }
         catch (DbUpdateException dbUpdateException)
         {
@@ -315,17 +316,17 @@ static bool addProblematica1()
     Experiencia_Educativa experienciaEducativa = tutoriaManagement.getExperienciaEducativaByNRC(nrc);
     Problematica problematica = new Problematica
     {
-        descripcion = "Los alumnos creen que el profesor no cumple con el conocimiento apropiado para dar la EE",
-        numAlumnos = 2
+        Descripcion = "Los alumnos creen que el profesor no cumple con el conocimiento apropiado para dar la EE",
+        NumAlumnos = 2
     };
     
-    problematica.experienciaEducativa = experienciaEducativa;
+    problematica.ExperienciaEducativa = experienciaEducativa;
     using (TutoriasContext context = new TutoriasContext())
     {
         try
         {
             Reporte_De_Tutoria reporteDeTutoria = context.ReportesDeTutorias.FirstOrDefault();
-            problematica.reporteDeTutoria = reporteDeTutoria;
+            problematica.ReporteDeTutoria = reporteDeTutoria;
             flag = true;
         }
         catch (DbUpdateException dbUpdateException)

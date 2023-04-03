@@ -27,9 +27,9 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontWeight="Bold" Text="Inicio: " />
-                                <TextBlock FontWeight="Bold" Text="{Binding fechaDeInicio}" />
+                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio}" />
                                 <TextBlock FontWeight="Bold" Text=" Fin: " />
-                                <TextBlock FontWeight="Bold" Text="{Binding fechaDeFin}" />
+                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin}" />
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
