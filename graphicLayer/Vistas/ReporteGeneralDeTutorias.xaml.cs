@@ -38,11 +38,12 @@ namespace graphicLayer.Vistas
 
         public ICommand SelectProblematicaCommand { get; set; }
 
-        public ICommand SelectPeriodoEscolarCommand { get; set; }
 
         public ICommand BtnBuscarReporteCommand { get; }
 
         public int NumTutoriaSeleccionada { get; set; }
+
+        public Problematica ProblematicaSeleccionada { get; set; } = new Problematica();
 
         public Periodo_Escolar PeriodoEscolarSeleccionado { get; set; }
 

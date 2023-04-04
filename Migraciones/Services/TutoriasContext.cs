@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.Design;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tutorias.Service.DatabaseContext
 {
@@ -20,7 +16,9 @@ namespace Tutorias.Service.DatabaseContext
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Estudiante> Estudiantes { get; set; }
-        public DbSet<Lista_de_Asistencia> ListaDeAsistencias { get; set; }
+        public DbSet<Asistencia> Asistencias { get; set; }
+
+        public DbSet<Fecha_De_Tutoria> FechasDeTutorias { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -75,18 +73,26 @@ namespace Tutorias.Service.DatabaseContext
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Fecha).IsRequired();
                 entity.Property(e => e.Comentarios).IsRequired();
-                entity.Property(e => e.FechaDeCierre).IsRequired();
                 entity.HasOne(e => e.TutorAcademico).WithMany(p => p.ReportesDeTutorias);
                 entity.HasMany(e => e.Problematicas).WithOne(p => p.ReporteDeTutoria);
+                entity.HasOne(r => r.FechaDeTutoria).WithMany(f => f.ReportesDeTutorias);
 
             });
+            modelBuilder.Entity<Fecha_De_Tutoria>(entity =>
+                {
+                    entity.HasKey(e => e.Id);
+                    entity.Property(e => e.NumDeTutoria).IsRequired();
+                    entity.HasOne(e => e.PeriodoEscolar).WithMany(p => p.FechasDeTutorias);
+                    entity.HasMany(f => f.Asistencias).WithOne(a => a.FechaDeTutoria);
+                    entity.HasMany(f => f.ReportesDeTutorias).WithOne(r => r.FechaDeTutoria);
+                }
+            );
             modelBuilder.Entity<Periodo_Escolar>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.FechaDeInicio).IsRequired();
                 entity.Property(e => e.FechaDeFin).IsRequired();
-
-
+                entity.HasMany(p => p.FechasDeTutorias).WithOne(f => f.PeriodoEscolar);
             });
             modelBuilder.Entity<Tutor_Academico>(entity =>
             {
@@ -119,7 +125,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.HasOne(e => e.TutorAcademico);
                 entity.HasMany(e => e.Asistencias).WithOne(p => p.Estudiante);
             });
-            modelBuilder.Entity<Lista_de_Asistencia>(entity =>
+            modelBuilder.Entity<Asistencia>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Asiste).IsRequired();
@@ -262,60 +268,64 @@ namespace Tutorias.Service.DatabaseContext
 
     public class Reporte_De_Tutoria
     {
-        public Reporte_De_Tutoria(int id, DateTime fecha, string comentatios, DateTime fechaDeCierre)
+        public Reporte_De_Tutoria(int id, DateTime fecha, string comentatios)
         {
             this.Id = id;
             this.Fecha = fecha;
             this.Comentarios = comentatios;
-            this.FechaDeCierre = fechaDeCierre;
         }
 
         public Reporte_De_Tutoria()
         {
             Fecha = Fecha;
             Comentarios = Comentarios;
-            FechaDeCierre = FechaDeCierre;
-            NumDeTutoria = NumDeTutoria;
         }
 
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public string Comentarios { get; set; }
-        public DateTime FechaDeCierre { get; set; }
         
-        public int NumDeTutoria { get; set; }
+        
         public virtual Tutor_Academico TutorAcademico { get; set; }
-        public virtual Periodo_Escolar PeriodoEscolar { get; set; }
         public virtual ICollection<Problematica> Problematicas { get; set; }
+        public virtual Fecha_De_Tutoria FechaDeTutoria { get; set; }
+    }
+
+    public class Fecha_De_Tutoria
+    {
+        public int Id { get; set; }
+        public DateTime FechaDeCierre { get; set; }
+        public int NumDeTutoria { get; set; }
+        public virtual Periodo_Escolar PeriodoEscolar { get; set; }
+
+        public virtual ICollection<Asistencia> Asistencias { get; set; }
+
+        public  virtual ICollection<Reporte_De_Tutoria> ReportesDeTutorias { get; set; }
+
+
     }
 
     public class Periodo_Escolar
     {
-        public Periodo_Escolar(int id, DateTime fechaDeInicio, DateTime fechaDeFin, DateTime fechaDePrimeraTutoria, DateTime fechaDeSegundaTutoria, DateTime fechaDeTerceraTutoria)
+        public Periodo_Escolar(int id, DateTime fechaDeInicio, DateTime fechaDeFin)
         {
             this.Id = id;
             this.FechaDeInicio = fechaDeInicio;
             this.FechaDeFin = fechaDeFin;
-            this.FechaDePrimeraTutoria = fechaDePrimeraTutoria;
-            this.FechaDeSegundaTutoria = fechaDeSegundaTutoria;
-            this.FechaDeTerceraTutoria = fechaDeTerceraTutoria;
         }
 
         public Periodo_Escolar()
         {
             this.FechaDeInicio = FechaDeInicio;
             this.FechaDeFin = FechaDeFin;
-            this.FechaDePrimeraTutoria = FechaDePrimeraTutoria;
-            this.FechaDeSegundaTutoria = FechaDeSegundaTutoria;
-            this.FechaDeTerceraTutoria = FechaDeTerceraTutoria;
         }
 
         public int Id { get; set; }
         public DateTime FechaDeInicio { get; set; }
         public DateTime FechaDeFin { get; set; }
-        public DateTime FechaDePrimeraTutoria { get; set; }
-        public DateTime FechaDeSegundaTutoria { get; set; }
-        public DateTime FechaDeTerceraTutoria { get; set; }
+
+        public ICollection<Fecha_De_Tutoria> FechasDeTutorias { get; set; }
+
     }
 
     public class Tutor_Academico
@@ -402,12 +412,12 @@ namespace Tutorias.Service.DatabaseContext
         public string Apellidos { get; set; }
         public virtual Tutor_Academico TutorAcademico { get; set; }
 
-        public virtual ICollection<Lista_de_Asistencia> Asistencias { get; set; }
+        public virtual ICollection<Asistencia> Asistencias { get; set; }
     }
 
-    public class Lista_de_Asistencia
+    public class Asistencia
     {
-        public Lista_de_Asistencia(int id, bool asiste, DateTime horario)
+        public Asistencia(int id, bool asiste, DateTime horario)
         {
             this.Id = id;
             this.Asiste = asiste;
@@ -418,6 +428,7 @@ namespace Tutorias.Service.DatabaseContext
         public bool Asiste { get; set; }
         public DateTime Horario { get; set; }
         public virtual Estudiante Estudiante { get; set; }
+        public virtual Fecha_De_Tutoria FechaDeTutoria { get; set; }
     }    
 }
 

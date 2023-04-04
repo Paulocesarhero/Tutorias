@@ -330,8 +330,8 @@ namespace Tutorias.BussinesLogic.Management
 				using (TutoriasContext context = new TutoriasContext())
 				{
 					problematicasResult = context.Problematicas
-						.Where(x => x.ReporteDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
-						            && x.ReporteDeTutoria.NumDeTutoria == numDeSesion)
+						.Where(x => x.ReporteDeTutoria.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
+						            && x.ReporteDeTutoria.FechaDeTutoria.NumDeTutoria == numDeSesion)
 						.Include(c => c.ExperienciaEducativa).ThenInclude(e => e.Catedratico)
 						.Include(c => c.ReporteDeTutoria)
 						.Include(c => c.Solucion)
@@ -353,7 +353,36 @@ namespace Tutorias.BussinesLogic.Management
 			return problematicasResult;
 		}
 
-		public Experiencia_Educativa getExperienciaEducativaByNRC(string nrc)
+        public int FindTotalAssistants(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion)
+        {
+            List<Asistencia> findAsistencias = new List<Asistencia>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    findAsistencias = context.Asistencias
+                        .Where(x => x.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
+                                    && x.FechaDeTutoria.NumDeTutoria == numDeSesion)
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return findAsistencias.Count;
+        }
+
+
+        public Experiencia_Educativa getExperienciaEducativaByNRC(string nrc)
 		{
 			Experiencia_Educativa result = new Experiencia_Educativa();
 			try
@@ -380,34 +409,7 @@ namespace Tutorias.BussinesLogic.Management
 			return result;
 		}
 
-		public List<Reporte_De_Tutoria> findReportesDeTutorias(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion)
-		{
-			List<Reporte_De_Tutoria> reporteDeTutorias = new List<Reporte_De_Tutoria>();
-			try
-			{
-				using (TutoriasContext context = new TutoriasContext())
-				{
-					reporteDeTutorias = context.ReportesDeTutorias
-						.Where(x => x.PeriodoEscolar == periodoEscolarSeleccionado
-						            && x.NumDeTutoria == numDeSesion)
-						.Include(c => c.TutorAcademico)
-						.ToList();
-				}
-			}
-			catch (DbException dbException)
-			{
-				throw dbException;
-			}
-			catch (InvalidOperationException invalidOperationException)
-			{
-				throw invalidOperationException;
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			return reporteDeTutorias;
-		}
+		
 
 		public List<Experiencia_Educativa> getExperienciasEducativas()
 		{

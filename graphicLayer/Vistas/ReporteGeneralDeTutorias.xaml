@@ -70,7 +70,7 @@
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
                 ItemsSource="{Binding ProblematicasObservableCollection}"
-                SelectedItem="{Binding SelectProblematicaCommand}"
+                SelectedItem="{Binding ProblematicaSeleccionada}"
                 SelectionMode="Extended"
                 SelectionUnit="Cell">
                 <DataGrid.Columns>
@@ -118,23 +118,6 @@
                             TextWrapping="Wrap" />
                         <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
                     </StackPanel>
-                    <Separator Width="0" Height="15" />
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                            Text="Tutor academico: "
-                            TextWrapping="Wrap" />
-                        <TextBlock Text="{Binding TutorAcademicoObservable}" TextWrapping="Wrap" />
-                    </StackPanel>
-                    <Separator Width="0" Height="15" />
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                            Text="Comentarios generales: "
-                            TextWrapping="Wrap" />
-                        <TextBlock Text="{Binding ComentariosGeneralesObservable}" TextWrapping="Wrap" />
-                    </StackPanel>
-
                 </StackPanel>
             </materialDesign:Card>
         </StackPanel>
