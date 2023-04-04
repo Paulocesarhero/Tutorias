@@ -1,19 +1,10 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -27,33 +18,48 @@ namespace graphicLayer.Vistas
         public ReporteGeneralDeTutorias()
         {
             InitializeComponent();
-            BtnBuscarReporte.IsEnabled = false;
             DataContext = new ReporteGeneralViewModel();
         }
+    }
 
-        private void BtnBuscarReporte_Click(object sender, RoutedEventArgs e)
+    public class ReporteGeneralViewModel
+    {
+        public ObservableCollection<Periodo_Escolar> PeriodosEscolaresObservableCollection { get; set; } =
+            new ObservableCollection<Periodo_Escolar>();
+
+        public ObservableCollection<Problematica> ProblematicasObservableCollection { get; set; } =
+            new ObservableCollection<Problematica>();
+
+        public String TutorAcademicoObservable { get; set; }
+
+        public String ComentariosGeneralesObservable { get; set; }
+
+        public String TotalDeAsistenciasObservable { get; set; }
+
+        public ICommand SelectProblematicaCommand { get; set; }
+
+        public ICommand SelectPeriodoEscolarCommand { get; set; }
+
+        public ICommand BtnBuscarReporteCommand { get; }
+
+        public int NumTutoriaSeleccionada { get; set; }
+
+        public Periodo_Escolar PeriodoEscolarSeleccionado { get; set; }
+
+        public ReporteGeneralViewModel()
         {
+            SelectProblematicaCommand = new RelayCommand<Problematica>(SelectProblematicaAction);
+            BtnBuscarReporteCommand = new RelayCommand(ExecuteBuscarReporte);
+            FillPeriodosEscolares();
         }
 
-        private void CbPeriodoEscolar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ExecuteBuscarReporte()
         {
-            BtnBuscarReporte.IsEnabled = true;
-        }
-
-        private void CbSesionDeTutoria_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BtnBuscarReporte.IsEnabled = true;
-        }
-
-        public void FillProblematicas()
-        {
-            int sesionSelect = 1 + CbPeriodoEscolar.SelectedIndex;
             TutoriaManagement tutoriaManagement = new TutoriaManagement();
-            Periodo_Escolar periodoEscolarSelect = (Periodo_Escolar)CbPeriodoEscolar.SelectedItem;
+            List<Problematica> problematicas = new List<Problematica>();
             try
             {
-                tutoriaManagement.FindProblematicasAcademicas(periodoEscolarSelect, sesionSelect);
-
+                problematicas = tutoriaManagement.FindProblematicasAcademicas(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
             }
             catch (Exception e)
             {
@@ -61,19 +67,20 @@ namespace graphicLayer.Vistas
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OKCancel);
             }
+            ProblematicasObservableCollection.Clear();
+            foreach (var problematica in problematicas) ProblematicasObservableCollection.Add(problematica);
         }
-        
-        
-    }
 
-    public class ReporteGeneralViewModel
-    {
-        public ObservableCollection<Periodo_Escolar> PeriodosEscolaresObservableCollection { get; set; }
-
-        public ReporteGeneralViewModel()
+        private void SelectProblematicaAction(Problematica problematicaSeleccionada)
         {
-            FillPeriodosEscolares();
+            string nombreTutorAcademico = problematicaSeleccionada.ReporteDeTutoria.TutorAcademico.Nombres;
+            string apellidosTutorAcademico = problematicaSeleccionada.ReporteDeTutoria.TutorAcademico.Apellidos;
+            string ComentariosGeneralesDeTutoria = problematicaSeleccionada.ReporteDeTutoria.Comentarios;
+
+            TutorAcademicoObservable = nombreTutorAcademico + apellidosTutorAcademico;
+            ComentariosGeneralesObservable = ComentariosGeneralesDeTutoria;
         }
+
         public void FillPeriodosEscolares()
         {
             TutoriaManagement tutoriaManagement = new TutoriaManagement();

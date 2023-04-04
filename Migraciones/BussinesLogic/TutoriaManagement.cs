@@ -332,7 +332,7 @@ namespace Tutorias.BussinesLogic.Management
 					problematicasResult = context.Problematicas
 						.Where(x => x.ReporteDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
 						            && x.ReporteDeTutoria.NumDeTutoria == numDeSesion)
-						.Include(c => c.ExperienciaEducativa)
+						.Include(c => c.ExperienciaEducativa).ThenInclude(e => e.Catedratico)
 						.Include(c => c.ReporteDeTutoria)
 						.Include(c => c.Solucion)
 						.ToList();
