@@ -22,8 +22,10 @@ namespace graphicLayer.Vistas
         }
     }
 
-    public class ReporteGeneralViewModel
+    public class ReporteGeneralViewModel : DependencyObject
     {
+        public static readonly DependencyProperty TotalDeAsistenciasObservableProperty = DependencyProperty.Register(
+            "TotalDeAsistenciasObservable", typeof(String), typeof(ReporteGeneralViewModel), new PropertyMetadata(default(String)));
         public ObservableCollection<Periodo_Escolar> PeriodosEscolaresObservableCollection { get; set; } =
             new ObservableCollection<Periodo_Escolar>();
 
@@ -34,7 +36,11 @@ namespace graphicLayer.Vistas
 
         public String ComentariosGeneralesObservable { get; set; }
 
-        public String TotalDeAsistenciasObservable { get; set; }
+        public String TotalDeAsistenciasObservable
+        {
+            get { return (string)GetValue(TotalDeAsistenciasObservableProperty); }
+            set {SetValue(TotalDeAsistenciasObservableProperty, value);}
+        }
 
         public ICommand SelectProblematicaCommand { get; set; }
 
@@ -58,9 +64,12 @@ namespace graphicLayer.Vistas
         {
             TutoriaManagement tutoriaManagement = new TutoriaManagement();
             List<Problematica> problematicas = new List<Problematica>();
+            int totalAsistencias = 0;
             try
             {
                 problematicas = tutoriaManagement.FindProblematicasAcademicas(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
+                totalAsistencias =
+                    tutoriaManagement.FindTotalAssistants(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
             }
             catch (Exception e)
             {
@@ -68,8 +77,18 @@ namespace graphicLayer.Vistas
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OKCancel);
             }
+
+            if (totalAsistencias > 0)
+            {
+                TotalDeAsistenciasObservable = totalAsistencias.ToString();
+            }
+            else
+            {
+                TotalDeAsistenciasObservable = "0";
+            }
             ProblematicasObservableCollection.Clear();
             foreach (var problematica in problematicas) ProblematicasObservableCollection.Add(problematica);
+
         }
 
         private void SelectProblematicaAction(Problematica problematicaSeleccionada)
