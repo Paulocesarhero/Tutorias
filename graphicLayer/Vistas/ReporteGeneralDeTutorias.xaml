@@ -97,18 +97,13 @@
             <Button
                 Content="Datos problematica"
                 Style="{StaticResource MaterialDesignPaperDarkButton}"
+                Command="{Binding BtnDatosProblematica}"
                 ToolTip="Resource name: MaterialDesignPaperDarkButton" />
-            <TextBlock
-                FontSize="32"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-                Text="Reporte de tutoria" />
-            <materialDesign:Card
-                Width="638"
-                Height="134"
+            <Separator Height="20" Width="0"></Separator>
+            <GroupBox
+                
                 Padding="8"
-                Background="{DynamicResource PrimaryHueDarkBrush}"
-                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                UniformCornerRadius="6">
+                Header="Reporte de tutoria">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -119,7 +114,9 @@
                         <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
                     </StackPanel>
                 </StackPanel>
-            </materialDesign:Card>
+            </GroupBox>
         </StackPanel>
     </Grid>
+
+    
 </Page>

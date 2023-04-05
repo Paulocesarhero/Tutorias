@@ -47,6 +47,8 @@ namespace graphicLayer.Vistas
 
         public ICommand BtnBuscarReporteCommand { get; }
 
+        public ICommand BtnDatosProblematica { get; }
+
         public int NumTutoriaSeleccionada { get; set; }
 
         public Problematica ProblematicaSeleccionada { get; set; } = new Problematica();
@@ -57,7 +59,13 @@ namespace graphicLayer.Vistas
         {
             SelectProblematicaCommand = new RelayCommand<Problematica>(SelectProblematicaAction);
             BtnBuscarReporteCommand = new RelayCommand(ExecuteBuscarReporte);
+            BtnDatosProblematica = new RelayCommand(ExecuteDatosProblematica);
             FillPeriodosEscolares();
+        }
+
+        private void ExecuteDatosProblematica()
+        {
+            throw new NotImplementedException();
         }
 
         private void ExecuteBuscarReporte()

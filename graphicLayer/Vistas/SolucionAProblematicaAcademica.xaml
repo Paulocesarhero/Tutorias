@@ -25,7 +25,7 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Titulo "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock Name="TbTitulo" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -33,7 +33,7 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Experiencia educativa "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock Name="TbExperienciaEducativa" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -41,15 +41,15 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Profesor "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock Name="TbProfesor" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         FontSize="19"
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Descripcion "
+                        Text="Descripción "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock Name="TbDescripcion" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -57,7 +57,7 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Numero de estudiantes "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock Name="TbNumeroDeEstudiantes" TextWrapping="Wrap" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
