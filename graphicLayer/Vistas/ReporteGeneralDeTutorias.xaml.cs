@@ -18,7 +18,10 @@ namespace graphicLayer.Vistas
         public ReporteGeneralDeTutorias()
         {
             InitializeComponent();
-            DataContext = new ReporteGeneralViewModel();
+            ReporteGeneralViewModel dataContext = new ReporteGeneralViewModel();
+            dataContext.ReporteGeneral = this;
+            DataContext = dataContext;
+            
         }
     }
 
@@ -51,9 +54,12 @@ namespace graphicLayer.Vistas
 
         public int NumTutoriaSeleccionada { get; set; }
 
-        public Problematica ProblematicaSeleccionada { get; set; } = new Problematica();
+        public Problematica ProblematicaSeleccionada { get; set; }
 
         public Periodo_Escolar PeriodoEscolarSeleccionado { get; set; }
+
+        public ReporteGeneralDeTutorias ReporteGeneral { get; set; }
+
 
         public ReporteGeneralViewModel()
         {
@@ -65,7 +71,23 @@ namespace graphicLayer.Vistas
 
         private void ExecuteDatosProblematica()
         {
-            throw new NotImplementedException();
+            SolucionAProblematicaAcademica newWindow = new SolucionAProblematicaAcademica();
+            if (ProblematicaSeleccionada != null)
+            {
+                newWindow.TbDescripcion.Text = ProblematicaSeleccionada.Descripcion;
+                newWindow.TbExperienciaEducativa.Text = ProblematicaSeleccionada.ExperienciaEducativa.Nombre + " Nrc: " + ProblematicaSeleccionada.ExperienciaEducativa.Nrc;
+                newWindow.TbNumeroDeEstudiantes.Text = ProblematicaSeleccionada.NumAlumnos.ToString();
+                newWindow.TbProfesor.Text = ProblematicaSeleccionada.ExperienciaEducativa.Catedratico.NombreCompleto;
+                ReporteGeneral.NavigationService.Navigate(newWindow); 
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Para poder ver los datos de la problematica primero tienes que seleccionar una problematica",
+                    "Seleccione una problematica primero",
+                    MessageBoxButton.OK);
+            }
+           
         }
 
         private void ExecuteBuscarReporte()

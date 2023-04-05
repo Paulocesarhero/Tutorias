@@ -69,10 +69,9 @@
                 Height="201"
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
+                IsSelected="True"
                 ItemsSource="{Binding ProblematicasObservableCollection}"
-                SelectedItem="{Binding ProblematicaSeleccionada}"
-                SelectionMode="Extended"
-                SelectionUnit="Cell">
+                SelectedItem="{Binding ProblematicaSeleccionada}">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Binding="{Binding Descripcion}"
@@ -95,15 +94,12 @@
 
             </DataGrid>
             <Button
+                Command="{Binding BtnDatosProblematica}"
                 Content="Datos problematica"
                 Style="{StaticResource MaterialDesignPaperDarkButton}"
-                Command="{Binding BtnDatosProblematica}"
                 ToolTip="Resource name: MaterialDesignPaperDarkButton" />
-            <Separator Height="20" Width="0"></Separator>
-            <GroupBox
-                
-                Padding="8"
-                Header="Reporte de tutoria">
+            <Separator Width="0" Height="20" />
+            <GroupBox Padding="8" Header="Reporte de tutoria">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -118,5 +114,5 @@
         </StackPanel>
     </Grid>
 
-    
+
 </Page>

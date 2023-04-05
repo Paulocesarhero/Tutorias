@@ -14,26 +14,20 @@
 
     <StackPanel>
         <GroupBox
-            Width="744"
-            Height="176"
             Margin="16"
             Header="Datos de la problematica">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Titulo "
-                        TextWrapping="Wrap" />
-                    <TextBlock Name="TbTitulo" TextWrapping="Wrap" />
-                </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         FontSize="19"
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Experiencia educativa "
                         TextWrapping="Wrap" />
-                    <TextBlock Name="TbExperienciaEducativa" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbExperienciaEducativa"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -41,7 +35,10 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Profesor "
                         TextWrapping="Wrap" />
-                    <TextBlock Name="TbProfesor" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbProfesor"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -49,19 +46,25 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Descripción "
                         TextWrapping="Wrap" />
-                    <TextBlock Name="TbDescripcion" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbDescripcion"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         FontSize="19"
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Numero de estudiantes "
+                        Text="Numero de estudiantes afectados "
                         TextWrapping="Wrap" />
-                    <TextBlock Name="TbNumeroDeEstudiantes" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbNumeroDeEstudiantes"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <GroupBox Margin="16" Header="Solución a problematica">
+        <GroupBox Margin="16" Header="Atender problematica">
             <StackPanel Margin="2">
                 <TextBox
                     Margin="12"
