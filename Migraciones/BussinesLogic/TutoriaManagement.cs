@@ -208,9 +208,9 @@ namespace Tutorias.BussinesLogic.Management
 				using (TutoriasContext context = new TutoriasContext())
 				{
 					usuario = context.Usuarios
-						.Where(x => x.username == usename
-						            && x.password == Security.HashSHA256(password))
-						.Include(c => c.tipoUsuario)
+						.Where(x => x.Username == usename
+						            && x.Password == Security.HashSHA256(password))
+						.Include(c => c.TipoUsuario)
 						.Include(c => c.ProgramaEducativo)
 						.FirstOrDefault();
 				}
@@ -243,8 +243,8 @@ namespace Tutorias.BussinesLogic.Management
 				using (TutoriasContext context = new TutoriasContext())
 				{
 					catedraticos = context.Catedraticos
-						.Include(c => c.experienciasEducativas)
-						.ThenInclude(x => x.programaEducativo)
+						.Include(c => c.ExperienciasEducativas)
+						.ThenInclude(x => x.ProgramaEducativo)
 						.ToList();
 				}
 			}
@@ -330,11 +330,11 @@ namespace Tutorias.BussinesLogic.Management
 				using (TutoriasContext context = new TutoriasContext())
 				{
 					problematicasResult = context.Problematicas
-						.Where(x => x.reporteDeTutoria.periodoEscolar == periodoEscolarSeleccionado
-						            && x.reporteDeTutoria.numDeTutoria == numDeSesion)
-						.Include(c => c.experienciaEducativa)
-						.Include(c => c.reporteDeTutoria)
-						.Include(c => c.solucion)
+						.Where(x => x.ReporteDeTutoria.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
+						            && x.ReporteDeTutoria.FechaDeTutoria.NumDeTutoria == numDeSesion)
+						.Include(c => c.ExperienciaEducativa).ThenInclude(e => e.Catedratico)
+						.Include(c => c.ReporteDeTutoria)
+						.Include(c => c.Solucion)
 						.ToList();
 				}
 			}
@@ -353,7 +353,36 @@ namespace Tutorias.BussinesLogic.Management
 			return problematicasResult;
 		}
 
-		public Experiencia_Educativa getExperienciaEducativaByNRC(string nrc)
+        public int FindTotalAssistants(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion)
+        {
+            List<Asistencia> findAsistencias = new List<Asistencia>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    findAsistencias = context.Asistencias
+                        .Where(x => x.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
+                                    && x.FechaDeTutoria.NumDeTutoria == numDeSesion)
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return findAsistencias.Count;
+        }
+
+
+        public Experiencia_Educativa getExperienciaEducativaByNRC(string nrc)
 		{
 			Experiencia_Educativa result = new Experiencia_Educativa();
 			try
@@ -361,7 +390,7 @@ namespace Tutorias.BussinesLogic.Management
 				using (TutoriasContext context = new TutoriasContext())
 				{
 					result = context.ExperienciasEducativas
-						.Where(x => x.nrc == nrc)
+						.Where(x => x.Nrc == nrc)
 						.FirstOrDefault();
 				}
 			}
@@ -380,34 +409,7 @@ namespace Tutorias.BussinesLogic.Management
 			return result;
 		}
 
-		public List<Reporte_De_Tutoria> findReportesDeTutorias(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion)
-		{
-			List<Reporte_De_Tutoria> reporteDeTutorias = new List<Reporte_De_Tutoria>();
-			try
-			{
-				using (TutoriasContext context = new TutoriasContext())
-				{
-					reporteDeTutorias = context.ReportesDeTutorias
-						.Where(x => x.periodoEscolar == periodoEscolarSeleccionado
-						            && x.numDeTutoria == numDeSesion)
-						.Include(c => c.tutorAcademico)
-						.ToList();
-				}
-			}
-			catch (DbException dbException)
-			{
-				throw dbException;
-			}
-			catch (InvalidOperationException invalidOperationException)
-			{
-				throw invalidOperationException;
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			return reporteDeTutorias;
-		}
+		
 
 		public List<Experiencia_Educativa> getExperienciasEducativas()
 		{
@@ -417,8 +419,8 @@ namespace Tutorias.BussinesLogic.Management
 				using (TutoriasContext context = new TutoriasContext())
 				{
 					result = context.ExperienciasEducativas
-						.Include(c => c.catedratico)
-						.Include(c => c.programaEducativo)
+						.Include(c => c.Catedratico)
+						.Include(c => c.ProgramaEducativo)
 						.ToList();
 				}
 			}

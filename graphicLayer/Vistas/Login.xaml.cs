@@ -61,7 +61,7 @@ namespace graphicLayer.Vistas
             }
             if (result != null)
             {
-                switch (result.tipoUsuario.tipo)
+                switch (result.TipoUsuario.Tipo)
                 {
                     case "Jefe de carrera":
                         ReporteGeneralDeTutorias firstPageJefeDeCarrera = new ReporteGeneralDeTutorias();

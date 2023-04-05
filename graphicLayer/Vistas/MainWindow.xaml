@@ -4,6 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Tutorias"
     Width="800"
-    Height="450"
+    Height="600"
     Source="Login.xaml"
     ShowsNavigationUI="False" />

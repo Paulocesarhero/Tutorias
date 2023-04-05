@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.Design;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tutorias.Service.DatabaseContext
 {
@@ -20,7 +16,9 @@ namespace Tutorias.Service.DatabaseContext
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<TipoUsuario> TiposUsuarios { get; set; }
         public DbSet<Estudiante> Estudiantes { get; set; }
-        public DbSet<Lista_de_Asistencia> ListaDeAsistencias { get; set; }
+        public DbSet<Asistencia> Asistencias { get; set; }
+
+        public DbSet<Fecha_De_Tutoria> FechasDeTutorias { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,91 +32,105 @@ namespace Tutorias.Service.DatabaseContext
         {
             modelBuilder.Entity<Catedratico>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.nombreCompleto).IsRequired();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.NombreCompleto).IsRequired();
             });
             modelBuilder.Entity<Experiencia_Educativa>(entity =>
             {
-                entity.HasKey(e => e.nrc);
-                entity.HasOne(e => e.catedratico).WithMany(e => e.experienciasEducativas);
-                entity.HasMany(e => e.problematicas).WithOne(p => p.experienciaEducativa);
+                entity.HasKey(e => e.Nrc);
+                entity.HasOne(e => e.Catedratico).WithMany(e => e.ExperienciasEducativas);
+                entity.HasMany(e => e.Problematicas).WithOne(p => p.ExperienciaEducativa);
+                entity.HasOne(e => e.Academia).WithMany(a => a.ExperienciaEducativas );
             });
             modelBuilder.Entity<Programa_Educativo>(entity =>
             {
                 entity.HasKey(e => e.ProgramaEducativo);
             });
+            modelBuilder.Entity<Academia>(entity =>
+            {
+                entity.HasKey(e => e.NombreAcademia);
+                entity.HasMany(e => e.ExperienciaEducativas).WithOne(a => a.Academia);
+            });
             modelBuilder.Entity<Problematica>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.numAlumnos).IsRequired();
-                entity.Property(e => e.descripcion).IsRequired();
-                entity.HasOne(e => e.solucion).WithOne(p => p.problematica);
-                entity.HasOne(e => e.experienciaEducativa).WithMany(p => p.problematicas);
-                entity.HasOne(e => e.reporteDeTutoria).WithMany(p => p.Problematicas);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.NumAlumnos).IsRequired();
+                entity.Property(e => e.Descripcion).IsRequired();
+                entity.HasOne(e => e.Solucion).WithOne(p => p.Problematica);
+                entity.HasOne(e => e.ExperienciaEducativa).WithMany(p => p.Problematicas);
+                entity.HasOne(e => e.ReporteDeTutoria).WithMany(p => p.Problematicas);
             });
             modelBuilder.Entity<Solucion>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.titulo).IsRequired();
-                entity.Property(e => e.fecha).IsRequired();
-                entity.Property(e => e.descripcion).IsRequired();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Titulo).IsRequired();
+                entity.Property(e => e.Fecha).IsRequired();
+                entity.Property(e => e.Descripcion).IsRequired();
 
             }); 
             modelBuilder.Entity<Reporte_De_Tutoria>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.fecha).IsRequired();
-                entity.Property(e => e.comentarios).IsRequired();
-                entity.Property(e => e.fechaDeCierre).IsRequired();
-                entity.HasOne(e => e.tutorAcademico).WithMany(p => p.reportesDeTutorias);
-                entity.HasMany(e => e.Problematicas).WithOne(p => p.reporteDeTutoria);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Fecha).IsRequired();
+                entity.Property(e => e.Comentarios).IsRequired();
+                entity.HasOne(e => e.TutorAcademico).WithMany(p => p.ReportesDeTutorias);
+                entity.HasMany(e => e.Problematicas).WithOne(p => p.ReporteDeTutoria);
+                entity.HasOne(r => r.FechaDeTutoria).WithMany(f => f.ReportesDeTutorias);
 
             });
+            modelBuilder.Entity<Fecha_De_Tutoria>(entity =>
+                {
+                    entity.HasKey(e => e.Id);
+                    entity.Property(e => e.NumDeTutoria).IsRequired();
+                    entity.HasOne(e => e.PeriodoEscolar).WithMany(p => p.FechasDeTutorias);
+                    entity.HasMany(f => f.Asistencias).WithOne(a => a.FechaDeTutoria);
+                    entity.HasMany(f => f.ReportesDeTutorias).WithOne(r => r.FechaDeTutoria);
+                }
+            );
             modelBuilder.Entity<Periodo_Escolar>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.fechaDeInicio).IsRequired();
-                entity.Property(e => e.fechaDeFin).IsRequired();
-
-
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.FechaDeInicio).IsRequired();
+                entity.Property(e => e.FechaDeFin).IsRequired();
+                entity.HasMany(p => p.FechasDeTutorias).WithOne(f => f.PeriodoEscolar);
             });
             modelBuilder.Entity<Tutor_Academico>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.nombres).IsRequired();
-                entity.Property(e => e.apellidos).IsRequired();
-                entity.HasOne(e => e.usuario);
-                entity.HasMany(e => e.reportesDeTutorias).WithOne(p => p.tutorAcademico);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Nombres).IsRequired();
+                entity.Property(e => e.Apellidos).IsRequired();
+                entity.HasOne(e => e.Usuario);
+                entity.HasMany(e => e.ReportesDeTutorias).WithOne(p => p.TutorAcademico);
             });
             modelBuilder.Entity<Usuario>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.password).IsRequired();
-                entity.Property(e => e.username).IsRequired();
-                entity.HasOne(e => e.tipoUsuario);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Password).IsRequired();
+                entity.Property(e => e.Username).IsRequired();
+                entity.HasOne(e => e.TipoUsuario);
                 entity.HasOne(e => e.ProgramaEducativo);
 
             });
             modelBuilder.Entity<TipoUsuario>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.tipo).IsRequired();
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Tipo).IsRequired();
             });
             modelBuilder.Entity<Estudiante>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.nombres).IsRequired();
-                entity.Property(e => e.matricula).IsRequired();
-                entity.Property(e => e.apellidos).IsRequired();
-                entity.HasOne(e => e.tutorAcademico);
-                entity.HasMany(e => e.asistencias).WithOne(p => p.estudiante);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Nombres).IsRequired();
+                entity.Property(e => e.Matricula).IsRequired();
+                entity.Property(e => e.Apellidos).IsRequired();
+                entity.HasOne(e => e.TutorAcademico);
+                entity.HasMany(e => e.Asistencias).WithOne(p => p.Estudiante);
             });
-            modelBuilder.Entity<Lista_de_Asistencia>(entity =>
+            modelBuilder.Entity<Asistencia>(entity =>
             {
-                entity.HasKey(e => e.id);
-                entity.Property(e => e.asiste).IsRequired();
-                entity.Property(e => e.horario).IsRequired();
-                entity.HasOne(e => e.estudiante).WithMany(p => p.asistencias);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Asiste).IsRequired();
+                entity.Property(e => e.Horario).IsRequired();
+                entity.HasOne(e => e.Estudiante).WithMany(p => p.Asistencias);
             });
         }
     }
@@ -127,51 +139,71 @@ namespace Tutorias.Service.DatabaseContext
     {
         public Catedratico(int id, string nombres, string apellidos)
         {
-            this.id = id;
-            this.nombreCompleto = nombres;
+            this.Id = id;
+            this.NombreCompleto = nombres;
          
         }
 
         public Catedratico()
         {
-            this.nombreCompleto = nombreCompleto;
+            this.NombreCompleto = NombreCompleto;
             
         }
 
-        public int id { get; set; }
-        public string nombreCompleto { get; set; }
+        public int Id { get; set; }
+        public string NombreCompleto { get; set; }
        
 
-        public virtual ICollection<Experiencia_Educativa> experienciasEducativas { get; set; }
+        public virtual ICollection<Experiencia_Educativa> ExperienciasEducativas { get; set; }
     }
 
     public class Experiencia_Educativa
     {
         public Experiencia_Educativa(string nrc, string nombre)
         {
-            this.nrc = nrc;
-            this.nombre = nombre;
+            this.Nrc = nrc;
+            this.Nombre = nombre;
         }
 
         public Experiencia_Educativa()
         {
-            this.nrc = nrc;
-            this.nombre = nombre;
-            this.catedratico = catedratico;
-            this.programaEducativo = programaEducativo;
+            this.Nrc = Nrc;
+            this.Nombre = Nombre;
+            this.Catedratico = Catedratico;
+            this.ProgramaEducativo = ProgramaEducativo;
         }
 
-        public string nrc { get; set; }
-        public string nombre { get; set; }
+        public string Nrc { get; set; }
+        public string Nombre { get; set; }
 
-        public virtual Catedratico catedratico { get; set; }
-        public virtual Programa_Educativo programaEducativo { get; set; }
-        public virtual ICollection<Problematica> problematicas { get; set; }
+        public virtual Catedratico Catedratico { get; set; }
+        public virtual Programa_Educativo ProgramaEducativo { get; set; }
+        public virtual ICollection<Problematica> Problematicas { get; set; }
+
+        public virtual Academia Academia { get; set; }
+    }
+
+    public class Academia
+    {
+        public Academia(string nombreAcademia)
+        {
+            NombreAcademia = nombreAcademia;
+        }
+
+        public Academia()
+        {
+            NombreAcademia = NombreAcademia;
+        }
+
+        public string NombreAcademia { get; set; }
+        public virtual ICollection<Experiencia_Educativa> ExperienciaEducativas { get; set; }
+
+
     }
 
     public class Programa_Educativo
     {
-        public Programa_Educativo(int id, string programaEducativo)
+        public Programa_Educativo(string programaEducativo)
         {
             this.ProgramaEducativo = programaEducativo;
         }
@@ -189,9 +221,9 @@ namespace Tutorias.Service.DatabaseContext
 
         public Problematica(int id, int numAlumnos, string descripcion)
         {
-            this.id = id;
-            this.numAlumnos = numAlumnos;
-            this.descripcion = descripcion;
+            this.Id = id;
+            this.NumAlumnos = numAlumnos;
+            this.Descripcion = descripcion;
 
         }
 
@@ -199,145 +231,149 @@ namespace Tutorias.Service.DatabaseContext
 
         public Problematica()
         {
-            this.id = id;
-            this.numAlumnos = numAlumnos;
-            this.descripcion = descripcion;
-            this.solucion = solucion;
-            this.experienciaEducativa = experienciaEducativa;
-            this.reporteDeTutoria = reporteDeTutoria;
+            this.Id = Id;
+            this.NumAlumnos = NumAlumnos;
+            this.Descripcion = Descripcion;
+            this.Solucion = Solucion;
+            this.ExperienciaEducativa = ExperienciaEducativa;
+            this.ReporteDeTutoria = ReporteDeTutoria;
         }
 
-        public int id { get; set; }
-        public int numAlumnos { get; set; }
-        public string descripcion { get; set; }
-        public virtual Solucion solucion { get; set; }
-        public virtual Experiencia_Educativa experienciaEducativa { get; set; }
+        public int Id { get; set; }
+        public int NumAlumnos { get; set; }
+        public string Descripcion { get; set; }
+        public virtual Solucion Solucion { get; set; }
+        public virtual Experiencia_Educativa ExperienciaEducativa { get; set; }
         
-        public virtual Reporte_De_Tutoria reporteDeTutoria { get; set; }
+        public virtual Reporte_De_Tutoria ReporteDeTutoria { get; set; }
     }
 
     public class Solucion
     {
         public Solucion(int id, string titulo, DateTime fecha, string descripcion)
         {
-            this.id = id;
-            this.titulo = titulo;
-            this.fecha = fecha;
-            this.descripcion = descripcion;
+            this.Id = id;
+            this.Titulo = titulo;
+            this.Fecha = fecha;
+            this.Descripcion = descripcion;
         }
 
-        public int id { get; set; }
-        public string titulo { get; set; }
-        public DateTime fecha { get; set; }
-        public string descripcion { get; set; }
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Descripcion { get; set; }
         [ForeignKey("problematicaFk")]
-        public virtual Problematica problematica { get; set; }
+        public virtual Problematica Problematica { get; set; }
     }
 
     public class Reporte_De_Tutoria
     {
-        public Reporte_De_Tutoria(int id, DateTime fecha, string comentatios, DateTime fechaDeCierre)
+        public Reporte_De_Tutoria(int id, DateTime fecha, string comentatios)
         {
-            this.id = id;
-            this.fecha = fecha;
-            this.comentarios = comentatios;
-            this.fechaDeCierre = fechaDeCierre;
+            this.Id = id;
+            this.Fecha = fecha;
+            this.Comentarios = comentatios;
         }
 
         public Reporte_De_Tutoria()
         {
-            fecha = fecha;
-            comentarios = comentarios;
-            fechaDeCierre = fechaDeCierre;
-            numDeTutoria = numDeTutoria;
+            Fecha = Fecha;
+            Comentarios = Comentarios;
         }
 
-        public int id { get; set; }
-        public DateTime fecha { get; set; }
-        public string comentarios { get; set; }
-        public DateTime fechaDeCierre { get; set; }
+        public int Id { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Comentarios { get; set; }
         
-        public int numDeTutoria { get; set; }
-        public virtual Tutor_Academico tutorAcademico { get; set; }
-        public virtual Periodo_Escolar periodoEscolar { get; set; }
+        
+        public virtual Tutor_Academico TutorAcademico { get; set; }
         public virtual ICollection<Problematica> Problematicas { get; set; }
+        public virtual Fecha_De_Tutoria FechaDeTutoria { get; set; }
+    }
+
+    public class Fecha_De_Tutoria
+    {
+        public int Id { get; set; }
+        public DateTime FechaDeCierre { get; set; }
+        public int NumDeTutoria { get; set; }
+        public virtual Periodo_Escolar PeriodoEscolar { get; set; }
+
+        public virtual ICollection<Asistencia> Asistencias { get; set; }
+
+        public  virtual ICollection<Reporte_De_Tutoria> ReportesDeTutorias { get; set; }
+
+
     }
 
     public class Periodo_Escolar
     {
-        public Periodo_Escolar(int id, DateTime fechaDeInicio, DateTime fechaDeFin, DateTime fechaDePrimeraTutoria, DateTime fechaDeSegundaTutoria, DateTime fechaDeTerceraTutoria)
+        public Periodo_Escolar(int id, DateTime fechaDeInicio, DateTime fechaDeFin)
         {
-            this.id = id;
-            this.fechaDeInicio = fechaDeInicio;
-            this.fechaDeFin = fechaDeFin;
-            this.fechaDePrimeraTutoria = fechaDePrimeraTutoria;
-            this.fechaDeSegundaTutoria = fechaDeSegundaTutoria;
-            this.fechaDeTerceraTutoria = fechaDeTerceraTutoria;
+            this.Id = id;
+            this.FechaDeInicio = fechaDeInicio;
+            this.FechaDeFin = fechaDeFin;
         }
 
         public Periodo_Escolar()
         {
-            this.fechaDeInicio = fechaDeInicio;
-            this.fechaDeFin = fechaDeFin;
-            this.fechaDePrimeraTutoria = fechaDePrimeraTutoria;
-            this.fechaDeSegundaTutoria = fechaDeSegundaTutoria;
-            this.fechaDeTerceraTutoria = fechaDeTerceraTutoria;
+            this.FechaDeInicio = FechaDeInicio;
+            this.FechaDeFin = FechaDeFin;
         }
 
-        public int id { get; set; }
-        public DateTime fechaDeInicio { get; set; }
-        public DateTime fechaDeFin { get; set; }
-        public DateTime fechaDePrimeraTutoria { get; set; }
-        public DateTime fechaDeSegundaTutoria { get; set; }
-        public DateTime fechaDeTerceraTutoria { get; set; }
+        public int Id { get; set; }
+        public DateTime FechaDeInicio { get; set; }
+        public DateTime FechaDeFin { get; set; }
+
+        public ICollection<Fecha_De_Tutoria> FechasDeTutorias { get; set; }
+
     }
 
     public class Tutor_Academico
     {
         public Tutor_Academico(int id, string nombres, string apellidos)
         {
-            this.id = id;
-            this.nombres = nombres;
-            this.apellidos = apellidos;
+            this.Id = id;
+            this.Nombres = nombres;
+            this.Apellidos = apellidos;
         }
         
 
         public Tutor_Academico()
         {
-            nombres = nombres;
-            apellidos = apellidos;
-            usuario = usuario;
+            Nombres = Nombres;
+            Apellidos = Apellidos;
+            Usuario = Usuario;
             
         }
 
-        public int id { get; set; }
-        public string nombres { get; set; }
-        public string apellidos { get; set; }
-        public virtual Usuario usuario { get; set; }
-        public virtual ICollection<Reporte_De_Tutoria> reportesDeTutorias { get; set; }
+        public int Id { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        public virtual ICollection<Reporte_De_Tutoria> ReportesDeTutorias { get; set; }
     }
 
     public class Usuario
     {
         public Usuario(int id, string password, string username)
         {
-            this.id = id;
-            this.password = password;
-            this.username = username;
+            this.Id = id;
+            this.Password = password;
+            this.Username = username;
         }
 
         public Usuario()
         {
-            id = id;
-            password = password;
-            username = username;
-            tipoUsuario = tipoUsuario;
+            Id = Id;
+            Password = Password;
+            Username = Username;
+            TipoUsuario = TipoUsuario;
         }
 
-        public int id { get; set; }
-        public string password { get; set; }
-        public string username { get; set; }
-        public virtual TipoUsuario tipoUsuario { get; set; }
+        public int Id { get; set; }
+        public string Password { get; set; }
+        public string Username { get; set; }
+        public virtual TipoUsuario TipoUsuario { get; set; }
         
         public virtual Programa_Educativo ProgramaEducativo { get; set; }
     }
@@ -346,17 +382,17 @@ namespace Tutorias.Service.DatabaseContext
     {
         public TipoUsuario(int id, string tipo)
         {
-            this.id = id;
-            this.tipo = tipo;
+            this.Id = id;
+            this.Tipo = tipo;
         }
 
         public TipoUsuario()
         {
-            tipo = tipo;
+            Tipo = Tipo;
         }
 
-        public int id { get; set; }
-        public string tipo { get; set; }
+        public int Id { get; set; }
+        public string Tipo { get; set; }
     }
     
 
@@ -364,34 +400,35 @@ namespace Tutorias.Service.DatabaseContext
     {
         public Estudiante(int id, string matricula, string nombres, string apellidos)
         {
-            this.id = id;
-            this.matricula = matricula;
-            this.nombres = nombres;
-            this.apellidos = apellidos;
+            this.Id = id;
+            this.Matricula = matricula;
+            this.Nombres = nombres;
+            this.Apellidos = apellidos;
         }
 
-        public int id { get; set; }
-        public string matricula { get; set; }
-        public string nombres { get; set; }
-        public string apellidos { get; set; }
-        public virtual Tutor_Academico tutorAcademico { get; set; }
+        public int Id { get; set; }
+        public string Matricula { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public virtual Tutor_Academico TutorAcademico { get; set; }
 
-        public virtual ICollection<Lista_de_Asistencia> asistencias { get; set; }
+        public virtual ICollection<Asistencia> Asistencias { get; set; }
     }
 
-    public class Lista_de_Asistencia
+    public class Asistencia
     {
-        public Lista_de_Asistencia(int id, bool asiste, DateTime horario)
+        public Asistencia(int id, bool asiste, DateTime horario)
         {
-            this.id = id;
-            this.asiste = asiste;
-            this.horario = horario;
+            this.Id = id;
+            this.Asiste = asiste;
+            this.Horario = horario;
         }
 
-        public int id { get; set; }
-        public bool asiste { get; set; }
-        public DateTime horario { get; set; }
-        public virtual Estudiante estudiante { get; set; }
+        public int Id { get; set; }
+        public bool Asiste { get; set; }
+        public DateTime Horario { get; set; }
+        public virtual Estudiante Estudiante { get; set; }
+        public virtual Fecha_De_Tutoria FechaDeTutoria { get; set; }
     }    
 }
 
