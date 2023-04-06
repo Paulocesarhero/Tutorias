@@ -32,14 +32,16 @@ namespace graphicLayer.Vistas
         {
             if (TbTitulo.Text != "" && TbDescripcionSolucion.Text != "")
             {
-                Solucion sol = new Solucion()
+                if (_Problematica.Solucion == null)
                 {
-                    Problematica = _Problematica,
-                    Descripcion = TbDescripcionSolucion.Text,
-                    Fecha = Convert.ToDateTime(TbFecha.Text),
-                    Titulo = TbTitulo.Text
-                };
-                SaveSolucion(sol);
+                    _Problematica.Solucion = new Solucion();
+                    _Problematica.Solucion.Problematica = _Problematica;
+                }
+               
+                _Problematica.Solucion.Descripcion = TbDescripcionSolucion.Text;
+                _Problematica.Solucion.Fecha = Convert.ToDateTime(TbFecha.Text);
+                _Problematica.Solucion.Titulo = TbTitulo.Text;
+                SaveSolucion(_Problematica.Solucion);
                 
             }
             else
@@ -58,7 +60,10 @@ namespace graphicLayer.Vistas
                result = tutoria.AddSolucion(solucion);
                if (result)
                {
-                   this.NavigationService.GoBack();
+                   MessageBox.Show("Registro exitoso",
+                       "La problematica ha sido atendida",
+                       MessageBoxButton.OK);
+                    this.NavigationService.GoBack();
                }
                else
                {

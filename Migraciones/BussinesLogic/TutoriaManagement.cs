@@ -471,15 +471,26 @@ namespace Tutorias.BussinesLogic.Management
 
         public bool AddSolucion(Solucion solucionProblematica)
         {
-            bool result;
+            bool result = false;
+            Solucion findSol = new Solucion();
             try
             {
                 using (TutoriasContext context = new TutoriasContext())
                 {
-                    
-                    context.Soluciones.Update(solucionProblematica);
-                    context.SaveChanges();
-                    result = true;
+                    findSol = context.Soluciones.FirstOrDefault(x => x.Id == solucionProblematica.Id);
+                    if (findSol == null)
+                    {
+                        context.Soluciones.Update(solucionProblematica);
+                    }
+                    else
+                    {
+                        context.Entry(findSol).CurrentValues.SetValues(solucionProblematica);
+                    }
+
+                    if (context.SaveChanges() > 0)
+                    {
+                        result = true;
+                    }
                 }
             }
             catch (DbException dbException)

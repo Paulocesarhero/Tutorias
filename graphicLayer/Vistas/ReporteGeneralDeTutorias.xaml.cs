@@ -79,7 +79,13 @@ namespace graphicLayer.Vistas
                 newWindow.TbNumeroDeEstudiantes.Text = ProblematicaSeleccionada.NumAlumnos.ToString();
                 newWindow.TbProfesor.Text = ProblematicaSeleccionada.ExperienciaEducativa.Catedratico.NombreCompleto;
                 newWindow._Problematica = ProblematicaSeleccionada;
-                newWindow.TbFecha.Text = DateTime.Now.ToString(); 
+                newWindow.TbFecha.Text = DateTime.Now.ToString();
+                if (ProblematicaSeleccionada.Solucion != null)
+                {
+                    newWindow.TbTitulo.Text = ProblematicaSeleccionada.Solucion.Titulo;
+                    newWindow.TbDescripcionSolucion.Text = ProblematicaSeleccionada.Solucion.Descripcion;
+                }
+                
                 ReporteGeneral.NavigationService.Navigate(newWindow); 
             }
             else
