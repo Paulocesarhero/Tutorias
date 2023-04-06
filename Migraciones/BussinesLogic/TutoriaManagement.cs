@@ -472,20 +472,12 @@ namespace Tutorias.BussinesLogic.Management
         public bool AddSolucion(Solucion solucionProblematica)
         {
             bool result;
-            Problematica findProblematica;
             try
             {
                 using (TutoriasContext context = new TutoriasContext())
                 {
-                    // findProblematica = context.Problematicas.FirstOrDefault(p =>
-                        // p.Descripcion == solucionProblematica.Problematica.Descripcion);
-                    // context.Problematicas.Attach(solucionProblematica.Problematica);
+                    
                     context.Soluciones.Update(solucionProblematica);
-                    // context.Problematicas.Attach(solucionProblematica.Problematica);
-                    // context.Catedraticos.Attach(solucionProblematica.Problematica.ExperienciaEducativa.Catedratico);
-                    // context.Academias.Attach(solucionProblematica.Problematica.ExperienciaEducativa.Academia);
-                    // context.ProgramasEducativos.Attach(
-                    //     solucionProblematica.Problematica.ExperienciaEducativa.ProgramaEducativo);
                     context.SaveChanges();
                     result = true;
                 }
