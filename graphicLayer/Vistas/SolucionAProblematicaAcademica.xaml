@@ -13,9 +13,7 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <GroupBox
-            Margin="16"
-            Header="Datos de la problematica">
+        <GroupBox Margin="16" Header="Datos de la problematica">
             <StackPanel>
 
                 <StackPanel Orientation="Horizontal">
@@ -67,6 +65,7 @@
         <GroupBox Margin="16" Header="Atender problematica">
             <StackPanel Margin="2">
                 <TextBox
+                    Name="TbTitulo"
                     Margin="12"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Titulo"
@@ -75,26 +74,29 @@
                     Style="{StaticResource MaterialDesignFilledTextBox}"
                     TextWrapping="Wrap" />
                 <TextBox
+                    Name="TbFecha"
                     Margin="12"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Fecha"
                     materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    IsReadOnly="True"
                     MaxLength="40"
                     Style="{StaticResource MaterialDesignFilledTextBox}"
                     TextWrapping="Wrap" />
                 <TextBox
+                    Name="TbDescripcionSolucion"
                     Height="70"
                     Margin="12"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Descripción"
                     AcceptsReturn="True"
-                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
                 <Button
+                    Name="BtnSave"
+                    Click="BtnSave_Click"
                     Content="{materialDesign:PackIcon ContentSave}"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     ToolTip="Icon" />
             </StackPanel>
         </GroupBox>

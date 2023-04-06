@@ -332,8 +332,11 @@ namespace Tutorias.BussinesLogic.Management
 					problematicasResult = context.Problematicas
 						.Where(x => x.ReporteDeTutoria.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
 						            && x.ReporteDeTutoria.FechaDeTutoria.NumDeTutoria == numDeSesion)
-						.Include(c => c.ExperienciaEducativa).ThenInclude(e => e.Catedratico)
-						.Include(c => c.ReporteDeTutoria)
+						.Include(c => c.ExperienciaEducativa)
+                            .ThenInclude(e => e.Catedratico)
+                        .Include(e => e.ExperienciaEducativa)
+                            .ThenInclude(c => c.Academia)
+                        .Include(c => c.ReporteDeTutoria)
 						.Include(c => c.Solucion)
 						.ToList();
 				}
@@ -465,5 +468,41 @@ namespace Tutorias.BussinesLogic.Management
 			}
 			return result;
 		}
-	}
+
+        public bool AddSolucion(Solucion solucionProblematica)
+        {
+            bool result;
+            Problematica findProblematica;
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    // findProblematica = context.Problematicas.FirstOrDefault(p =>
+                        // p.Descripcion == solucionProblematica.Problematica.Descripcion);
+                    // context.Problematicas.Attach(solucionProblematica.Problematica);
+                    context.Soluciones.Update(solucionProblematica);
+                    // context.Problematicas.Attach(solucionProblematica.Problematica);
+                    // context.Catedraticos.Attach(solucionProblematica.Problematica.ExperienciaEducativa.Catedratico);
+                    // context.Academias.Attach(solucionProblematica.Problematica.ExperienciaEducativa.Academia);
+                    // context.ProgramasEducativos.Attach(
+                    //     solucionProblematica.Problematica.ExperienciaEducativa.ProgramaEducativo);
+                    context.SaveChanges();
+                    result = true;
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+    }
 }

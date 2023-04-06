@@ -78,6 +78,8 @@ namespace graphicLayer.Vistas
                 newWindow.TbExperienciaEducativa.Text = ProblematicaSeleccionada.ExperienciaEducativa.Nombre + " Nrc: " + ProblematicaSeleccionada.ExperienciaEducativa.Nrc;
                 newWindow.TbNumeroDeEstudiantes.Text = ProblematicaSeleccionada.NumAlumnos.ToString();
                 newWindow.TbProfesor.Text = ProblematicaSeleccionada.ExperienciaEducativa.Catedratico.NombreCompleto;
+                newWindow._Problematica = ProblematicaSeleccionada;
+                newWindow.TbFecha.Text = DateTime.Now.ToString(); 
                 ReporteGeneral.NavigationService.Navigate(newWindow); 
             }
             else
