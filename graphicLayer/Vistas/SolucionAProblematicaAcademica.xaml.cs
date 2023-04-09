@@ -63,7 +63,7 @@ namespace graphicLayer.Vistas
                    MessageBox.Show("Registro exitoso",
                        "La problematica ha sido atendida",
                        MessageBoxButton.OK);
-                    this.NavigationService.GoBack();
+                   this.NavigationService.GoBack();
                }
                else
                {

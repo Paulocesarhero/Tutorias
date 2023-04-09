@@ -424,6 +424,7 @@ namespace Tutorias.BussinesLogic.Management
 					result = context.ExperienciasEducativas
 						.Include(c => c.Catedratico)
 						.Include(c => c.ProgramaEducativo)
+                        .Include(e=> e.Academia)
 						.ToList();
 				}
 			}
