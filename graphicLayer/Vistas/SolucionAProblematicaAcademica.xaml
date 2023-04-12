@@ -13,27 +13,19 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <GroupBox
-            Width="744"
-            Height="176"
-            Margin="16"
-            Header="Datos de la problematica">
+        <GroupBox Margin="16" Header="Datos de la problematica">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Titulo "
-                        TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
-                </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         FontSize="19"
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Experiencia educativa "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbExperienciaEducativa"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -41,29 +33,39 @@
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                         Text="Profesor "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbProfesor"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         FontSize="19"
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Descripcion "
+                        Text="Descripción "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbDescripcion"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         FontSize="19"
                         Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Numero de estudiantes "
+                        Text="Numero de estudiantes afectados "
                         TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="TbNumeroDeEstudiantes"
+                        FontSize="19"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <GroupBox Margin="16" Header="Solución a problematica">
+        <GroupBox Margin="16" Header="Atender problematica">
             <StackPanel Margin="2">
                 <TextBox
+                    Name="TbTitulo"
                     Margin="12"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Titulo"
@@ -72,26 +74,29 @@
                     Style="{StaticResource MaterialDesignFilledTextBox}"
                     TextWrapping="Wrap" />
                 <TextBox
+                    Name="TbFecha"
                     Margin="12"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Fecha"
                     materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    IsReadOnly="True"
                     MaxLength="40"
                     Style="{StaticResource MaterialDesignFilledTextBox}"
                     TextWrapping="Wrap" />
                 <TextBox
+                    Name="TbDescripcionSolucion"
                     Height="70"
                     Margin="12"
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Descripción"
                     AcceptsReturn="True"
-                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
                 <Button
+                    Name="BtnSave"
+                    Click="BtnSave_Click"
                     Content="{materialDesign:PackIcon ContentSave}"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     ToolTip="Icon" />
             </StackPanel>
         </GroupBox>

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tutorias.BussinesLogic.Management;
+using Tutorias.Service.DatabaseContext;
 
 namespace graphicLayer.Vistas
 {
@@ -20,9 +22,64 @@ namespace graphicLayer.Vistas
     /// </summary>
     public partial class SolucionAProblematicaAcademica : Page
     {
+        public Problematica _Problematica { get; set; }
         public SolucionAProblematicaAcademica()
         {
             InitializeComponent();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (TbTitulo.Text != "" && TbDescripcionSolucion.Text != "")
+            {
+                if (_Problematica.Solucion == null)
+                {
+                    _Problematica.Solucion = new Solucion();
+                    _Problematica.Solucion.Problematica = _Problematica;
+                }
+               
+                _Problematica.Solucion.Descripcion = TbDescripcionSolucion.Text;
+                _Problematica.Solucion.Fecha = Convert.ToDateTime(TbFecha.Text);
+                _Problematica.Solucion.Titulo = TbTitulo.Text;
+                SaveSolucion(_Problematica.Solucion);
+                
+            }
+            else
+            {
+                MessageBox.Show("Campos vacios", "tiene que llenar los campos de titulo y descripción antes",
+                    MessageBoxButton.OK);
+            }
+        }
+
+        private void SaveSolucion(Solucion solucion)
+        {
+            bool result;
+            TutoriaManagement tutoria = new TutoriaManagement();
+            try
+            {
+               result = tutoria.AddSolucion(solucion);
+               if (result)
+               {
+                   MessageBox.Show("Registro exitoso",
+                       "La problematica ha sido atendida",
+                       MessageBoxButton.OK);
+                   this.NavigationService.GoBack();
+               }
+               else
+               {
+                   MessageBox.Show("Ha ocurrido un error",
+                       "No se ha podido guardar la solución a la problematica",
+                       MessageBoxButton.OK);
+               }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error en la conexión con la base de datos",
+                    "No hay conexión a la base de datos en estos momentos",
+                    MessageBoxButton.OK);
+                Console.WriteLine(e.StackTrace);
+            }
+
         }
     }
 }

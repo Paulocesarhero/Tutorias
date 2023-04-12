@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -332,8 +333,11 @@ namespace Tutorias.BussinesLogic.Management
 					problematicasResult = context.Problematicas
 						.Where(x => x.ReporteDeTutoria.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
 						            && x.ReporteDeTutoria.FechaDeTutoria.NumDeTutoria == numDeSesion)
-						.Include(c => c.ExperienciaEducativa).ThenInclude(e => e.Catedratico)
-						.Include(c => c.ReporteDeTutoria)
+						.Include(c => c.ExperienciaEducativa)
+                            .ThenInclude(e => e.Catedratico)
+                        .Include(e => e.ExperienciaEducativa)
+                            .ThenInclude(c => c.Academia)
+                        .Include(c => c.ReporteDeTutoria)
 						.Include(c => c.Solucion)
 						.ToList();
 				}
@@ -421,6 +425,7 @@ namespace Tutorias.BussinesLogic.Management
 					result = context.ExperienciasEducativas
 						.Include(c => c.Catedratico)
 						.Include(c => c.ProgramaEducativo)
+                        .Include(e=> e.Academia)
 						.ToList();
 				}
 			}
@@ -465,5 +470,96 @@ namespace Tutorias.BussinesLogic.Management
 			}
 			return result;
 		}
-	}
+
+        public bool AddSolucion(Solucion solucionProblematica)
+        {
+            bool result = false;
+            Solucion findSol = new Solucion();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    findSol = context.Soluciones.FirstOrDefault(x => x.Id == solucionProblematica.Id);
+                    if (findSol == null)
+                    {
+                        context.Soluciones.Update(solucionProblematica);
+                    }
+                    else
+                    {
+                        context.Entry(findSol).CurrentValues.SetValues(solucionProblematica);
+                    }
+
+                    if (context.SaveChanges() > 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Academia> GetAcademias()
+        {
+            List<Academia> result = new List<Academia>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.Academias
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Programa_Educativo> GetProgramasEducativos()
+        {
+            List<Programa_Educativo> result = new List<Programa_Educativo>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.ProgramasEducativos
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+    }
 }

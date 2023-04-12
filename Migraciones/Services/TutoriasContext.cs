@@ -20,6 +20,8 @@ namespace Tutorias.Service.DatabaseContext
 
         public DbSet<Fecha_De_Tutoria> FechasDeTutorias { get; set; }
 
+        public DbSet<Academia> Academias { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySQL("server=localhost;" +
@@ -257,6 +259,16 @@ namespace Tutorias.Service.DatabaseContext
             this.Fecha = fecha;
             this.Descripcion = descripcion;
         }
+
+        public Solucion()
+        {
+            Id = Id;
+            Titulo = Titulo;
+            Fecha = Fecha;
+            Descripcion = Descripcion;
+            Problematica = Problematica;
+        }
+
 
         public int Id { get; set; }
         public string Titulo { get; set; }
