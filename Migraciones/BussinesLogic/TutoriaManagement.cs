@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -492,6 +493,58 @@ namespace Tutorias.BussinesLogic.Management
                     {
                         result = true;
                     }
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Academia> GetAcademias()
+        {
+            List<Academia> result = new List<Academia>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.Academias
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Programa_Educativo> GetProgramasEducativos()
+        {
+            List<Programa_Educativo> result = new List<Programa_Educativo>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.ProgramasEducativos
+                        .ToList();
                 }
             }
             catch (DbException dbException)

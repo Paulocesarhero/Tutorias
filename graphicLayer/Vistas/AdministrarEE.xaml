@@ -12,7 +12,9 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-
+    <Page.DataContext>
+        <local:AdministrarEEViewModel />
+    </Page.DataContext>
 
 
     <StackPanel>
@@ -26,7 +28,6 @@
                         Name="BtnMod"
                         Width="45"
                         Height="45"
-                        Command="{Binding BtnBuscarReporteCommand}"
                         Content="{materialDesign:PackIcon ModeEdit}"
                         ToolTip="Icon" />
 
@@ -35,9 +36,8 @@
                         Name="BtnAgregar"
                         Width="45"
                         Height="45"
-                        Command="{Binding BtnBuscarReporteCommand}"
                         Content="{materialDesign:PackIcon Add}"
-                        ToolTip="Icon" />
+                        ToolTip="Icon" Click="BtnAgregar_Click" />
                     <Separator Width="100" Height="0" />
                     <Button
                         Name="BtnEliminar"
@@ -48,13 +48,13 @@
                         Content="{materialDesign:PackIcon Delete}"
                         ToolTip="Icon" />
                 </StackPanel>
-
                 <DataGrid
                     Width="Auto"
                     Height="200"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
-                    IsSelected="True"
+                    Selector.IsSelected="True"
+                    SelectedItem="{Binding ExperienciaEducativaSelect}"
                     ItemsSource="{Binding ExperienciasObservables}">
                     <DataGrid.Columns>
                         <DataGridTextColumn

@@ -72,8 +72,6 @@ namespace graphicLayer.Vistas
                     case "Coordinadora":
                         AdministrarEE firstPageCoordinadora = new AdministrarEE();
                         CredencialesUsuario.Instance.Usuario = result;
-                        firstPageCoordinadora.FillExperiencias();
-                        firstPageCoordinadora.FillCatedraticos();
                         this.NavigationService.Navigate(firstPageCoordinadora);
                         break;
 

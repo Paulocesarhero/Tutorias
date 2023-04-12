@@ -14,17 +14,36 @@ namespace graphicLayer.Vistas
     /// </summary>
     public partial class AdministrarEE : Page
     {
-        public ObservableCollection<Experiencia_Educativa> ExperienciasObservables { get; set; } =
-            new ObservableCollection<Experiencia_Educativa>();
 
-        public ObservableCollection<Catedratico> CatedraticosDisponiblesObservables { get; set; } =
-            new ObservableCollection<Catedratico>();
         public AdministrarEE()
         {
             InitializeComponent();
-            DataContext = this;
+            AdministrarEEViewModel viewModel = new AdministrarEEViewModel();
+            viewModel.AdministrarEe = this;
+            DataContext = viewModel;
         }
 
+        
+      
+        private void BtnAgregar_Click(object sender, RoutedEventArgs e)
+        {
+             AgregarEE newPage = new AgregarEE();
+             newPage.FillData();
+             this.NavigationService.Navigate(newPage);
+        }
+    }
+
+    public class AdministrarEEViewModel
+    {
+        public AdministrarEE AdministrarEe { get; set; }
+        public Experiencia_Educativa ExperienciaEducativaSelect { get; set; }
+        public ObservableCollection<Experiencia_Educativa> ExperienciasObservables { get; set; } =
+            new ObservableCollection<Experiencia_Educativa>();
+
+        public AdministrarEEViewModel()
+        {
+            FillExperiencias();   
+        }
         public void FillExperiencias()
         {
             TutoriaManagement tutoriaManagement = new TutoriaManagement();
@@ -43,20 +62,5 @@ namespace graphicLayer.Vistas
             foreach (Experiencia_Educativa experienciaEducativa in experiencisResult) ExperienciasObservables.Add(experienciaEducativa);
         }
 
-        public void FillCatedraticos()
-        {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
-            List<Catedratico> catedraticos = new List<Catedratico>();
-            try
-            {
-                catedraticos = tutoriaManagement.GetCatedraticos();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            foreach (Catedratico catedratico in catedraticos) CatedraticosDisponiblesObservables.Add(catedratico);
-        }
     }
 }
