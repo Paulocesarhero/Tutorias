@@ -22,7 +22,7 @@ namespace graphicLayer.Vistas
     /// </summary>
     public partial class AgregarEE : Page
     {
-        private Experiencia_Educativa ExperienciaEducativaSelect { get; set; }
+        public Experiencia_Educativa ExperienciaEducativaSelect { get; set; }
         public AgregarEE()
         {
             InitializeComponent();

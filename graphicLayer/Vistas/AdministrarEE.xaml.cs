@@ -31,6 +31,29 @@ namespace graphicLayer.Vistas
              newPage.FillData();
              this.NavigationService.Navigate(newPage);
         }
+
+        private void BtnMod_Click(object sender, RoutedEventArgs e)
+        {
+            AgregarEE newPage = new AgregarEE();
+            if (DgExperiencias.SelectedItem == null)
+            {
+                MessageBox.Show("Para modificar una experiencia educativa primero debe seleccionarla de la tabla",
+                    "Seleccione una experiencia educativa",
+                    MessageBoxButton.OK);
+            }
+            else
+            {
+                newPage.ExperienciaEducativaSelect = DgExperiencias.SelectedItem as Experiencia_Educativa;
+                newPage.FillData();
+                this.NavigationService.Navigate(newPage);
+            }
+            
+        }
+
+        private void BtnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class AdministrarEEViewModel
