@@ -373,3 +373,5 @@ local.properties
 
 # Directory Build overrides for local setups
 Directory.Build.Override.props
+/MaterialDesignInXamlToolkit-master.zip
+/MaterialDesignInXamlToolkit-master/MaterialDesignInXamlToolkit-master

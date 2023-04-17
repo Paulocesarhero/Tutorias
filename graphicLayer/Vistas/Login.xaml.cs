@@ -61,7 +61,11 @@ namespace graphicLayer.Vistas
             }
             if (result != null)
             {
-                switch (result.TipoUsuario.Tipo)
+                ConsultarSolucionProblematica pgConsultarSolucion = new ConsultarSolucionProblematica();
+                CredencialesUsuario.Instance.Usuario = result;
+                this.NavigationService.Navigate(pgConsultarSolucion);                
+
+                /*switch (result.TipoUsuario.Tipo)
                 {
                     case "Jefe de carrera":
                         ReporteGeneralDeTutorias firstPageJefeDeCarrera = new ReporteGeneralDeTutorias();
@@ -84,7 +88,7 @@ namespace graphicLayer.Vistas
                         MessageBox.Show("El usuario no tiene un tipo de usuario asignado",
                             "Contacte al administrador para concederle los permisos adecuados");
                         break;
-                }
+                }*/
             }
             else
             {
