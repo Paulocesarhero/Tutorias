@@ -54,7 +54,7 @@
                 <DataGrid
                     Name="DgExperiencias"
                     Width="Auto"
-                    Height="200"
+                    Height="Auto"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     ItemsSource="{Binding ExperienciasObservables}"

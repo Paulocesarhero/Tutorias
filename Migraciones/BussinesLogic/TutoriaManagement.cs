@@ -124,6 +124,7 @@ namespace Tutorias.BussinesLogic.Management
             }
         }
 
+     
 
 
         public bool AddReporteDeTutoria(Reporte_De_Tutoria reporteDeTutoria)
@@ -208,9 +209,21 @@ namespace Tutorias.BussinesLogic.Management
 		}
 
 		public bool DeleteExperienciaEduactiva(Experiencia_Educativa experienciaEducativa)
-		{
-			throw new System.NotImplementedException();
-		}
+        {
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    context.ExperienciasEducativas.Remove(experienciaEducativa);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar la experiencia educativa", ex);
+            }
+        }
 
 		public Usuario Login(string usename, string password)
 		{
@@ -229,17 +242,13 @@ namespace Tutorias.BussinesLogic.Management
 			}
 			catch (DbException dbException)
 			{
-				throw dbException;
+				throw new Exception("Error en el login", dbException);
 			}
 			catch (InvalidOperationException invalidOperationException)
 			{
-				throw invalidOperationException;
+                throw new Exception("Error en el login", invalidOperationException);
 			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			return usuario;
+            return usuario;
 		}
 
 		public bool AddUSer(Usuario usuario)

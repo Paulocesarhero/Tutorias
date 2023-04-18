@@ -56,7 +56,7 @@ namespace graphicLayer.Vistas
             catch (Exception e)
             {
                 MessageBox.Show("Error en la conexión con la base de datos",
-                    "No hay conexión a la base de datos en estos momentos",
+                    e.Message,
                     MessageBoxButton.OKCancel);
             }
             if (result != null)

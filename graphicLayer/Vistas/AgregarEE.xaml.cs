@@ -53,7 +53,24 @@ namespace graphicLayer.Vistas
         {
             TutoriaManagement tutoriaManagement = new TutoriaManagement();
             InitExperienciaEducativa();
-            tutoriaManagement.AddExperienciaEducativa(ExperienciaEducativaSelect);
+            try
+            {
+                if (tutoriaManagement.AddExperienciaEducativa(ExperienciaEducativaSelect))
+                {
+                    MessageBox.Show("Datos guardados con exito","La base de datos ha sido actualizada",
+                        MessageBoxButton.OK);
+                    AdministrarEE administrarEe = new AdministrarEE();
+                    NavigationService.Navigate(administrarEe);
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, 
+                    "Error en la conexión con la base de datos",
+                    MessageBoxButton.OK);
+            }
+            
+            
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
@@ -128,6 +145,29 @@ namespace graphicLayer.Vistas
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OK);
             }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !AreAllValidNumericChars(e.Text);
+        }
+        private static bool AreAllValidNumericChars(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            textBox.Text = textBox.Text.ToUpper();
+            textBox.CaretIndex = textBox.Text.Length;
         }
     }
 }
