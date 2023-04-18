@@ -89,30 +89,29 @@ namespace Tutorias.BussinesLogic.Management
             {
                 try
                 {
-                    Experiencia_Educativa experienciaEducativaToAdd = new Experiencia_Educativa();
-                    Experiencia_Educativa experienciaEducativaExistente =
-                        context.ExperienciasEducativas.FirstOrDefault(x => x.Nrc == experienciaEducativa.Nrc);
-
-                    if (experienciaEducativaExistente == null)
+                    Experiencia_Educativa experienciaEducativaToAdd = new Experiencia_Educativa
                     {
-                        experienciaEducativaToAdd.Nombre = experienciaEducativa.Nombre;
-                        experienciaEducativaToAdd.Nrc = experienciaEducativa.Nrc;
-                        experienciaEducativaToAdd.ProgramaEducativo = context.ProgramasEducativos
-                            .FirstOrDefault(x => x.ProgramaEducativo == experienciaEducativa.ProgramaEducativo.ProgramaEducativo);
-                        experienciaEducativaToAdd.Academia = context.Academias
-                            .FirstOrDefault(x => x.NombreAcademia == experienciaEducativa.Academia.NombreAcademia);
-                        experienciaEducativaToAdd.Catedratico = context.Catedraticos
-                            .FirstOrDefault(x =>
-                            x.NombreCompleto == experienciaEducativa.Catedratico.NombreCompleto);
-                        
-                        context.ExperienciasEducativas.Add(experienciaEducativaToAdd);
+                        Nombre = experienciaEducativa.Nombre,
+                        Nrc = experienciaEducativa.Nrc,
+                        ProgramaEducativo = context.ProgramasEducativos
+                            .FirstOrDefault(x => x.ProgramaEducativo == experienciaEducativa.ProgramaEducativo.ProgramaEducativo),
+                        Academia = context.Academias
+                            .FirstOrDefault(x => x.NombreAcademia == experienciaEducativa.Academia.NombreAcademia),
+                        Catedratico = context.Catedraticos
+                            .FirstOrDefault(x => x.NombreCompleto == experienciaEducativa.Catedratico.NombreCompleto)
+                    };
+
+                    if (context.ExperienciasEducativas.Any(x => x.Nrc == experienciaEducativa.Nrc))
+                    {
+                        context.ExperienciasEducativas.Update(experienciaEducativaToAdd);
                     }
                     else
                     {
-                        context.ExperienciasEducativas.Update(experienciaEducativa);
+                        context.ExperienciasEducativas.Add(experienciaEducativaToAdd);
                     }
 
-                    return context.SaveChanges() > 0;
+                    context.SaveChanges();
+                    return true;
                 }
                 catch (DbUpdateException ex)
                 {
