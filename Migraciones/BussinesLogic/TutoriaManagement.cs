@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI.Common;
 using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Interface;
 using Tutorias.Service.DatabaseContext;
@@ -82,40 +83,51 @@ namespace Tutorias.BussinesLogic.Management
 			return status;
 		}
 
-		public bool AddExperienciaEducativa(Experiencia_Educativa experienciaEducativa)
-		{
-			bool status;
-			using (TutoriasContext context = new TutoriasContext())
-			{
-				try
-				{
-					context.ExperienciasEducativas.Add(experienciaEducativa);
-					context.SaveChanges();
-					status = true;
-				}
-				catch (DbUpdateException dbUpdateException)
-				{
-					throw dbUpdateException;
-				}
-				catch (InvalidOperationException invalidOperationException)
-				{
-					throw invalidOperationException;
-				}
-				catch (Exception exception)
-				{
-					throw exception;
-				}
-			}
-			return status;
-		}
+        public bool AddExperienciaEducativa(Experiencia_Educativa experienciaEducativa)
+        {
+            using (TutoriasContext context = new TutoriasContext())
+            {
+                try
+                {
+                    Experiencia_Educativa experienciaEducativaToAdd = new Experiencia_Educativa();
+                    Experiencia_Educativa experienciaEducativaExistente =
+                        context.ExperienciasEducativas.FirstOrDefault(x => x.Nrc == experienciaEducativa.Nrc);
 
-		public bool AddProblematica(Problematica problematica, Experiencia_Educativa experienciaEducatica,
-			Reporte_De_Tutoria reporteDeTutoria)
-		{
-			throw new System.NotImplementedException();
-		}
+                    if (experienciaEducativaExistente == null)
+                    {
+                        experienciaEducativaToAdd.Nombre = experienciaEducativa.Nombre;
+                        experienciaEducativaToAdd.Nrc = experienciaEducativa.Nrc;
+                        experienciaEducativaToAdd.ProgramaEducativo = context.ProgramasEducativos
+                            .FirstOrDefault(x => x.ProgramaEducativo == experienciaEducativa.ProgramaEducativo.ProgramaEducativo);
+                        experienciaEducativaToAdd.Academia = context.Academias
+                            .FirstOrDefault(x => x.NombreAcademia == experienciaEducativa.Academia.NombreAcademia);
+                        experienciaEducativaToAdd.Catedratico = context.Catedraticos
+                            .FirstOrDefault(x =>
+                            x.NombreCompleto == experienciaEducativa.Catedratico.NombreCompleto);
+                        
+                        context.ExperienciasEducativas.Add(experienciaEducativaToAdd);
+                    }
+                    else
+                    {
+                        context.ExperienciasEducativas.Update(experienciaEducativa);
+                    }
 
-		public bool AddReporteDeTutoria(Reporte_De_Tutoria reporteDeTutoria)
+                    return context.SaveChanges() > 0;
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw new Exception("Error al actualizar la experiencia educativa", ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new Exception("Error al actualizar la experiencia educativa", ex);
+                }
+            }
+        }
+
+
+
+        public bool AddReporteDeTutoria(Reporte_De_Tutoria reporteDeTutoria)
 		{
 			bool status;
 			using (TutoriasContext context = new TutoriasContext())

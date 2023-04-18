@@ -12,7 +12,6 @@ namespace Tutorias.BussinesLogic.Interface
 		bool AddTutorAcademico(Tutor_Academico tutorAcademico);
 		bool AddEstudiante(Estudiante estudiante);
 		bool AddExperienciaEducativa(Experiencia_Educativa experienciaEducativa);
-		bool AddProblematica(Problematica problematica, Experiencia_Educativa experienciaEducatica, Reporte_De_Tutoria reporteDeTutoria);
 		bool AddReporteDeTutoria(Reporte_De_Tutoria reporteDeTutoria);
 
 		bool AddPeriodoEscolar(Periodo_Escolar periodoEscolar);

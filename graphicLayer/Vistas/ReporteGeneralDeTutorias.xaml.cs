@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -154,6 +155,7 @@ namespace graphicLayer.Vistas
                     MessageBoxButton.OKCancel);
             }
 
+            periodosEscolares.FirstOrDefault().FechaDeInicio.GetDateTimeFormats();
             PeriodosEscolaresObservableCollection = new ObservableCollection<Periodo_Escolar>(periodosEscolares);
         }
     }
