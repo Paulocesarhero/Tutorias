@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "Migraciones\DataAccess.csproj", "{39DB0F6D-A673-4A7B-9CDD-F4B7FA93DD58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "graphicLayer", "graphicLayer\graphicLayer.csproj", "{B3E497C2-AA4C-42DC-AF81-F5BA054552B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "graphicLayer", "graphicLayer\graphicLayer.csproj", "{B3E497C2-AA4C-42DC-AF81-F5BA054552B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{D6B15AA1-735A-47DA-8990-AA211862A160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B3E497C2-AA4C-42DC-AF81-F5BA054552B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3E497C2-AA4C-42DC-AF81-F5BA054552B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3E497C2-AA4C-42DC-AF81-F5BA054552B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B15AA1-735A-47DA-8990-AA211862A160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B15AA1-735A-47DA-8990-AA211862A160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B15AA1-735A-47DA-8990-AA211862A160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B15AA1-735A-47DA-8990-AA211862A160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
