@@ -28,7 +28,8 @@ namespace Tutorias.Service.DatabaseContext
                                      
                                     "database=database;" +
                                     "user=user;" +
-                                    "password=password");
+                                    "password=password")
+                        .EnableSensitiveDataLogging();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,10 +44,13 @@ namespace Tutorias.Service.DatabaseContext
                 entity.HasOne(e => e.Catedratico).WithMany(e => e.ExperienciasEducativas);
                 entity.HasMany(e => e.Problematicas).WithOne(p => p.ExperienciaEducativa);
                 entity.HasOne(e => e.Academia).WithMany(a => a.ExperienciaEducativas );
+                entity.HasOne(e => e.ProgramaEducativo).WithMany(p => p.ExperienciaEducativas);
             });
             modelBuilder.Entity<Programa_Educativo>(entity =>
             {
-                entity.HasKey(e => e.ProgramaEducativo);
+                entity.HasKey(e => e.Id);
+                entity.HasMany(e => e.ExperienciaEducativas).WithOne(p => p.ProgramaEducativo);
+                entity.HasMany(u => u.Usuarios).WithOne(u => u.ProgramaEducativo);
             });
             modelBuilder.Entity<Academia>(entity =>
             {
@@ -110,7 +114,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.Username).IsRequired();
                 entity.HasOne(e => e.TipoUsuario);
-                entity.HasOne(e => e.ProgramaEducativo);
+                entity.HasOne(e => e.ProgramaEducativo).WithMany(p => p.Usuarios);
 
             });
             modelBuilder.Entity<TipoUsuario>(entity =>
@@ -213,9 +217,15 @@ namespace Tutorias.Service.DatabaseContext
         public Programa_Educativo()
         {
             this.ProgramaEducativo = ProgramaEducativo;
+            this.Id = Id;
         }
+        public int? Id {get; set; }
 
         public string ProgramaEducativo { get; set; }
+
+        public virtual ICollection<Experiencia_Educativa> ExperienciaEducativas { get; set; }
+
+        public virtual ICollection<Usuario> Usuarios {get; set; }
     }
 
     public class Problematica

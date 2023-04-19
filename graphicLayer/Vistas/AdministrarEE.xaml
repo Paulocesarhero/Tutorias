@@ -28,6 +28,7 @@
                         Name="BtnMod"
                         Width="45"
                         Height="45"
+                        Click="BtnMod_Click"
                         Content="{materialDesign:PackIcon ModeEdit}"
                         ToolTip="Icon" />
 
@@ -36,26 +37,29 @@
                         Name="BtnAgregar"
                         Width="45"
                         Height="45"
+                        Click="BtnAgregar_Click"
                         Content="{materialDesign:PackIcon Add}"
-                        ToolTip="Icon" Click="BtnAgregar_Click" />
+                        ToolTip="Icon" />
                     <Separator Width="100" Height="0" />
                     <Button
                         Name="BtnEliminar"
                         Width="45"
                         Height="45"
                         Background="Red"
+                        Click="BtnEliminar_Click"
                         Command="{Binding BtnBuscarReporteCommand}"
                         Content="{materialDesign:PackIcon Delete}"
                         ToolTip="Icon" />
                 </StackPanel>
                 <DataGrid
+                    Name="DgExperiencias"
                     Width="Auto"
-                    Height="200"
+                    Height="Auto"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
-                    Selector.IsSelected="True"
+                    ItemsSource="{Binding ExperienciasObservables}"
                     SelectedItem="{Binding ExperienciaEducativaSelect}"
-                    ItemsSource="{Binding ExperienciasObservables}">
+                    Selector.IsSelected="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Binding="{Binding Nrc}"
