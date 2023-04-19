@@ -1,4 +1,5 @@
-﻿using graphicLayer.Vistas;
+﻿using ControlzEx.Standard;
+using graphicLayer.Vistas;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +19,28 @@ namespace graphicLayer.Controles
 
         private void BtnAdministrarEE_Click(object sender, RoutedEventArgs e)
         {
+           
+        }
+
+        private void BtnAdministrarTutoresAcademicos_Click(object sender, RoutedEventArgs e)
+        {
+            AdministrarTutorAcademico administrarTutor = new AdministrarTutorAcademico();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(administrarTutor);
+        }
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
             Login login = new Login();
             Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
             pg.NavigationService.Navigate(login);
         }
+        private void BtnExperiencias_Click(object sender, RoutedEventArgs e)
+        {
+            AdministrarEE administrarEe = new AdministrarEE();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(administrarEe);
 
+        }
         /// <summary>
 
         /// Walk visual tree to find the first DependencyObject  of the specific type.
@@ -52,5 +70,7 @@ namespace graphicLayer.Controles
 
             return parent;
         }
+
+        
     }
 }

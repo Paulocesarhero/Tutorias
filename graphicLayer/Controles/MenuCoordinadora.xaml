@@ -12,15 +12,21 @@
     <Grid>
         <Menu materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
             <MenuItem
-                Name="BtnAdministrarEE"
-                Click="BtnAdministrarEE_Click"
-                Header="Experiencias educativas" />
+                Name="BtnExit"
+                Click="BtnExit_Click"
+                Header="Salir" />
             <MenuItem
                 Name="BtnAdministrarEstudiante"
                 Header="Estudiantes" />
             <MenuItem
+            Name="BtnExperiencias"
+            Header="Experiencias" Click="BtnExperiencias_Click" />
+            <MenuItem
                 Name="BtnAdministrarFechasdesesión"
                 Header="Fechas de sesión de tutoria academica" />
+            <MenuItem
+                Name="BtnAdministrarTutoresAcademicos"
+                Header="Tutores academicos" Click="BtnAdministrarTutoresAcademicos_Click" />
         </Menu>
     </Grid>
 </UserControl>

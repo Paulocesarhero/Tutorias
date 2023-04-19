@@ -18,11 +18,11 @@ using Tutorias.Service.DatabaseContext;
 namespace graphicLayer.Vistas
 {
     /// <summary>
-    /// Lógica de interacción para AdministrarTutorAcademico.xaml
+    /// Lógica de interacción para DetallesTutorAcademico.xaml
     /// </summary>
-    public partial class AdministrarTutorAcademico : Page
+    public partial class DetallesTutorAcademico : Page
     {
-        public AdministrarTutorAcademico()
+        public DetallesTutorAcademico()
         {
             InitializeComponent();
         }
@@ -41,11 +41,16 @@ namespace graphicLayer.Vistas
         {
             throw new NotImplementedException();
         }
-    }
-    public class AdministrarTutorAcademicoViewModel
-    {
-        public ObservableCollection<Tutor_Academico> TutorAcademicosObservables { get; set; } =
-            new ObservableCollection<Tutor_Academico>();
 
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DetallesTutorAcademicoViewModel
+    {
+        public ObservableCollection<Estudiante> EstudiantesObservables { get; set; } =
+            new ObservableCollection<Estudiante>();
     }
 }
