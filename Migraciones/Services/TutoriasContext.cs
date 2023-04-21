@@ -107,6 +107,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Apellidos).IsRequired();
                 entity.HasOne(e => e.Usuario);
                 entity.HasMany(e => e.ReportesDeTutorias).WithOne(p => p.TutorAcademico);
+                entity.HasMany(tutor => tutor.Estudiantes).WithOne(estudiante => estudiante.TutorAcademico);
             });
             modelBuilder.Entity<Usuario>(entity =>
             {
@@ -128,7 +129,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Nombres).IsRequired();
                 entity.Property(e => e.Matricula).IsRequired();
                 entity.Property(e => e.Apellidos).IsRequired();
-                entity.HasOne(e => e.TutorAcademico);
+                entity.HasOne(e => e.TutorAcademico).WithMany(tutor => tutor.Estudiantes).HasForeignKey(e => e.IdTutorAcademico);
                 entity.HasMany(e => e.Asistencias).WithOne(p => p.Estudiante);
             });
             modelBuilder.Entity<Asistencia>(entity =>
@@ -373,6 +374,8 @@ namespace Tutorias.Service.DatabaseContext
         public string Apellidos { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual ICollection<Reporte_De_Tutoria> ReportesDeTutorias { get; set; }
+
+        public virtual ICollection<Estudiante> Estudiantes { get; set; }
     }
 
     public class Usuario
@@ -432,6 +435,8 @@ namespace Tutorias.Service.DatabaseContext
         public string Matricula { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+
+        public int? IdTutorAcademico { get; set; }
         public virtual Tutor_Academico TutorAcademico { get; set; }
 
         public virtual ICollection<Asistencia> Asistencias { get; set; }
