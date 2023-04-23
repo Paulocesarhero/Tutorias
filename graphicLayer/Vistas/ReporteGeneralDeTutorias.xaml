@@ -92,12 +92,13 @@
                         IsReadOnly="True" />
                     <DataGridTextColumn Binding="{Binding Solucion.Titulo}" Header="Solucion" />
                 </DataGrid.Columns>
-
             </DataGrid>
+
+
             <Button
                 Content="Datos problematica"
                 Style="{StaticResource MaterialDesignPaperDarkButton}"
-                ToolTip="Resource name: MaterialDesignPaperDarkButton" />
+                ToolTip="Resource name: MaterialDesignPaperDarkButton"  />
             <TextBlock
                 FontSize="32"
                 Style="{StaticResource MaterialDesignHeadline3TextBlock}"

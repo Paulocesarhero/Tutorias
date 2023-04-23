@@ -61,7 +61,7 @@ namespace graphicLayer.Vistas
             }
             if (result != null)
             {
-                ConsultarSolucionProblematica pgConsultarSolucion = new ConsultarSolucionProblematica();
+                AsignarTutorAEstudiante pgConsultarSolucion = new AsignarTutorAEstudiante();
                 CredencialesUsuario.Instance.Usuario = result;
                 this.NavigationService.Navigate(pgConsultarSolucion);                
 
