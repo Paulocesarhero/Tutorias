@@ -37,7 +37,7 @@ namespace graphicLayer.Vistas
         public void fillTable()
         {
             TutoriaManagement tutoriaManagement = new TutoriaManagement();
-            DgEstudiantes.ItemsSource = tutoriaManagement.GetEstudiantesWithoutTutorAcademico();
+            //DgEstudiantes.ItemsSource = tutoriaManagement.GetEstudiantesWithoutTutorAcademico();
         }
 
     }
