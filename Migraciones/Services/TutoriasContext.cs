@@ -20,13 +20,16 @@ namespace Tutorias.Service.DatabaseContext
 
         public DbSet<Fecha_De_Tutoria> FechasDeTutorias { get; set; }
 
+        public DbSet<Academia> Academias { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySQL("server=localhost;" +
                                      
                                     "database=database;" +
                                     "user=user;" +
-                                    "password=password");
+                                    "password=password")
+                        .EnableSensitiveDataLogging();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,10 +44,13 @@ namespace Tutorias.Service.DatabaseContext
                 entity.HasOne(e => e.Catedratico).WithMany(e => e.ExperienciasEducativas);
                 entity.HasMany(e => e.Problematicas).WithOne(p => p.ExperienciaEducativa);
                 entity.HasOne(e => e.Academia).WithMany(a => a.ExperienciaEducativas );
+                entity.HasOne(e => e.ProgramaEducativo).WithMany(p => p.ExperienciaEducativas);
             });
             modelBuilder.Entity<Programa_Educativo>(entity =>
             {
-                entity.HasKey(e => e.ProgramaEducativo);
+                entity.HasKey(e => e.Id);
+                entity.HasMany(e => e.ExperienciaEducativas).WithOne(p => p.ProgramaEducativo);
+                entity.HasMany(u => u.Usuarios).WithOne(u => u.ProgramaEducativo);
             });
             modelBuilder.Entity<Academia>(entity =>
             {
@@ -101,6 +107,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Apellidos).IsRequired();
                 entity.HasOne(e => e.Usuario);
                 entity.HasMany(e => e.ReportesDeTutorias).WithOne(p => p.TutorAcademico);
+                entity.HasMany(tutor => tutor.Estudiantes).WithOne(estudiante => estudiante.TutorAcademico);
             });
             modelBuilder.Entity<Usuario>(entity =>
             {
@@ -108,7 +115,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.Username).IsRequired();
                 entity.HasOne(e => e.TipoUsuario);
-                entity.HasOne(e => e.ProgramaEducativo);
+                entity.HasOne(e => e.ProgramaEducativo).WithMany(p => p.Usuarios);
 
             });
             modelBuilder.Entity<TipoUsuario>(entity =>
@@ -122,7 +129,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Nombres).IsRequired();
                 entity.Property(e => e.Matricula).IsRequired();
                 entity.Property(e => e.Apellidos).IsRequired();
-                entity.HasOne(e => e.TutorAcademico);
+                entity.HasOne(e => e.TutorAcademico).WithMany(tutor => tutor.Estudiantes).HasForeignKey(e => e.IdTutorAcademico);
                 entity.HasMany(e => e.Asistencias).WithOne(p => p.Estudiante);
             });
             modelBuilder.Entity<Asistencia>(entity =>
@@ -211,9 +218,15 @@ namespace Tutorias.Service.DatabaseContext
         public Programa_Educativo()
         {
             this.ProgramaEducativo = ProgramaEducativo;
+            this.Id = Id;
         }
+        public int? Id {get; set; }
 
         public string ProgramaEducativo { get; set; }
+
+        public virtual ICollection<Experiencia_Educativa> ExperienciaEducativas { get; set; }
+
+        public virtual ICollection<Usuario> Usuarios {get; set; }
     }
 
     public class Problematica
@@ -257,6 +270,16 @@ namespace Tutorias.Service.DatabaseContext
             this.Fecha = fecha;
             this.Descripcion = descripcion;
         }
+
+        public Solucion()
+        {
+            Id = Id;
+            Titulo = Titulo;
+            Fecha = Fecha;
+            Descripcion = Descripcion;
+            Problematica = Problematica;
+        }
+
 
         public int Id { get; set; }
         public string Titulo { get; set; }
@@ -351,6 +374,8 @@ namespace Tutorias.Service.DatabaseContext
         public string Apellidos { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual ICollection<Reporte_De_Tutoria> ReportesDeTutorias { get; set; }
+
+        public virtual ICollection<Estudiante> Estudiantes { get; set; }
     }
 
     public class Usuario
@@ -410,6 +435,8 @@ namespace Tutorias.Service.DatabaseContext
         public string Matricula { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+
+        public int? IdTutorAcademico { get; set; }
         public virtual Tutor_Academico TutorAcademico { get; set; }
 
         public virtual ICollection<Asistencia> Asistencias { get; set; }

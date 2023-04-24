@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,7 +19,10 @@ namespace graphicLayer.Vistas
         public ReporteGeneralDeTutorias()
         {
             InitializeComponent();
-            DataContext = new ReporteGeneralViewModel();
+            ReporteGeneralViewModel dataContext = new ReporteGeneralViewModel();
+            dataContext.ReporteGeneral = this;
+            DataContext = dataContext;
+            
         }
     }
 
@@ -47,17 +51,52 @@ namespace graphicLayer.Vistas
 
         public ICommand BtnBuscarReporteCommand { get; }
 
+        public ICommand BtnDatosProblematica { get; }
+
         public int NumTutoriaSeleccionada { get; set; }
 
-        public Problematica ProblematicaSeleccionada { get; set; } = new Problematica();
+        public Problematica ProblematicaSeleccionada { get; set; }
 
         public Periodo_Escolar PeriodoEscolarSeleccionado { get; set; }
+
+        public ReporteGeneralDeTutorias ReporteGeneral { get; set; }
+
 
         public ReporteGeneralViewModel()
         {
             SelectProblematicaCommand = new RelayCommand<Problematica>(SelectProblematicaAction);
             BtnBuscarReporteCommand = new RelayCommand(ExecuteBuscarReporte);
+            BtnDatosProblematica = new RelayCommand(ExecuteDatosProblematica);
             FillPeriodosEscolares();
+        }
+
+        private void ExecuteDatosProblematica()
+        {
+            SolucionAProblematicaAcademica newWindow = new SolucionAProblematicaAcademica();
+            if (ProblematicaSeleccionada != null)
+            {
+                newWindow.TbDescripcion.Text = ProblematicaSeleccionada.Descripcion;
+                newWindow.TbExperienciaEducativa.Text = ProblematicaSeleccionada.ExperienciaEducativa.Nombre + " Nrc: " + ProblematicaSeleccionada.ExperienciaEducativa.Nrc;
+                newWindow.TbNumeroDeEstudiantes.Text = ProblematicaSeleccionada.NumAlumnos.ToString();
+                newWindow.TbProfesor.Text = ProblematicaSeleccionada.ExperienciaEducativa.Catedratico.NombreCompleto;
+                newWindow._Problematica = ProblematicaSeleccionada;
+                newWindow.TbFecha.Text = DateTime.Now.ToString();
+                if (ProblematicaSeleccionada.Solucion != null)
+                {
+                    newWindow.TbTitulo.Text = ProblematicaSeleccionada.Solucion.Titulo;
+                    newWindow.TbDescripcionSolucion.Text = ProblematicaSeleccionada.Solucion.Descripcion;
+                }
+                
+                ReporteGeneral.NavigationService.Navigate(newWindow); 
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Para poder ver los datos de la problematica primero tienes que seleccionar una problematica",
+                    "Seleccione una problematica primero",
+                    MessageBoxButton.OK);
+            }
+           
         }
 
         private void ExecuteBuscarReporte()
@@ -116,6 +155,7 @@ namespace graphicLayer.Vistas
                     MessageBoxButton.OKCancel);
             }
 
+            periodosEscolares.FirstOrDefault().FechaDeInicio.GetDateTimeFormats();
             PeriodosEscolaresObservableCollection = new ObservableCollection<Periodo_Escolar>(periodosEscolares);
         }
     }

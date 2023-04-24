@@ -17,9 +17,7 @@
 
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-        </Grid.RowDefinitions>
+       
         <StackPanel Margin="15,15,15,15">
             <StackPanel Orientation="Horizontal">
                 <ComboBox
@@ -33,9 +31,9 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontWeight="Bold" Text="Inicio: " />
-                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio}" />
+                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio, StringFormat='MMM/yyyy'}" />
                                 <TextBlock FontWeight="Bold" Text=" Fin: " />
-                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin}" />
+                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin, StringFormat='MMM/yyyy'}" />
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -69,10 +67,9 @@
                 Height="201"
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
+                IsSelected="True"
                 ItemsSource="{Binding ProblematicasObservableCollection}"
-                SelectedItem="{Binding ProblematicaSeleccionada}"
-                SelectionMode="Extended"
-                SelectionUnit="Cell">
+                SelectedItem="{Binding ProblematicaSeleccionada}">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Binding="{Binding Descripcion}"
@@ -96,20 +93,12 @@
 
 
             <Button
+                Command="{Binding BtnDatosProblematica}"
                 Content="Datos problematica"
                 Style="{StaticResource MaterialDesignPaperDarkButton}"
-                ToolTip="Resource name: MaterialDesignPaperDarkButton"  />
-            <TextBlock
-                FontSize="32"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-                Text="Reporte de tutoria" />
-            <materialDesign:Card
-                Width="638"
-                Height="134"
-                Padding="8"
-                Background="{DynamicResource PrimaryHueDarkBrush}"
-                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                UniformCornerRadius="6">
+                ToolTip="Resource name: MaterialDesignPaperDarkButton" />
+            <Separator Width="0" Height="20" />
+            <GroupBox Padding="8" Header="Reporte de tutoria">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -120,7 +109,9 @@
                         <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
                     </StackPanel>
                 </StackPanel>
-            </materialDesign:Card>
+            </GroupBox>
         </StackPanel>
     </Grid>
+
+
 </Page>

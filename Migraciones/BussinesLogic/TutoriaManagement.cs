@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI.Common;
 using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Interface;
 using Tutorias.Service.DatabaseContext;
@@ -81,40 +83,51 @@ namespace Tutorias.BussinesLogic.Management
 			return status;
 		}
 
-		public bool AddExperienciaEducativa(Experiencia_Educativa experienciaEducativa)
-		{
-			bool status;
-			using (TutoriasContext context = new TutoriasContext())
-			{
-				try
-				{
-					context.ExperienciasEducativas.Add(experienciaEducativa);
-					context.SaveChanges();
-					status = true;
-				}
-				catch (DbUpdateException dbUpdateException)
-				{
-					throw dbUpdateException;
-				}
-				catch (InvalidOperationException invalidOperationException)
-				{
-					throw invalidOperationException;
-				}
-				catch (Exception exception)
-				{
-					throw exception;
-				}
-			}
-			return status;
-		}
+        public bool AddExperienciaEducativa(Experiencia_Educativa experienciaEducativa)
+        {
+            using (TutoriasContext context = new TutoriasContext())
+            {
+                try
+                {
+                    Experiencia_Educativa experienciaEducativaToAdd = new Experiencia_Educativa
+                    {
+                        Nombre = experienciaEducativa.Nombre,
+                        Nrc = experienciaEducativa.Nrc,
+                        ProgramaEducativo = context.ProgramasEducativos
+                            .FirstOrDefault(x => x.ProgramaEducativo == experienciaEducativa.ProgramaEducativo.ProgramaEducativo),
+                        Academia = context.Academias
+                            .FirstOrDefault(x => x.NombreAcademia == experienciaEducativa.Academia.NombreAcademia),
+                        Catedratico = context.Catedraticos
+                            .FirstOrDefault(x => x.NombreCompleto == experienciaEducativa.Catedratico.NombreCompleto)
+                    };
 
-		public bool AddProblematica(Problematica problematica, Experiencia_Educativa experienciaEducatica,
-			Reporte_De_Tutoria reporteDeTutoria)
-		{
-			throw new System.NotImplementedException();
-		}
+                    if (context.ExperienciasEducativas.Any(x => x.Nrc == experienciaEducativa.Nrc))
+                    {
+                        context.ExperienciasEducativas.Update(experienciaEducativaToAdd);
+                    }
+                    else
+                    {
+                        context.ExperienciasEducativas.Add(experienciaEducativaToAdd);
+                    }
 
-		public bool AddReporteDeTutoria(Reporte_De_Tutoria reporteDeTutoria)
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw new Exception("Error al actualizar la experiencia educativa", ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new Exception("Error al actualizar la experiencia educativa", ex);
+                }
+            }
+        }
+
+     
+
+
+        public bool AddReporteDeTutoria(Reporte_De_Tutoria reporteDeTutoria)
 		{
 			bool status;
 			using (TutoriasContext context = new TutoriasContext())
@@ -196,9 +209,21 @@ namespace Tutorias.BussinesLogic.Management
 		}
 
 		public bool DeleteExperienciaEduactiva(Experiencia_Educativa experienciaEducativa)
-		{
-			throw new System.NotImplementedException();
-		}
+        {
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    context.ExperienciasEducativas.Remove(experienciaEducativa);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar la experiencia educativa", ex);
+            }
+        }
 
 		public Usuario Login(string usename, string password)
 		{
@@ -217,17 +242,13 @@ namespace Tutorias.BussinesLogic.Management
 			}
 			catch (DbException dbException)
 			{
-				throw dbException;
+				throw new Exception("Error en el login", dbException);
 			}
 			catch (InvalidOperationException invalidOperationException)
 			{
-				throw invalidOperationException;
+                throw new Exception("Error en el login", invalidOperationException);
 			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			return usuario;
+            return usuario;
 		}
 
 		public bool AddUSer(Usuario usuario)
@@ -332,8 +353,11 @@ namespace Tutorias.BussinesLogic.Management
 					problematicasResult = context.Problematicas
 						.Where(x => x.ReporteDeTutoria.FechaDeTutoria.PeriodoEscolar == periodoEscolarSeleccionado
 						            && x.ReporteDeTutoria.FechaDeTutoria.NumDeTutoria == numDeSesion)
-						.Include(c => c.ExperienciaEducativa).ThenInclude(e => e.Catedratico)
-						.Include(c => c.ReporteDeTutoria)
+						.Include(c => c.ExperienciaEducativa)
+                            .ThenInclude(e => e.Catedratico)
+                        .Include(e => e.ExperienciaEducativa)
+                            .ThenInclude(c => c.Academia)
+                        .Include(c => c.ReporteDeTutoria)
 						.Include(c => c.Solucion)
 						.ToList();
 				}
@@ -421,6 +445,7 @@ namespace Tutorias.BussinesLogic.Management
 					result = context.ExperienciasEducativas
 						.Include(c => c.Catedratico)
 						.Include(c => c.ProgramaEducativo)
+                        .Include(e=> e.Academia)
 						.ToList();
 				}
 			}
@@ -465,5 +490,96 @@ namespace Tutorias.BussinesLogic.Management
 			}
 			return result;
 		}
-	}
+
+        public bool AddSolucion(Solucion solucionProblematica)
+        {
+            bool result = false;
+            Solucion findSol = new Solucion();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    findSol = context.Soluciones.FirstOrDefault(x => x.Id == solucionProblematica.Id);
+                    if (findSol == null)
+                    {
+                        context.Soluciones.Update(solucionProblematica);
+                    }
+                    else
+                    {
+                        context.Entry(findSol).CurrentValues.SetValues(solucionProblematica);
+                    }
+
+                    if (context.SaveChanges() > 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Academia> GetAcademias()
+        {
+            List<Academia> result = new List<Academia>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.Academias
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Programa_Educativo> GetProgramasEducativos()
+        {
+            List<Programa_Educativo> result = new List<Programa_Educativo>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.ProgramasEducativos
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+    }
 }
