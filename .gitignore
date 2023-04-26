@@ -6,7 +6,8 @@
 .nuspec/
 .buildtasks/
 templatesTest/
-
+.vscode 
+.vscode/*
 # User-specific files
 *.rsuser
 *.suo
