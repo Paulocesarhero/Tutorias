@@ -3,6 +3,8 @@
 ##
 ## Archivos a ignorar, basado en .gitignore recomendado por Microsoft en tecnologias MAUI
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+appsettings.json
+*/appsettings.json
 .nuspec/
 .buildtasks/
 templatesTest/

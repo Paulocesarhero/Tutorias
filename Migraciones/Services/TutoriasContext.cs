@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Pomelo.EntityFrameworkCore.MySql;
 namespace Tutorias.Service.DatabaseContext
 {
     public class TutoriasContext : DbContext
     {
+        static readonly string connectionString = "";
         public DbSet<Catedratico> Catedraticos { get; set; }
         public DbSet<Experiencia_Educativa> ExperienciasEducativas { get; set; }
         public DbSet<Programa_Educativo> ProgramasEducativos { get; set; }
@@ -24,12 +25,8 @@ namespace Tutorias.Service.DatabaseContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;" +
-                                     
-                                    "database=database;" +
-                                    "user=user;" +
-                                    "password=password")
-                        .EnableSensitiveDataLogging();
+             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
