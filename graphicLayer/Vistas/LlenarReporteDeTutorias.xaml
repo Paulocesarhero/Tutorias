@@ -11,6 +11,10 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <Page.DataContext>
+        <local:LlenarReporteDeTutoriasViewModel />
+    </Page.DataContext>
+
 
     <StackPanel Margin="15">
         <StackPanel Orientation="Horizontal">
@@ -59,26 +63,17 @@
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     IsSelected="True"
-                    ItemsSource="{Binding ProblematicasObservableCollection}"
+                    ItemsSource="{Binding AsistenciaObservable}"
                     SelectedItem="{Binding ProblematicaSeleccionada}">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Binding="{Binding Descripcion}"
-                            Header="Descripción"
-                            IsReadOnly="True" />
-                        <DataGridTextColumn
-                            Binding="{Binding ExperienciaEducativa.Nombre}"
-                            Header="Experiencia educativa"
-                            IsReadOnly="True" />
-                        <DataGridTextColumn
                             Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
-                            Header="Profesor"
+                            Header="Estudiante"
                             IsReadOnly="True" />
                         <DataGridTextColumn
                             Binding="{Binding NumAlumnos}"
-                            Header="Alumnos afectados"
-                            IsReadOnly="True" />
-                        <DataGridTextColumn Binding="{Binding Solucion.Titulo}" Header="Solucion" />
+                            Header="Asistencia"
+                            IsReadOnly="False" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
