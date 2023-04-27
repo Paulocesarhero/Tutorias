@@ -17,9 +17,7 @@
 
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-        </Grid.RowDefinitions>
+       
         <StackPanel Margin="15,15,15,15">
             <StackPanel Orientation="Horizontal">
                 <ComboBox

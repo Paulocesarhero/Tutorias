@@ -1,13 +1,94 @@
-﻿<Page x:Class="graphicLayer.Vistas.LlenarReporteDeTutorias"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:graphicLayer.Vistas"
-      mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="LlenarReporteDeTutorias">
+﻿<Page
+    x:Class="graphicLayer.Vistas.LlenarReporteDeTutorias"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:graphicLayer.Vistas"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="LlenarReporteDeTutorias"
+    d:Background="White"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <local:LlenarReporteDeTutoriasViewModel />
+    </Page.DataContext>
 
-    <Grid>
-    </Grid>
+
+    <StackPanel Margin="15">
+        <StackPanel Orientation="Horizontal">
+            <ComboBox
+                Name="CbPeriodoEscolar"
+                Width="391"
+                materialDesign:HintAssist.Hint="Periodo escolar"
+                ItemsSource="{Binding PeriodosEscolaresObservableCollection}"
+                SelectedItem="{Binding PeriodoEscolarSeleccionado}"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontWeight="Bold" Text="Inicio: " />
+                            <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio, StringFormat='MMM/yyyy'}" />
+                            <TextBlock FontWeight="Bold" Text=" Fin: " />
+                            <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin, StringFormat='MMM/yyyy'}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Separator Width="100" Height="0" />
+            <ComboBox
+                Name="CbSesionDeTutoria"
+                Width="200"
+                materialDesign:HintAssist.Hint="Sesión de tutoria academica"
+                SelectedIndex="{Binding NumTutoriaSeleccionada}"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <ComboBoxItem Content="Primera sesión" />
+                <ComboBoxItem Content="Segunda sesión" />
+                <ComboBoxItem Content="Tercera sesión" />
+            </ComboBox>
+            <Separator Width="20" Height="0" />
+            <Button
+                Name="BtnBuscarReporte"
+                Command="{Binding BtnBuscarReporteCommand}"
+                Content="{materialDesign:PackIcon BookSearch}"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                ToolTip="Icon" />
+        </StackPanel>
+        <GroupBox Name="GbReporteDeTutoria" Header="Fecha de hoy 20/04/2023 Fecha de cierre 25/04/2023 ">
+            <StackPanel Orientation="Horizontal">
+                <DataGrid
+                    Width="774"
+                    Height="201"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    IsSelected="True"
+                    ItemsSource="{Binding AsistenciaObservable}"
+                    SelectedItem="{Binding ProblematicaSeleccionada}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
+                            Header="Estudiante"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding NumAlumnos}"
+                            Header="Asistencia"
+                            IsReadOnly="False" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+        </GroupBox>
+        <TextBox
+            Margin="40"
+            VerticalAlignment="Top"
+            materialDesign:HintAssist.Hint="Comentarios generales"
+            AcceptsReturn="True"
+            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto" />
+        <StackPanel Orientation="Horizontal" />
+
+    </StackPanel>
 </Page>

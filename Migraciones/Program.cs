@@ -29,6 +29,10 @@ static bool InsertData()
         AddCoordinadora();
         addExperienciaEducativa();
         addProblematica1();
+        addEstudiante();
+
+        
+
         flag = true;
     }
     catch (Exception e)
@@ -364,4 +368,17 @@ static bool addProblematica1()
     }
 
     return flag;
+}
+
+static void addEstudiante()
+{
+    TutoriaManagement tutoriaManagement = new TutoriaManagement();
+    Estudiante estudiante = new Estudiante
+    {
+        Nombres = "Paulo Cesar",
+        Apellidos = "Hernandez Rosado",
+        Matricula = "S20020854"
+
+    };
+    tutoriaManagement.AddEstudiante(estudiante);
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DataAccess.BussinesLogic.EntityRepository;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -101,18 +102,19 @@ namespace graphicLayer.Vistas
 
         private void ExecuteBuscarReporte()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            ProblematicaRepository problematicaRepository = new ProblematicaRepository(new TutoriasContext());
+            AsistenciaRepository asistenciaRepository = new AsistenciaRepository(new TutoriasContext());
             List<Problematica> problematicas = new List<Problematica>();
             int totalAsistencias = 0;
             try
             {
-                problematicas = tutoriaManagement.FindProblematicasAcademicas(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
-                totalAsistencias =
-                    tutoriaManagement.FindTotalAssistants(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
+                problematicas = problematicaRepository.GetProblematicas(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
+                 totalAsistencias =
+                    asistenciaRepository.GetTotalDeAsistencias(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error en la conexión con la base de datos",
+                MessageBox.Show(e.Message,
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OKCancel);
             }
@@ -142,15 +144,15 @@ namespace graphicLayer.Vistas
 
         public void FillPeriodosEscolares()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            PeriodoEscolarRepository periodoEscolarRepository = new PeriodoEscolarRepository(new TutoriasContext());
             List<Periodo_Escolar> periodosEscolares = new List<Periodo_Escolar>();
             try
             {
-                periodosEscolares = tutoriaManagement.GetPeriodosEscolares();
+                periodosEscolares = periodoEscolarRepository.GetAllPeriodosEscolar();
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error en la conexión con la base de datos",
+                MessageBox.Show(e.Message,
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OKCancel);
             }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sistema_De_Tutorias.Utility;
 using System.Windows;
 using System.Windows.Controls;
+using DataAccess.BussinesLogic.EntityRepository;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -45,12 +47,12 @@ namespace graphicLayer.Vistas
         private void NavigateToUserWindow()
         {
             Usuario result = null;
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            UsuarioRepository usuarioRepository = new UsuarioRepository(new TutoriasContext()); 
             string username = TbUsername.Text;
             string password = PbPassword.Password.ToString();
             try
             {
-                result = tutoriaManagement.Login(username, password);
+                result = usuarioRepository.Login(username, password);
 
             }
             catch (Exception e)
