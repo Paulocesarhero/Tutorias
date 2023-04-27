@@ -1,5 +1,5 @@
 {
    "ConnectionStrings":{
-      "DefaultConnection":"Server=localhost; User ID=***; Password=***; Database=***",
+      "DefaultConnection":"Server=localhost; User ID=***; Password=***; Database=***"
    }
 }
