@@ -581,5 +581,31 @@ namespace Tutorias.BussinesLogic.Management
             }
             return result;
         }
+
+        public List<Estudiante> findEstudiantesWithOutTutor()
+        {
+            List<Estudiante> result = new List<Estudiante>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.Estudiantes.Where(estudiante => estudiante.TutorAcademico == null)
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
     }
 }

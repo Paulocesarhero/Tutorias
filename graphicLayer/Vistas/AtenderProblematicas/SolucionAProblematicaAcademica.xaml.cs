@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataAccess.BussinesLogic.EntityRepository;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -54,10 +55,10 @@ namespace graphicLayer.Vistas
         private void SaveSolucion(Solucion solucion)
         {
             bool result;
-            TutoriaManagement tutoria = new TutoriaManagement();
+            SolucionRepository solucionRepository = new SolucionRepository(new TutoriasContext());
             try
             {
-               result = tutoria.AddSolucion(solucion);
+               result = solucionRepository.AddSolucion(solucion);
                if (result)
                {
                    MessageBox.Show("Registro exitoso",

@@ -54,7 +54,7 @@ namespace Tutorias.Service.DatabaseContext
             });
             modelBuilder.Entity<Academia>(entity =>
             {
-                entity.HasKey(e => e.NombreAcademia);
+                entity.HasKey(x => x.Id);
                 entity.HasMany(e => e.ExperienciaEducativas).WithOne(a => a.Academia);
             });
             modelBuilder.Entity<Problematica>(entity =>
@@ -201,7 +201,7 @@ namespace Tutorias.Service.DatabaseContext
         {
             NombreAcademia = NombreAcademia;
         }
-
+        public int  Id { get; set; }
         public string NombreAcademia { get; set; }
         public virtual ICollection<Experiencia_Educativa> ExperienciaEducativas { get; set; }
 
@@ -431,6 +431,13 @@ namespace Tutorias.Service.DatabaseContext
             this.Apellidos = apellidos;
         }
 
+        public Estudiante()
+        {
+            Matricula = Matricula;
+            Nombres = Nombres;
+            Apellidos = Apellidos;
+        }
+
         public int Id { get; set; }
         public string Matricula { get; set; }
         public string Nombres { get; set; }
@@ -449,6 +456,16 @@ namespace Tutorias.Service.DatabaseContext
             this.Id = id;
             this.Asiste = asiste;
             this.Horario = horario;
+        }
+
+        
+
+        public Asistencia()
+        {
+            Asiste = Asiste;
+            Horario = Horario;
+            Estudiante = Estudiante;
+            FechaDeTutoria = FechaDeTutoria;
         }
 
         public int Id { get; set; }

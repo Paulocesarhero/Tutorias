@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using DataAccess.BussinesLogic.EntityRepository;
+using Microsoft.EntityFrameworkCore;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -35,7 +37,7 @@ namespace graphicLayer.Vistas
         private void BtnMod_Click(object sender, RoutedEventArgs e)
         {
             AgregarEE newPage = new AgregarEE();
-            if (!IsExperienciaSelectNotNull())
+            if (IsExperienciaSelectNull())
             {
                 newPage.ExperienciaEducativaSelect = DgExperiencias.SelectedItem as Experiencia_Educativa;
                 newPage.FillData();
@@ -46,13 +48,14 @@ namespace graphicLayer.Vistas
 
         private void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
-            if (IsExperienciaSelectNotNull())
+            if (IsExperienciaSelectNull())
             {
-                TutoriaManagement tutoria = new TutoriaManagement();
+                ExperienciaEducativaRepository experienciaEducativaRepository =
+                    new ExperienciaEducativaRepository(new TutoriasContext());
                 Experiencia_Educativa experienciSeleccionada = DgExperiencias.SelectedItem as Experiencia_Educativa;
                 try
                 {
-                    if (tutoria.DeleteExperienciaEduactiva(experienciSeleccionada))
+                    if (experienciaEducativaRepository.DeleteExperienciaEducativa(experienciSeleccionada))
                     {
                         MessageBox.Show("La experiencia educativa " + experienciSeleccionada.Nombre + " " + experienciSeleccionada.Nrc + " ha sido eliminada",
                             "Datos eliminados con exito",
@@ -72,7 +75,7 @@ namespace graphicLayer.Vistas
             }
         }
 
-        private bool IsExperienciaSelectNotNull()
+        private bool IsExperienciaSelectNull()
         {
             bool result = false;
             if (DgExperiencias.SelectedItem == null)
@@ -102,16 +105,17 @@ namespace graphicLayer.Vistas
         }
         public void FillExperiencias()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            ExperienciaEducativaRepository experienciaEducativaRepository =
+                new ExperienciaEducativaRepository(new TutoriasContext());
             List<Experiencia_Educativa> experiencisResult = new List<Experiencia_Educativa>();
             try
             {
-                experiencisResult = tutoriaManagement.getExperienciasEducativas();
+                experiencisResult = experienciaEducativaRepository.GetExperienciasEducativas();
 
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error en la conexión con la base de datos",
+                MessageBox.Show(e.Message,
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OK);
             }
