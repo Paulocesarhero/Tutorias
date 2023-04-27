@@ -1,100 +1,172 @@
-﻿<Page x:Class="graphicLayer.Vistas.DetallesSolucionProblematica"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:graphicLayer.Vistas"
-      mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="DetallesSolucionProblematica">
+﻿<Page
+    x:Class="graphicLayer.Vistas.DetallesSolucionProblematica"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Title="DetallesSolucionProblematica">
 
-    <StackPanel>
-        <GroupBox
-            Width="744"
-            Height="176"
-            Margin="16"
-            Header="Datos de la problematica">
-            <StackPanel>
-                <StackPanel
-                    Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Titulo "
-                        TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Experiencia educativa "
-                        TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Profesor "
-                        TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Descripcion "
-                        TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        FontSize="19"
-                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                        Text="Numero de estudiantes "
-                        TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
-        <GroupBox Margin="16" Header="Solución a problematica">
-            <StackPanel Margin="2">
-                <TextBox
-                    Margin="12"
-                    VerticalAlignment="Top"
-                    materialDesign:HintAssist.Hint="Titulo"
-                    materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    MaxLength="40"
-                    Style="{StaticResource MaterialDesignFilledTextBox}"
-                    TextWrapping="Wrap" />
-                <TextBox
-                    Margin="12"
-                    VerticalAlignment="Top"
-                    materialDesign:HintAssist.Hint="Fecha"
-                    materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    MaxLength="40"
-                    Style="{StaticResource MaterialDesignFilledTextBox}"
-                    TextWrapping="Wrap" />
-                <TextBox
-                    Height="70"
-                    Margin="12"
-                    VerticalAlignment="Top"
-                    materialDesign:HintAssist.Hint="Descripción"
-                    AcceptsReturn="True"
-                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    TextWrapping="Wrap"
-                    VerticalScrollBarVisibility="Auto" />
-                <Button
-                    Content="{materialDesign:PackIcon ContentSave}"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                    ToolTip="Icon" />
-            </StackPanel>
-        </GroupBox>
-
-
-    </StackPanel>
-
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Button
+            x:Name="btnBack"
+            Content="Regresar"
+            HorizontalAlignment="Left"
+            Margin="10,408,0,0"
+            VerticalAlignment="Top"
+            Click="btnBack_Click"
+            Height="32"
+            Width="87"
+            Background="#FFD2594D" />
+        <Label
+            Content="Título: "
+            HorizontalAlignment="Left"
+            Margin="10,5,0,0"
+            VerticalAlignment="Top"
+            Width="73"
+            FontSize="16"
+            FontWeight="Bold"
+            Height="29" />
+        <Label
+            x:Name="lblTitulo"
+            Content="Label"
+            HorizontalAlignment="Left"
+            Margin="72,5,0,0"
+            VerticalAlignment="Top"
+            FontSize="16"
+            Width="381"
+            Grid.ColumnSpan="2"
+            Height="29" />
+        <Label
+            Content="E.E Donde se suscitó la problemática:"
+            HorizontalAlignment="Left"
+            Margin="95,7,0,0"
+            VerticalAlignment="Top"
+            Width="321"
+            FontSize="16"
+            FontWeight="Bold"
+            Grid.Column="1"
+            Height="29" />
+        <Label
+            x:Name="lblEE"
+            Grid.Column="1"
+            Content="Label"
+            HorizontalAlignment="Left"
+            Margin="95,26,0,0"
+            VerticalAlignment="Top"
+            Width="321"
+            FontSize="16"
+            Height="29" />
+        <Label
+            Content="Docente que imparte EE:"
+            HorizontalAlignment="Left"
+            Margin="95,45,0,0"
+            VerticalAlignment="Top"
+            Width="321"
+            FontSize="16"
+            FontWeight="Bold"
+            Grid.Column="1"
+            Height="29" />
+        <Label
+            x:Name="lblDocente"
+            Grid.Column="1"
+            Content="Label"
+            HorizontalAlignment="Left"
+            Margin="95,66,0,0"
+            VerticalAlignment="Top"
+            Width="321"
+            FontSize="16"
+            Height="29" />
+        <Label
+            Content="NRC de EE:"
+            HorizontalAlignment="Left"
+            Margin="95,85,0,0"
+            VerticalAlignment="Top"
+            Width="321"
+            FontSize="16"
+            FontWeight="Bold"
+            Grid.Column="1"
+            Height="29" />
+        <Label
+            x:Name="lblNRC"
+            Grid.Column="1"
+            Content="Label"
+            HorizontalAlignment="Left"
+            Margin="95,106,0,0"
+            VerticalAlignment="Top"
+            Width="321"
+            FontSize="16"
+            Height="29" />
+        <Label
+            Content="Incidencias de estudiantes:"
+            HorizontalAlignment="Left"
+            Margin="10,30,0,0"
+            VerticalAlignment="Top"
+            Width="210"
+            FontSize="16"
+            FontWeight="Bold"
+            Height="30" />
+        <Label
+            x:Name="lblIncidencias"
+            Content="Label"
+            HorizontalAlignment="Left"
+            Margin="225,30,0,0"
+            VerticalAlignment="Top"
+            FontSize="16"
+            Width="174"
+            Height="29" />
+        <Label
+            Content="Descripción de Problemática:"
+            HorizontalAlignment="Center"
+            Margin="0,70,0,0"
+            VerticalAlignment="Top"
+            Width="244"
+            FontSize="16"
+            FontWeight="Bold"
+            Height="30"
+            Foreground="#DD313131" />
+        <TextBlock
+            x:Name="tBoxDescripcionProblematica"
+            HorizontalAlignment="Center"
+            Margin="0,101,0,0"
+            TextWrapping="Wrap"
+            Text="TextBlock"
+            VerticalAlignment="Top"
+            Width="380"
+            Height="268" />
+        <Label
+            Content="Solución de Problemática:"
+            HorizontalAlignment="Left"
+            Margin="88,125,0,0"
+            VerticalAlignment="Top"
+            Width="244"
+            FontSize="16"
+            FontWeight="Bold"
+            Height="30"
+            Grid.Column="1"
+            Foreground="#DD313131" />
+        <TextBlock
+            x:Name="tBoxSolucionProblematica"
+            HorizontalAlignment="Left"
+            Margin="20,156,0,0"
+            TextWrapping="Wrap"
+            Text="TextBlock"
+            VerticalAlignment="Top"
+            Width="380"
+            Height="213"
+            Grid.Column="1" />
+        <Button
+            x:Name="btnDownload"
+            Grid.Column="1"
+            Content="Descargar"
+            HorizontalAlignment="Left"
+            Margin="273,408,0,0"
+            VerticalAlignment="Top" />
+    </Grid>
 </Page>

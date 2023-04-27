@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Mysqlx.Session;
 using MySqlX.XDevAPI.Common;
 using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Interface;
@@ -13,6 +14,8 @@ namespace Tutorias.BussinesLogic.Management
 {
 	public class TutoriaManagement : ITutoriaManagement
 	{
+
+
 		public bool AddCatedratico(Catedratico catedratico)
 		{
 			bool status;
@@ -580,6 +583,154 @@ namespace Tutorias.BussinesLogic.Management
                 throw ex;
             }
             return result;
+        }
+
+		public int getNumberOfMentees(Tutor_Academico objTutor)
+		{
+
+			int number;
+
+			try
+			{
+				using (TutoriasContext context = new TutoriasContext()) {
+					number = context.Estudiantes
+						.Where(x => x.IdTutorAcademico == objTutor.Id)
+						.ToList()
+						.Count();
+				}
+			}
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return number;
+        }
+
+        public List<Estudiante> GetEstudiantesWithoutTutorAcademico()
+        {
+            List<Estudiante> result = new List<Estudiante>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.Estudiantes
+						.Where(x => x.IdTutorAcademico == null)
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public List<Tutor_Academico> GetTutorAcademicosWithTutoradosCount()
+        {
+
+			List<Tutor_Academico> findTutors = new List<Tutor_Academico> ();
+			List<Tutor_Academico> listToClient = new List<Tutor_Academico>();
+
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+					findTutors = context.TutorAcademico
+					.ToList();
+                }
+
+				foreach (Tutor_Academico tutor in findTutors)
+				{
+					tutor.Nombres = tutor.Nombres + " " + tutor.Apellidos;
+					tutor.Apellidos = "";
+                    tutor.Apellidos = getNumberOfMentees(tutor).ToString();
+					listToClient.Add(tutor);
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return listToClient;
+        }
+
+		public bool updateAssignmentTutorToStudent(Estudiante objetoEstudiante)
+		{
+			bool status = false;
+            using (TutoriasContext context = new TutoriasContext())
+            {
+                try
+                {
+                    context.Estudiantes.Update(objetoEstudiante);
+                    context.SaveChanges();
+                    status = true;
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    throw dbUpdateException;
+                }
+                catch (InvalidOperationException invalidOperationException)
+                {
+                    throw invalidOperationException;
+                }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
+            }
+            return status;
+        }
+
+        public Solucion getSolucionProblematica(int idProblematica)
+        {
+			
+
+            using (TutoriasContext context = new TutoriasContext())
+            {				
+
+                try
+                {
+                  return context.Soluciones
+                        .Include(x => x.Problematica)
+                        .FirstOrDefault(x => x.Id == idProblematica);
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    throw dbUpdateException;
+                }
+                catch (InvalidOperationException invalidOperationException)
+                {
+                    throw invalidOperationException;
+                }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
+            }
         }
     }
 }

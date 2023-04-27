@@ -36,9 +36,8 @@ namespace graphicLayer.Vistas
         {
             Problematica fila = DgProblematicas.SelectedItem as Problematica;
 
-            MessageBox.Show(fila.Descripcion,
-                    "No hay conexión a la base de datos en estos momentos",
-                    MessageBoxButton.OKCancel);
+            DetallesSolucionProblematica secondWindow = new DetallesSolucionProblematica(fila);
+            this.NavigationService.Navigate(secondWindow);
         }
 
     }

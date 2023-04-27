@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tutorias.BussinesLogic.Management;
+using Tutorias.Service.DatabaseContext;
 
 namespace graphicLayer.Vistas
 {
@@ -20,9 +22,37 @@ namespace graphicLayer.Vistas
     /// </summary>
     public partial class DetallesSolucionProblematica : Page
     {
-        public DetallesSolucionProblematica()
+        Problematica problematicaRecibida = new Problematica();
+
+        public DetallesSolucionProblematica(Problematica fila)
         {
             InitializeComponent();
+            fillData(fila);
+        }
+
+        private void fillData(Problematica fila)
+        {
+            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+
+            Solucion objetoSolucion = new Solucion();
+            objetoSolucion = tutoriaManagement.getSolucionProblematica(fila.Id);
+
+            problematicaRecibida = fila;
+            tBoxDescripcionProblematica.Text = fila.Descripcion;
+            lblIncidencias.Content = fila.NumAlumnos;
+            lblEE.Content = fila.ExperienciaEducativa.Nombre;
+            lblDocente.Content = fila.ExperienciaEducativa.Catedratico.NombreCompleto;
+            lblNRC.Content = fila.ExperienciaEducativa.Nrc;
+            tBoxSolucionProblematica.Text = objetoSolucion.Descripcion;
+            lblTitulo.Content = objetoSolucion.Titulo;
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
         }
     }
 }
