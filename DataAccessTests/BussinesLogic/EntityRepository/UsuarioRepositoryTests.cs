@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataAccess.BussinesLogic.EntityRepository;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Tutorias.Service.DatabaseContext;
+using DataAccess.BussinesLogic.EntityRepository;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataAccess.BussinesLogic.EntityRepository.Tests
 {

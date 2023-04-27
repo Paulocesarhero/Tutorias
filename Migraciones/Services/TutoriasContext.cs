@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 using Pomelo.EntityFrameworkCore.MySql;
+using Microsoft.Extensions.Configuration;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Tutorias.Service.DatabaseContext
 {
     public class TutoriasContext : DbContext
     {
-        static readonly string connectionString = "";
+        static readonly IConfiguration config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .Build();
+        static readonly string connectionString = config.GetConnectionString("DefaultConnection");
         public DbSet<Catedratico> Catedraticos { get; set; }
         public DbSet<Experiencia_Educativa> ExperienciasEducativas { get; set; }
         public DbSet<Programa_Educativo> ProgramasEducativos { get; set; }
