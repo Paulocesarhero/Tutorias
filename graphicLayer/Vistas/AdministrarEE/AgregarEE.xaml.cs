@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataAccess.BussinesLogic.EntityRepository;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -51,11 +52,11 @@ namespace graphicLayer.Vistas
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            ExperienciaEducativaRepository experienciaEducativaRepository = new ExperienciaEducativaRepository(new TutoriasContext()) ;
             InitExperienciaEducativa();
             try
             {
-                if (tutoriaManagement.AddExperienciaEducativa(ExperienciaEducativaSelect))
+                if (experienciaEducativaRepository.AddExperienciaEducativa(ExperienciaEducativaSelect))
                 {
                     MessageBox.Show("Datos guardados con exito","La base de datos ha sido actualizada",
                         MessageBoxButton.OK);
@@ -103,10 +104,10 @@ namespace graphicLayer.Vistas
 
         private void FillCatedraticos()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            CatedraticoRepository catedraticoRepository = new CatedraticoRepository(new TutoriasContext());
             try
             {
-                CbCatedratico.ItemsSource = tutoriaManagement.GetCatedraticos();
+                CbCatedratico.ItemsSource = catedraticoRepository.GetAllCatedraticos();
             }
             catch (Exception e)
             {
@@ -114,19 +115,18 @@ namespace graphicLayer.Vistas
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OK);
             }
-            tutoriaManagement.GetCatedraticos();
         }
 
         private void FillAcademias()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            AcademiaRepository academiaRepository = new AcademiaRepository(new TutoriasContext());
             try
             {
-                CbAcademia.ItemsSource = tutoriaManagement.GetAcademias();
+                CbAcademia.ItemsSource = academiaRepository.getAllAcademias();
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error en la conexión con la base de datos",
+                MessageBox.Show(e.Message,
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OK);
             }
@@ -134,14 +134,15 @@ namespace graphicLayer.Vistas
 
         private void FillProgramasEducativos()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            ProgramaEducativoRepository programaEducativoRepository =
+                new ProgramaEducativoRepository(new TutoriasContext());
             try
             {
-                CbProgramaEducativo.ItemsSource = tutoriaManagement.GetProgramasEducativos();
+                CbProgramaEducativo.ItemsSource = programaEducativoRepository.GetProgramasEducativos();
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error en la conexión con la base de datos",
+                MessageBox.Show(e.Message,
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OK);
             }

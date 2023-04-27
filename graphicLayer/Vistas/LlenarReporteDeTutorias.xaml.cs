@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using Tutorias.Service.DatabaseContext;
 
 namespace graphicLayer.Vistas
 {
@@ -10,6 +12,16 @@ namespace graphicLayer.Vistas
         public LlenarReporteDeTutorias()
         {
             InitializeComponent();
+            LlenarReporteDeTutoriasViewModel viewModel = new LlenarReporteDeTutoriasViewModel();
+            DataContext = viewModel;
+
         }
+    }
+
+    public class LlenarReporteDeTutoriasViewModel
+    {
+        public ObservableCollection<Asistencia> AsistenciaObservable { get; set; } =
+            new ObservableCollection<Asistencia>();
+
     }
 }
