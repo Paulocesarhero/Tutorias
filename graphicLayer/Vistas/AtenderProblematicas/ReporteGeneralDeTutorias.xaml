@@ -17,7 +17,7 @@
 
 
     <Grid>
-       
+
         <StackPanel Margin="15,15,15,15">
             <StackPanel Orientation="Horizontal">
                 <ComboBox
@@ -58,45 +58,54 @@
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     ToolTip="Icon" />
             </StackPanel>
-            <TextBlock
-                FontSize="32"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-                Text="Problematicas academicas" />
-            <DataGrid
-                Width="774"
-                Height="201"
-                AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                IsSelected="True"
-                ItemsSource="{Binding ProblematicasObservableCollection}"
-                SelectedItem="{Binding ProblematicaSeleccionada}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Binding="{Binding Descripcion}"
-                        Header="Descripción"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding ExperienciaEducativa.Nombre}"
-                        Header="Experiencia educativa"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
-                        Header="Profesor"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn
-                        Binding="{Binding NumAlumnos}"
-                        Header="Alumnos afectados"
-                        IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding Solucion.Titulo}" Header="Solucion" />
-                </DataGrid.Columns>
+            <Separator Height="12" />
+            <GroupBox Header="Problematicas academicas">
+                <DataGrid
+                    Name="DgProblematicas"
+                    Width="auto"
+                    Height="auto"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    IsSelected="True"
+                    ItemsSource="{Binding ProblematicasObservableCollection}"
+                    SelectedItem="{Binding ProblematicaSeleccionada}"
+                    >
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Modificar">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Name="BtnMod"
+                                        Width="auto"
+                                        Height="auto"
+                                        Click="BtnMod_Click"
+                                        Content="{materialDesign:PackIcon ModeEdit}"
+                                        ToolTip="Icon" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn
+                            Binding="{Binding Descripcion}"
+                            Header="Descripción"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Nombre}"
+                            Header="Experiencia educativa"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
+                            Header="Profesor"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding NumAlumnos}"
+                            Header="Alumnos afectados"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Solucion.Titulo}" Header="Solucion" />
+                    </DataGrid.Columns>
 
-            </DataGrid>
-            <Button
-                Command="{Binding BtnDatosProblematica}"
-                Content="Datos problematica"
-                Style="{StaticResource MaterialDesignPaperDarkButton}"
-                ToolTip="Resource name: MaterialDesignPaperDarkButton" />
-            <Separator Width="0" Height="20" />
+                </DataGrid>
+
+            </GroupBox>
             <GroupBox Padding="8" Header="Reporte de tutoria">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">

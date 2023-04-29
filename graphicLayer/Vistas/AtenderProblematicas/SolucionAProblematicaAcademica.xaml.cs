@@ -64,7 +64,8 @@ namespace graphicLayer.Vistas
                    MessageBox.Show("Registro exitoso",
                        "La problematica ha sido atendida",
                        MessageBoxButton.OK);
-                   this.NavigationService.GoBack();
+                   ReporteGeneralDeTutorias newWindow = new ReporteGeneralDeTutorias();
+                   this.NavigationService.Navigate(newWindow);
                }
                else
                {
