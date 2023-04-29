@@ -159,7 +159,7 @@ namespace Tutorias.Service.DatabaseContext
 
         public int Id { get; set; }
         public string NombreCompleto { get; set; }
-       
+
 
         public virtual ICollection<Experiencia_Educativa> ExperienciasEducativas { get; set; }
     }

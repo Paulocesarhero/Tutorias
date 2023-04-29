@@ -31,17 +31,19 @@ namespace graphicLayer.Vistas
 
         public void FillData()
         {
+            
+            FillAcademias();
+            FillCatedraticos();
+            FillProgramasEducativos();
             if (ExperienciaEducativaSelect != null)
             {
                 FillExperienciaEducativa();
             }
-            FillAcademias();
-            FillCatedraticos();
-            FillProgramasEducativos();
         }
 
         private void FillExperienciaEducativa()
         {
+            TbNrc.IsReadOnly = true;
             TbNombre.Text = ExperienciaEducativaSelect.Nombre;
             TbNrc.Text = ExperienciaEducativaSelect.Nrc;
             CbAcademia.Text = ExperienciaEducativaSelect.Academia.NombreAcademia;

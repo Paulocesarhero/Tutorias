@@ -46,7 +46,9 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Problematica>().FirstOrDefault(x => x.Id == id);
+                return _context.Set<Problematica>().
+                    Include(x => x.Solucion)
+                    .FirstOrDefault(x => x.Id == id);
             }
             catch (DbException e)
             {
