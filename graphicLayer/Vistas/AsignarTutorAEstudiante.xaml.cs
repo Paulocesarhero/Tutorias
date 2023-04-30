@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using DataAccess.BussinesLogic.EntityRepository;
+using MaterialDesignThemes.Wpf;
 using System.Windows;
 using System.Windows.Controls;
 using Tutorias.BussinesLogic.Management;
@@ -19,8 +20,8 @@ namespace graphicLayer.Vistas
 
         private void fillTutores()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
-            DgTutores.ItemsSource = tutoriaManagement.GetTutorAcademicosWithTutoradosCount();            
+            TutorAcademicoRepository tutorRepository = new TutorAcademicoRepository(new TutoriasContext());
+            DgTutores.ItemsSource = tutorRepository.GetTutorAcademicosWithTutoradosCount();
         }
 
         private void AsignarTutor(object sender, RoutedEventArgs e)

@@ -70,6 +70,6 @@ namespace DataAccess.BussinesLogic.EntityRepository
             {
                 throw new Exception("Error al eliminar programa educativo", e);
             }
-        }
+        }        
     }
 }

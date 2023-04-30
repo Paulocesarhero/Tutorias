@@ -116,5 +116,59 @@ namespace DataAccess.BussinesLogic.EntityRepository
 
             }
         }
+
+        public List<Estudiante> findEstudiantesWithOutTutor()
+        {
+            List<Estudiante> result = new List<Estudiante>();
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    result = context.Estudiantes.Where(estudiante => estudiante.TutorAcademico == null)
+                        .ToList();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+        public bool updateAssignmentTutorToStudent(Estudiante objetoEstudiante)
+        {
+            bool status = false;
+            using (TutoriasContext context = new TutoriasContext())
+            {
+                try
+                {
+                    context.Estudiantes.Update(objetoEstudiante);
+                    context.SaveChanges();
+                    status = true;
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    throw dbUpdateException;
+                }
+                catch (InvalidOperationException invalidOperationException)
+                {
+                    throw invalidOperationException;
+                }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
+            }
+            return status;
+        }
+
     }
 }

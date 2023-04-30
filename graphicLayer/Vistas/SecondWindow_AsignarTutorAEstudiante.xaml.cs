@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Tutorias.BussinesLogic.Management;
 using System.Windows.Controls;
 using Tutorias.Service.DatabaseContext;
+using DataAccess.BussinesLogic.EntityRepository;
 
 namespace graphicLayer.Vistas
 {
@@ -39,8 +40,8 @@ namespace graphicLayer.Vistas
 
         public void fillTable()
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
-            DgEstudiantes.ItemsSource = tutoriaManagement.GetEstudiantesWithoutTutorAcademico();
+            EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
+            DgEstudiantes.ItemsSource = estudianteRepository.findEstudiantesWithOutTutor();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -80,11 +81,11 @@ namespace graphicLayer.Vistas
             }
             else
             {
-                TutoriaManagement tutoriaManagement = new TutoriaManagement();
+                EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
                 for (int i = 0; i < estudiantesSeleccionados.Count(); i++)
                 {
                     estudiantesSeleccionados[i].IdTutorAcademico = objetoTutorRecibido.Id;
-                    resultAssignment = tutoriaManagement.updateAssignmentTutorToStudent(estudiantesSeleccionados[i]);
+                    resultAssignment = estudianteRepository.updateAssignmentTutorToStudent(estudiantesSeleccionados[i]);
                     if (resultAssignment == true)
                     {
                         counterStudentsOnTutor++;

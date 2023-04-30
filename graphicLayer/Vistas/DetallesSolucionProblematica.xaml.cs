@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.BussinesLogic.EntityRepository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,10 +33,10 @@ namespace graphicLayer.Vistas
 
         private void fillData(Problematica fila)
         {
-            TutoriaManagement tutoriaManagement = new TutoriaManagement();
+            SolucionRepository solucionRepository = new SolucionRepository(new TutoriasContext());
 
             Solucion objetoSolucion = new Solucion();
-            objetoSolucion = tutoriaManagement.getSolucionProblematica(fila.Id);
+            objetoSolucion = solucionRepository.GetSolucion(fila.Id);
 
             problematicaRecibida = fila;
             tBoxDescripcionProblematica.Text = fila.Descripcion;
