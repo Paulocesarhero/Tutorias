@@ -34,7 +34,25 @@ namespace DataAccess.BussinesLogic.EntityRepository
 
         public bool AddFechaDeTutoria(Fecha_De_Tutoria fechaDeTutoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (fechaDeTutoria.Id == 0)
+                {
+                    _context.Set<Periodo_Escolar>().Attach(fechaDeTutoria.PeriodoEscolar);
+                    _context.Set<Fecha_De_Tutoria>().Add(fechaDeTutoria);
+                }
+                else
+                {
+                    // Si el objeto tiene un ID, es una entidad existente, por lo que la actualizamos.
+                    _context.Set<Fecha_De_Tutoria>().Update(fechaDeTutoria);
+                }
+
+                return _context.SaveChanges() > 0;
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al agregar las tutorias academicas", e);
+            }
         }
 
         public bool DeleteFechaDeTutoria(Fecha_De_Tutoria fechaDeTutoria)

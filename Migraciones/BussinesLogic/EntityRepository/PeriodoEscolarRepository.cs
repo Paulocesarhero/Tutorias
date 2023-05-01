@@ -66,7 +66,9 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Periodo_Escolar>().ToList();
+                return _context.Set<Periodo_Escolar>()
+                    .Include(x => x.FechasDeTutorias)
+                    .ToList();
             }
             catch (DbUpdateException e)
             {

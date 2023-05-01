@@ -1,0 +1,107 @@
+﻿<Page
+    x:Class="graphicLayer.Vistas.AdministrarFechas.AdministrarFechasDeEntrega"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:graphicLayer.Vistas.AdministrarFechas"
+    xmlns:localControls="clr-namespace:graphicLayer.Controles"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="AdministrarFechasDeEntrega"
+    d:Background="White"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel>
+            <localControls:MenuCoordinadora />
+
+            <GroupBox Header="Periodo escolar">
+                <StackPanel>
+                    <ComboBox
+                        Name="CbPeriodosEscolares"
+                        Margin="0,20"
+                        materialDesign:HintAssist.Hint="Seleccione el periodo escolar"
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        IsEditable="False"
+                        Style="{StaticResource MaterialDesignFilledComboBox}" SelectionChanged="CbPeriodosEscolares_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="5" Text="{Binding FechaDeInicio, StringFormat='{}Fecha de inicio: {0: MMMM yyyy}'}" />
+                                    <TextBlock Margin="5" Text="{Binding FechaDeFin, StringFormat='{}Fecha de fin: {0: MMMM yyyy}'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button
+                            Name="BtnModPeriodo"
+                            Click="BtnModPeriodo_Click"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignIconForegroundButton}"
+                            ToolTip="MaterialDesignIconForegroundButton">
+                            <materialDesign:PackIcon Kind="ModeEdit" />
+                        </Button>
+                        <Button
+                            Name="BtnNewPeriodo"
+                            Click="BtnNewPeriodo_Click"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignIconForegroundButton}"
+                            ToolTip="MaterialDesignIconForegroundButton">
+                            <materialDesign:PackIcon Kind="NewBox" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Sesiones de tutorias academicas">
+                <StackPanel>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <DatePicker
+                            Name="DpFirst"
+                            Width="140"
+                            Margin="10"
+                            materialDesign:HintAssist.HelperText="Fecha cierre de entrega"
+                            materialDesign:HintAssist.Hint="Primera fecha"
+                            Style="{StaticResource MaterialDesignFilledDatePicker}" />
+                        <DatePicker
+                            Name="DpSecond"
+                            Width="140"
+                            Margin="10"
+                            materialDesign:HintAssist.HelperText="Fecha cierre de entrega"
+                            materialDesign:HintAssist.Hint="Segunda fecha"
+                            Style="{StaticResource MaterialDesignFilledDatePicker}" />
+                        <DatePicker
+                            Name="DpThird"
+                            Width="140"
+                            Margin="10"
+                            materialDesign:HintAssist.HelperText="Fecha cierre de entrega"
+                            materialDesign:HintAssist.Hint="Tercera fecha"
+                            Style="{StaticResource MaterialDesignFilledDatePicker}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Width="auto"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                        <Button
+                            Name="BtnSaveDates"
+                            Margin="10"
+                            Click="BtnSaveDates_Click"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignIconForegroundButton}"
+                            ToolTip="MaterialDesignIconForegroundButton">
+                            <materialDesign:PackIcon Kind="ContentSave" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </GroupBox>
+        </StackPanel>
+
+
+    </Grid>
+</Page>

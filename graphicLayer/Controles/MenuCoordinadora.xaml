@@ -21,9 +21,15 @@
                     Name="btnExperiencias"
                     Click="BtnExperiencias_Click"
                     Header="Administrar Experiencias" />
-                <MenuItem Name="BtnCatedraticos" Header="Administrar Catedraticos" Click="BtnCatedraticos_Click"/>
+                <MenuItem
+                    Name="BtnCatedraticos"
+                    Click="BtnCatedraticos_Click"
+                    Header="Administrar Catedraticos" />
             </MenuItem>
-            <MenuItem Name="BtnAdministrarFechasdesesión" Header="Fechas de sesión de tutoria academica" />
+            <MenuItem
+                Name="BtnAdministrarFechasdesesión"
+                Click="BtnAdministrarFechasdesesión_Click"
+                Header="Fechas de sesión de tutoria academica" />
             <MenuItem
                 Name="BtnAdministrarTutoresAcademicos"
                 Click="BtnAdministrarTutoresAcademicos_Click"
