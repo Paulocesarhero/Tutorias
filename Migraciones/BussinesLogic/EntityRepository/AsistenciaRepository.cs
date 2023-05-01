@@ -45,14 +45,16 @@ namespace DataAccess.BussinesLogic.EntityRepository
                 }
                 else
                 {
-                    _context.Set<Asistencia>().Update(asistencia);
+                 
+                    _context.Attach(exist);
+                    _context.Entry(exist).CurrentValues.SetValues(asistencia);
                 }
                 
                 return _context.SaveChanges() > 0;
             }
             catch (DbException e)
             {
-                throw new Exception("Error al obtener asistencias", e);
+                throw new Exception("Error al agregar asistencias", e);
             }
         }
 
@@ -83,6 +85,26 @@ namespace DataAccess.BussinesLogic.EntityRepository
             {
                 throw new Exception("Error al obtener las asistencias", e);
             }
+        }
+
+        public List<Asistencia> GetAsistencias(Tutor_Academico tutorAcademico, Fecha_De_Tutoria fechaDeTutoria)
+        {
+            try
+            {
+                return _context.Set<Asistencia>()
+                    .Include(x => x.Estudiante)
+                    .Include(x => x.FechaDeTutoria)
+                    .ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener las asistencias", e);
+            }
+        }
+
+        public bool AddAsistencia(Fecha_De_Tutoria fechaDeTutoria, List<Estudiante> estudiantes)
+        {
+            throw new NotImplementedException();
         }
     }
 }

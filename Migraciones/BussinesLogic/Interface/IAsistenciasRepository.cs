@@ -14,5 +14,7 @@ namespace DataAccess.BussinesLogic.Interface
         bool DeleteAsistencia(Asistencia asistencia);
 
         List<Asistencia> GetAllAsistencias();
+        bool AddAsistencia(Fecha_De_Tutoria fechaDeTutoria, List<Estudiante> estudiantes);
+
     }
 }

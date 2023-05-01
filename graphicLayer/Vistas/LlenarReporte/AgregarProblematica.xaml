@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="graphicLayer.Vistas.LlenarReporte.AgregarProblematica"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:graphicLayer.Vistas.LlenarReporte"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="AgregarProblematica"
+    d:Background="White"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <local:AgregarProblematicasViewModel />
+    </Page.DataContext>
+
+    <StackPanel
+        Width="500"
+        Height="300"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+        <TextBox
+            Name="TbDescripcion"
+            MaxWidth="400"
+            Margin="0,20"
+            VerticalAlignment="Top"
+            materialDesign:HintAssist.Hint="Inserte la descripcion de la problematica"
+            AcceptsReturn="True"
+            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+            Style="{StaticResource MaterialDesignFilledTextBox}"
+            TextWrapping="Wrap" />
+        <TextBox
+            Name="TbNumeroDeAlumnosAfectados"
+            MaxWidth="400"
+            Margin="0,20"
+            VerticalAlignment="Top"
+            materialDesign:HintAssist.Hint="Numero de alumnos afectados"
+            AcceptsReturn="True"
+            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
+            Style="{StaticResource MaterialDesignFilledTextBox}"
+            PreviewTextInput="TextBox_PreviewTextInput"
+            TextWrapping="Wrap" />
+        <ComboBox
+            Margin="0,20"
+            materialDesign:HintAssist.Hint="Seleccione la experiencia educativa"
+            materialDesign:TextFieldAssist.HasClearButton="True"
+            IsEditable="False"
+            Name="CbExperienciaEducativa"
+            ItemsSource="{Binding ExperienciaEducativas}"
+            Style="{StaticResource MaterialDesignFilledComboBox}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="5" Text="{Binding Nombre, StringFormat='{}Nombre: {0}'}" />
+                        <TextBlock Margin="5" Text="{Binding Nrc, StringFormat='{}Nrc: {0}'}" />
+                        <TextBlock Margin="5" Text="{Binding Catedratico.NombreCompleto, StringFormat='{}Catedratico: {0}'}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+        <Button
+            Name="BtnSave"
+            Click="BtnSave_Click"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            Style="{StaticResource MaterialDesignIconForegroundButton}"
+            ToolTip="MaterialDesignIconForegroundButton">
+            <materialDesign:PackIcon Kind="ContentSave" />
+        </Button>
+    </StackPanel>
+</Page>
