@@ -69,6 +69,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
             {
                 Id = 1
             };
+
             problematicaRepository.GetProblematicas(prEscolar, 1).ForEach(x => Console.WriteLine(x.Id + " " + x.Descripcion));
 
             Assert.IsNotNull(problematicaRepository.GetProblematicas(prEscolar, 1));

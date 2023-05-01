@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sistema_De_Tutorias.Utility;
 using Tutorias.Service.DatabaseContext;
 
 namespace DataAccess.BussinesLogic.EntityRepository.Tests
@@ -20,7 +21,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
             Usuario = new Usuario()
             {
                 Username = "Juanli",
-                Password = "ElDolorAsiEs",
+                Password = Security.HashSHA256("lolopol"),
                 ProgramaEducativo = new Programa_Educativo("Ingenieria de software"),
                 TipoUsuario = new TipoUsuario()
                 {
@@ -36,7 +37,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
             Assert.IsTrue(tutorAcademicoRepository.AddTutorAcademico(tutorAcademico));
         }
 
-       
+
 
         [TestMethod()]
         public void UpdateTutorAcademicoTest()
@@ -49,7 +50,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         [TestMethod()]
         public void GetTutorAcademicoTest()
         {
-            
+
             Assert.IsNotNull(tutorAcademicoRepository.GetTutorAcademico(1));
         }
 
@@ -61,11 +62,20 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
             Assert.IsNotNull(result);
         }
         [TestMethod()]
-        public void  DeleteTutorAcademicoTest()
+        public void DeleteTutorAcademicoTest()
         {
             Tutor_Academico tutorAcademico = tutorAcademicoRepository.GetAllTutorAcademico().Last();
             Assert.IsTrue(tutorAcademicoRepository.DeleteTutorAcademico(tutorAcademico));
 
+        }
+
+        [TestMethod()]
+        public void GetTutorAcademicoByUserTest()
+        {
+            UsuarioRepository usuarioRepository = new UsuarioRepository(new TutoriasContext());
+            Usuario usuario = usuarioRepository.GetAllUser().Last();
+            Tutor_Academico result = tutorAcademicoRepository.GetTutorAcademicoByUser(usuario);
+            Assert.IsNotNull(result);
         }
     }
 }

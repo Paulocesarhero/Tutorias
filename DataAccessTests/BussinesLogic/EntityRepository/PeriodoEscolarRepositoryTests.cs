@@ -15,8 +15,8 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         private PeriodoEscolarRepository periodoEscolarRepository = new PeriodoEscolarRepository(new TutoriasContext());
         Periodo_Escolar periodoEscolar = new Periodo_Escolar()
         {
-            FechaDeInicio = new DateTime(2023,7,1),
-            FechaDeFin = new DateTime(2024,1,1)
+            FechaDeInicio = new DateTime(2023,2,1),
+            FechaDeFin = new DateTime(2023,7,1)
         };
         [TestMethod()]
         public void AddPeriodoEscolarTest()

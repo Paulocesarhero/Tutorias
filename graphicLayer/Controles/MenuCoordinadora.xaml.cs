@@ -4,6 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using graphicLayer.Vistas.AdministrarFechas;
 
 namespace graphicLayer.Controles
 {
@@ -40,6 +41,20 @@ namespace graphicLayer.Controles
             Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
             pg.NavigationService.Navigate(administrarEe);
 
+        }
+        private void BtnCatedraticos_Click(object sender, RoutedEventArgs e)
+        {
+            AdministrarCatedraticos administrarCatedraticos = new AdministrarCatedraticos();
+            administrarCatedraticos.FillData();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(administrarCatedraticos);
+        }
+        private void BtnAdministrarFechasdesesión_Click(object sender, RoutedEventArgs e)
+        {
+            AdministrarFechasDeEntrega administrarfechas = new AdministrarFechasDeEntrega();
+            administrarfechas.FillPeriodosEscolares();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(administrarfechas);
         }
         /// <summary>
 

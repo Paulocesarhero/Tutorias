@@ -78,8 +78,8 @@ namespace graphicLayer.Vistas
                         break;
 
                     case "Tutor academico":
-                        LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
                         CredencialesUsuario.Instance.Usuario = result;
+                        LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
                         this.NavigationService.Navigate(firstPageTutorAcademico);
                         break;
                     default:

@@ -19,18 +19,10 @@
 
     <StackPanel>
         <localControls:MenuCoordinadora />
-
-
         <GroupBox Padding="8" Header="Experiencias educativas">
             <StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Button
-                        Name="BtnMod"
-                        Width="45"
-                        Height="45"
-                        Click="BtnMod_Click"
-                        Content="{materialDesign:PackIcon ModeEdit}"
-                        ToolTip="Icon" />
+
 
                     <Separator Width="100" Height="0" />
                     <Button
@@ -41,15 +33,7 @@
                         Content="{materialDesign:PackIcon Add}"
                         ToolTip="Icon" />
                     <Separator Width="100" Height="0" />
-                    <Button
-                        Name="BtnEliminar"
-                        Width="45"
-                        Height="45"
-                        Background="Red"
-                        Click="BtnEliminar_Click"
-                        Command="{Binding BtnBuscarReporteCommand}"
-                        Content="{materialDesign:PackIcon Delete}"
-                        ToolTip="Icon" />
+
                 </StackPanel>
                 <DataGrid
                     Name="DgExperiencias"
@@ -61,20 +45,56 @@
                     SelectedItem="{Binding ExperienciaEducativaSelect}"
                     Selector.IsSelected="True">
                     <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Modificar">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Name="BtnMod"
+                                        Width="auto"
+                                        Height="auto"
+                                        Click="BtnMod_Click"
+                                        Content="{materialDesign:PackIcon ModeEdit}"
+                                        ToolTip="Icon" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Eliminar">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Name="BtnEliminar"
+                                        Width="auto"
+                                        Height="auto"
+                                        Background="Red"
+                                        Click="BtnEliminar_Click"
+                                        Command="{Binding BtnBuscarReporteCommand}"
+                                        Content="{materialDesign:PackIcon Delete}"
+                                        ToolTip="Icon" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
                         <DataGridTextColumn
                             Binding="{Binding Nrc}"
                             Header="Nrc"
-                            IsReadOnly="False" />
+                            IsReadOnly="True" />
                         <DataGridTextColumn
                             Binding="{Binding Nombre}"
                             Header="Experiencia educativa"
-                            IsReadOnly="False" />
+                            IsReadOnly="True" />
                         <DataGridTextColumn
                             Binding="{Binding ProgramaEducativo.ProgramaEducativo}"
                             Header="Programa educativo"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn Binding="{Binding Academia.NombreAcademia}" Header="Academia" />
-                        <DataGridTextColumn Binding="{Binding Catedratico.NombreCompleto}" Header="Catedratico" />
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding Academia.NombreAcademia}"
+                            Header="Academia"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding Catedratico.NombreCompleto}"
+                            Header="Catedratico"
+                            IsReadOnly="True" />
 
 
                     </DataGrid.Columns>

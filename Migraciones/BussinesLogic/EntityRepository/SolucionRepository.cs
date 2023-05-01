@@ -47,5 +47,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
             }
             return result;
         }
+
+
     }
 }

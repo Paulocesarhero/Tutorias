@@ -16,6 +16,7 @@ namespace DataAccess.BussinesLogic.Interface
         List<Estudiante> GetEstudiantesWithOutTutor();
 
         Estudiante GetEstudianteById(int id);
+        List<Estudiante> GetEstudiantesByTutorAcademico(Tutor_Academico tutorAcademico);
 
     }
 }

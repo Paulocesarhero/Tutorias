@@ -17,5 +17,9 @@ namespace DataAccess.BussinesLogic.Interface
         List<Problematica> GetProblematicas(Periodo_Escolar periodoEscolarSeleccionado, int numDeSesion);
         List<Problematica> GetProblematicaByExperienciaEducativa(string nrc);
         Problematica GetProblematica(int id);
+
+        List<Problematica> GetProblematicasByFechaDeTutoria(Fecha_De_Tutoria fechaDeTutoria,
+            Tutor_Academico tutorAcademico);
+
     }
 } 

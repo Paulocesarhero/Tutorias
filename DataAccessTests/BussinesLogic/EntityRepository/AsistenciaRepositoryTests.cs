@@ -35,6 +35,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         }
 
         [TestMethod()]
+        [Priority(1)]
         public void AddAsistenciaTest()
         {
             Assert.IsTrue(asistenciaRepository.AddAsistencia(asistencia));
