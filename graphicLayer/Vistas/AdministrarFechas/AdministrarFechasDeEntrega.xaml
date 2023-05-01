@@ -25,7 +25,8 @@
                         materialDesign:HintAssist.Hint="Seleccione el periodo escolar"
                         materialDesign:TextFieldAssist.HasClearButton="True"
                         IsEditable="False"
-                        Style="{StaticResource MaterialDesignFilledComboBox}" SelectionChanged="CbPeriodosEscolares_SelectionChanged">
+                        SelectionChanged="CbPeriodosEscolares_SelectionChanged"
+                        Style="{StaticResource MaterialDesignFilledComboBox}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -36,14 +37,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button
-                            Name="BtnModPeriodo"
-                            Click="BtnModPeriodo_Click"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                            Style="{StaticResource MaterialDesignIconForegroundButton}"
-                            ToolTip="MaterialDesignIconForegroundButton">
-                            <materialDesign:PackIcon Kind="ModeEdit" />
-                        </Button>
+
                         <Button
                             Name="BtnNewPeriodo"
                             Click="BtnNewPeriodo_Click"

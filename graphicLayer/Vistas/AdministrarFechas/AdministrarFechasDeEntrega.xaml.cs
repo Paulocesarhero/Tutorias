@@ -40,7 +40,13 @@ namespace graphicLayer.Vistas.AdministrarFechas
 
         private void BtnModPeriodo_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (CbPeriodosEscolares.SelectedItem != null)
+            {
+                AgregarPeriodoEscolar agregarPeriodoEscolar = new AgregarPeriodoEscolar();
+                agregarPeriodoEscolar._PeriodoEscolar = CbPeriodosEscolares.SelectedItem as Periodo_Escolar;
+                NavigationService.Navigate(agregarPeriodoEscolar);
+            }
+           
         }
 
         public void FillPeriodosEscolares()
@@ -56,7 +62,7 @@ namespace graphicLayer.Vistas.AdministrarFechas
                     "Error en la conexión con la base de datos",
                     MessageBoxButton.OK);
             }
-            CbPeriodosEscolares.ItemsSource = PeriodoEscolares;
+            CbPeriodosEscolares.ItemsSource = PeriodoEscolares.OrderBy(x => x.FechaDeInicio).ToList();
         }
 
         private void CbPeriodosEscolares_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -73,6 +79,12 @@ namespace graphicLayer.Vistas.AdministrarFechas
                 DpFirst.Text = PrimeraFechaDeTutoria.FechaDeCierre.ToShortDateString();
                 DpSecond.Text = SegundaFechaDeTutoria.FechaDeCierre.ToShortDateString();
                 DpThird.Text = TerceraFechaDEtutoria.FechaDeCierre.ToShortDateString();
+            }
+            else
+            {
+                DpFirst.Text = "";
+                DpSecond.Text = "";
+                DpThird.Text = "";
             }
 
             PrimeraFechaDeTutoria.PeriodoEscolar = periodoSeleccionado;
@@ -94,6 +106,9 @@ namespace graphicLayer.Vistas.AdministrarFechas
                     fechaDeTutoriaRepository.AddFechaDeTutoria(PrimeraFechaDeTutoria);
                     fechaDeTutoriaRepository.AddFechaDeTutoria(SegundaFechaDeTutoria);
                     fechaDeTutoriaRepository.AddFechaDeTutoria(TerceraFechaDEtutoria);
+                    MessageBox.Show("Registro exitoso",
+                        "Las fechas de tutorias se han registrado con exito",
+                        MessageBoxButton.OK);
 
                 }
                 catch (Exception exception)
