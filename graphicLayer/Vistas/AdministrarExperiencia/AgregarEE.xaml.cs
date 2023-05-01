@@ -109,7 +109,7 @@ namespace graphicLayer.Vistas
             CatedraticoRepository catedraticoRepository = new CatedraticoRepository(new TutoriasContext());
             try
             {
-                CbCatedratico.ItemsSource = catedraticoRepository.GetAllCatedraticos();
+                CbCatedratico.ItemsSource = catedraticoRepository.GetAllCatedraticosWithEE();
             }
             catch (Exception e)
             {

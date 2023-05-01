@@ -65,11 +65,15 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Binding="{Binding Estudiante.Matricula}"
-                            Header="Estudiante"
+                            Header="Matricula"
                             IsReadOnly="True" />
                         <DataGridTextColumn
                             Binding="{Binding Estudiante.Nombres}"
                             Header="Estudiante"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding Horario}"
+                            Header="Horario"
                             IsReadOnly="True" />
                         <DataGridCheckBoxColumn
                             Binding="{Binding Asiste}"

@@ -41,6 +41,13 @@ namespace graphicLayer.Controles
             pg.NavigationService.Navigate(administrarEe);
 
         }
+        private void BtnCatedraticos_Click(object sender, RoutedEventArgs e)
+        {
+            AdministrarCatedraticos administrarCatedraticos = new AdministrarCatedraticos();
+            administrarCatedraticos.FillData();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(administrarCatedraticos);
+        }
         /// <summary>
 
         /// Walk visual tree to find the first DependencyObject  of the specific type.
@@ -70,6 +77,7 @@ namespace graphicLayer.Controles
 
             return parent;
         }
+
 
         
     }

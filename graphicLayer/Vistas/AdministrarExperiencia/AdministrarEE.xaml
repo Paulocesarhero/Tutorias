@@ -19,8 +19,6 @@
 
     <StackPanel>
         <localControls:MenuCoordinadora />
-
-
         <GroupBox Padding="8" Header="Experiencias educativas">
             <StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">

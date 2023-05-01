@@ -14,6 +14,6 @@ namespace DataAccess.BussinesLogic.Interface
         bool UpdateCatedratico(Catedratico catedratico);
         bool DeleteCatedratico(Catedratico catedratico);
 
-        public List<Catedratico> GetAllCatedraticos();
+        public List<Catedratico> GetAllCatedraticosWithEE();
     }
 }

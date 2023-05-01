@@ -16,10 +16,13 @@
                 Click="BtnExit_Click"
                 Header="Salir" />
             <MenuItem Name="BtnAdministrarEstudiante" Header="Estudiantes" />
-            <MenuItem
-                Name="BtnExperiencias"
-                Click="BtnExperiencias_Click"
-                Header="Experiencias" />
+            <MenuItem Name="BtnExperiencias" Header="Experiencias">
+                <MenuItem
+                    Name="btnExperiencias"
+                    Click="BtnExperiencias_Click"
+                    Header="Administrar Experiencias" />
+                <MenuItem Name="BtnCatedraticos" Header="Administrar Catedraticos" Click="BtnCatedraticos_Click"/>
+            </MenuItem>
             <MenuItem Name="BtnAdministrarFechasdesesión" Header="Fechas de sesión de tutoria academica" />
             <MenuItem
                 Name="BtnAdministrarTutoresAcademicos"

@@ -63,10 +63,9 @@
                     Width="Auto"
                     Height="Auto"
                     AutoGenerateColumns="False"
-                    CanUserAddRows="False"
                     IsReadOnly="True"
                     ItemsSource="{Binding TutorAcademicosObservables}"
-                    Selector.IsSelected="True">
+                    >
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Binding="{Binding Nombres}"

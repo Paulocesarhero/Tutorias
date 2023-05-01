@@ -17,7 +17,7 @@
 
     <StackPanel
         Width="500"
-        Height="300"
+        Height="auto"
         HorizontalAlignment="Center"
         VerticalAlignment="Center">
         <TextBox
@@ -38,15 +38,15 @@
             materialDesign:HintAssist.Hint="Numero de alumnos afectados"
             AcceptsReturn="True"
             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
-            Style="{StaticResource MaterialDesignFilledTextBox}"
             PreviewTextInput="TextBox_PreviewTextInput"
+            Style="{StaticResource MaterialDesignFilledTextBox}"
             TextWrapping="Wrap" />
         <ComboBox
+            Name="CbExperienciaEducativa"
             Margin="0,20"
             materialDesign:HintAssist.Hint="Seleccione la experiencia educativa"
             materialDesign:TextFieldAssist.HasClearButton="True"
             IsEditable="False"
-            Name="CbExperienciaEducativa"
             ItemsSource="{Binding ExperienciaEducativas}"
             Style="{StaticResource MaterialDesignFilledComboBox}">
             <ComboBox.ItemTemplate>
