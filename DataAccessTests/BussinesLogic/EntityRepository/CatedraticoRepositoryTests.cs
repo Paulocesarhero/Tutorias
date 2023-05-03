@@ -54,7 +54,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         [TestMethod()]
         public void GetAllCatedraticosTest()
         {
-            Assert.IsNotNull(catedraticoRepository.GetAllCatedraticos());
+            Assert.IsNotNull(catedraticoRepository.GetAllCatedraticosWithEE());
         }
 
     }

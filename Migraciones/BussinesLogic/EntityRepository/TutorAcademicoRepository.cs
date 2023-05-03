@@ -83,7 +83,9 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Tutor_Academico>().FirstOrDefault(x => x.Id == id);
+                return _context.Set<Tutor_Academico>()
+                    .Include(x => x.Estudiantes)
+                    .FirstOrDefault(x => x.Id == id);
             }
             catch (DbException e)
             {
@@ -95,7 +97,23 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Tutor_Academico>().Include(x => x.Usuario).ToList();
+                return _context.Set<Tutor_Academico>()
+                    .Include(x => x.Estudiantes)
+                    .Include(x => x.Usuario).ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener el tutor academico de la base de datos", e);
+            }
+        }
+
+        public Tutor_Academico GetTutorAcademicoByUser(Usuario usuario)
+        {
+            try
+            {
+                return _context.Set<Tutor_Academico>()
+                    .Include(x => x.Estudiantes)
+                    .FirstOrDefault(t => t.Usuario.Id == usuario.Id);
             }
             catch (DbException e)
             {

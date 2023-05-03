@@ -1,0 +1,126 @@
+﻿<Page
+    Title="ReporteGeneralDeTutorias"
+    d:Background="White"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="graphicLayer.Vistas.ReporteGeneralDeTutorias"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:graphicLayer.Vistas"
+    xmlns:localControls="clr-namespace:graphicLayer.Controles"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Page.DataContext>
+        <local:ReporteGeneralViewModel />
+    </Page.DataContext>
+
+
+    <Grid>
+
+        <StackPanel Margin="15,15,15,15">
+            <localControls:MenuJefeDeCarrera />
+
+            <StackPanel Orientation="Horizontal">
+                <ComboBox
+                    ItemsSource="{Binding PeriodosEscolaresObservableCollection}"
+                    Name="CbPeriodoEscolar"
+                    SelectedItem="{Binding PeriodoEscolarSeleccionado}"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    Width="391"
+                    materialDesign:HintAssist.Hint="Periodo escolar">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontWeight="Bold" Text="Inicio: " />
+                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio, StringFormat='MMM/yyyy'}" />
+                                <TextBlock FontWeight="Bold" Text=" Fin: " />
+                                <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin, StringFormat='MMM/yyyy'}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                </ComboBox>
+                <Separator Height="0" Width="100" />
+                <ComboBox
+                    Name="CbSesionDeTutoria"
+                    SelectedIndex="{Binding NumTutoriaSeleccionada}"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    Width="200"
+                    materialDesign:HintAssist.Hint="Sesión de tutoria academica">
+                    <ComboBoxItem Content="Primera sesión" />
+                    <ComboBoxItem Content="Segunda sesión" />
+                    <ComboBoxItem Content="Tercera sesión" />
+                </ComboBox>
+                <Separator Height="0" Width="20" />
+                <Button
+                    Command="{Binding BtnBuscarReporteCommand}"
+                    Content="{materialDesign:PackIcon BookSearch}"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Name="BtnBuscarReporte"
+                    ToolTip="Icon" />
+            </StackPanel>
+
+            <Separator Height="12" />
+            <GroupBox Header="Problematicas academicas" Width="Auto">
+                <DataGrid
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    Height="auto"
+                    IsSelected="True"
+                    ItemsSource="{Binding ProblematicasObservableCollection}"
+                    Name="DgProblematicas"
+                    SelectedItem="{Binding ProblematicaSeleccionada}"
+                    Width="auto">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Modificar">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Click="BtnMod_Click"
+                                        Content="{materialDesign:PackIcon ModeEdit}"
+                                        Height="auto"
+                                        Name="BtnMod"
+                                        ToolTip="Icon"
+                                        Width="auto" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn
+                            Binding="{Binding Descripcion}"
+                            Header="Descripción"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Nombre}"
+                            Header="Experiencia educativa"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
+                            Header="Profesor"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding NumAlumnos}"
+                            Header="Alumnos afectados"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Solucion.Titulo}" Header="Solucion" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <GroupBox Header="Reporte de tutoria" Padding="8">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            FontSize="19"
+                            Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                            Text="Total de asistencias: "
+                            TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding TotalDeAsistenciasObservable}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+
+
+</Page>

@@ -34,7 +34,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
             }
             catch (DbUpdateException e)
             {
-                throw new("Error al agregar al estudiante", e);
+                 throw new ("Error al agregar al estudiante", e);
             }
         }
 
@@ -95,7 +95,10 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Estudiante>().Where(e => e.TutorAcademico == null).ToList();
+                return _context.Set<Estudiante>().Where(e=> e.TutorAcademico == null)
+                    .Include(x => x.TutorAcademico)
+                    .ThenInclude(x => x.Usuario)
+                    .ToList();
             }
             catch (DbException e)
             {
@@ -109,6 +112,19 @@ namespace DataAccess.BussinesLogic.EntityRepository
             try
             {
                 return _context.Set<Estudiante>().Where(e => e.Id == id).FirstOrDefault();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener los estudiantes", e);
+
+            }
+        }
+
+        public List<Estudiante> GetEstudiantesByTutorAcademico(Tutor_Academico tutorAcademico)
+        {
+            try
+            {
+                return _context.Set<Estudiante>().Where(e => e.TutorAcademico.Id == tutorAcademico.Id).ToList();
             }
             catch (DbException e)
             {

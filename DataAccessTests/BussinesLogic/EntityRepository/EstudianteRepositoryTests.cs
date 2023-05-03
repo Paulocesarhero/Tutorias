@@ -14,14 +14,14 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
     {
         static TutoriasContext context = new TutoriasContext();
         private EstudianteRepository estudianteRepository = new EstudianteRepository(context);
-        private static TutorAcademicoRepository tutorAcademicoRepository= new TutorAcademicoRepository(context);
+        private static TutorAcademicoRepository tutorAcademicoRepository = new TutorAcademicoRepository(context);
 
         private Estudiante estudiante = new Estudiante()
         {
-            Nombres = "Paulito Y Su Norteño banda",
-            Apellidos = "Del norte para el mundo",
-            Matricula = "123685",
-            TutorAcademico = tutorAcademicoRepository.GetTutorAcademico(1)
+            Nombres = "GOKU",
+            Apellidos = "ULTRA INSTINCT",
+            Matricula = "S212320054",
+            TutorAcademico = tutorAcademicoRepository.GetTutorAcademico(3)
         };
 
         [TestMethod()]
@@ -49,7 +49,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         public void GetAllEstudiantesTest()
         {
             List<Estudiante> result = estudianteRepository.GetAllEstudiantes();
-            result.ForEach(x => Console.WriteLine(x.Nombres + "\n") );
+            result.ForEach(x => Console.WriteLine(x.Nombres + "\n"));
             Assert.IsNotNull(result);
         }
 
@@ -57,6 +57,16 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         public void GetEstudiantesWithOutTutorTest()
         {
             List<Estudiante> result = estudianteRepository.GetEstudiantesWithOutTutor();
+            result.ForEach(x => Console.WriteLine(x.Nombres + "\n"));
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod()]
+        public void GetEstudiantesByTutorAcademicoTest()
+        {
+            TutorAcademicoRepository tutorAcademicoRepository = new TutorAcademicoRepository(new TutoriasContext());
+            Tutor_Academico tutorAcademico = tutorAcademicoRepository.GetAllTutorAcademico().Last();
+            List<Estudiante> result = estudianteRepository.GetEstudiantesByTutorAcademico(tutorAcademico);
             result.ForEach(x => Console.WriteLine(x.Nombres + "\n"));
             Assert.IsNotNull(result);
         }

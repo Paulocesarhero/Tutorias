@@ -67,5 +67,17 @@ namespace DataAccess.BussinesLogic.EntityRepository
                 throw new Exception("Error al agregar un nuevo usuario", e);
             }
         }
+
+        public List<Usuario> GetAllUser()
+        {
+            try
+            {
+                return _context.Set<Usuario>().ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al agregar un nuevo usuario", e);
+            }
+        }
     }
 }

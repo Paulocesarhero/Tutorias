@@ -57,11 +57,6 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                Catedratico existingCatedratico = _context.Set<Catedratico>().FirstOrDefault(cat => cat.Id == catedratico.Id);
-                if (existingCatedratico == null)
-                {
-                    throw new Exception("Catedratico not found");
-                }
                 _context.Set<Catedratico>().Update(catedratico);
                 return _context.SaveChanges() > 0;
             }
@@ -88,12 +83,24 @@ namespace DataAccess.BussinesLogic.EntityRepository
                 throw new Exception("Error al eliminar catedratico", e);
             }
         }
-        public List<Catedratico> GetAllCatedraticos()
+        public List<Catedratico> GetAllCatedraticosWithEE()
         {
             try
             {
                 return _context.Set<Catedratico>().Include(catedratico => catedratico.ExperienciasEducativas)
                     .ThenInclude(experiencia => experiencia.ProgramaEducativo).ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener todos los catedraticos", e);
+            }
+        }
+
+        public List<Catedratico> GetAllCatedraticos()
+        {
+            try
+            {
+                return _context.Set<Catedratico>().ToList();
             }
             catch (DbException e)
             {

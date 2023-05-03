@@ -22,7 +22,20 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                _context.Set<Periodo_Escolar>().Add(periodoEscolar);
+                if (periodoEscolar.Id == 0)
+                {
+                    Periodo_Escolar exist = _context.Set<Periodo_Escolar>().FirstOrDefault(x => x.FechaDeInicio == periodoEscolar.FechaDeInicio && x.FechaDeFin == periodoEscolar.FechaDeFin);
+                    if (exist != null)
+                    {
+                        return true;
+                    }
+                    _context.Set<Periodo_Escolar>().Add(periodoEscolar);
+                }
+                else
+                {
+                    _context.Set<Periodo_Escolar>().Update(periodoEscolar);
+                }
+                
                 return _context.SaveChanges() > 0;
             }
             catch (DbUpdateException e)
@@ -66,7 +79,9 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Periodo_Escolar>().ToList();
+                return _context.Set<Periodo_Escolar>()
+                    .Include(x => x.FechasDeTutorias)
+                    .ToList();
             }
             catch (DbUpdateException e)
             {

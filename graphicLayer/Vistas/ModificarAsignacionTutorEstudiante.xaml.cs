@@ -117,7 +117,7 @@ namespace graphicLayer.Vistas
             bool result = false;
             int resultCount = 0;
 
-            if (cbTutoresAElegir.SelectedItem != null && )
+            if (cbTutoresAElegir.SelectedItem != null )
             {
                 if ((cbTutoresAElegir.SelectedItem as Tutor_Academico).Id == (cbTutores.SelectedItem as Tutor_Academico).Id)
                 {

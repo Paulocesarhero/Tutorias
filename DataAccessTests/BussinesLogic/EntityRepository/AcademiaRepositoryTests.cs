@@ -17,7 +17,7 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
 
         private Academia academia = new Academia()
         {
-            NombreAcademia = "Q&A"
+            NombreAcademia = "SISTEMAS EN RED"
         };
 
         [TestMethod()]

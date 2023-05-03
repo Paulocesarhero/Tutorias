@@ -47,13 +47,13 @@ namespace graphicLayer.Vistas
         private void NavigateToUserWindow()
         {
             Usuario result = null;
-            UsuarioRepository usuarioRepository = new UsuarioRepository(new TutoriasContext()); 
+            UsuarioRepository usuarioRepository = new UsuarioRepository(new TutoriasContext());
+            FechaDeTutoriaRepository fechaDeTutoriaRepository = new FechaDeTutoriaRepository(new TutoriasContext());
             string username = TbUsername.Text;
             string password = PbPassword.Password.ToString();
             try
             {
                 result = usuarioRepository.Login(username, password);
-
             }
             catch (Exception e)
             {
@@ -61,13 +61,10 @@ namespace graphicLayer.Vistas
                     e.Message,
                     MessageBoxButton.OKCancel);
             }
+
             if (result != null)
             {
-                AsignarTutorAEstudiante pgConsultarSolucion = new AsignarTutorAEstudiante();
-                CredencialesUsuario.Instance.Usuario = result;
-                this.NavigationService.Navigate(pgConsultarSolucion);                
-
-                /*switch (result.TipoUsuario.Tipo)
+                switch (result.TipoUsuario.Tipo)
                 {
                     case "Jefe de carrera":
                         ReporteGeneralDeTutorias firstPageJefeDeCarrera = new ReporteGeneralDeTutorias();
@@ -82,20 +79,30 @@ namespace graphicLayer.Vistas
                         break;
 
                     case "Tutor academico":
-                        LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
-                        CredencialesUsuario.Instance.Usuario = result;
-                        this.NavigationService.Navigate(firstPageTutorAcademico);
+                        if (fechaDeTutoriaRepository.GetFechaDeTutoriaActual(DateTime.Now) == null)
+                        {
+                            MessageBox.Show("Actualmente no hay ninguna fecha de tutoria abierta",
+                                "Podria comunicarse con la coordinadora para solicitar una prorroga");
+                        }
+                        else
+                        {
+                            CredencialesUsuario.Instance.Usuario = result;
+                            LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
+
+                            this.NavigationService.Navigate(firstPageTutorAcademico);
+                        }
+
                         break;
                     default:
                         MessageBox.Show("El usuario no tiene un tipo de usuario asignado",
                             "Contacte al administrador para concederle los permisos adecuados");
                         break;
-                }*/
+                }
             }
             else
             {
                 MessageBox.Show("El usuario no se encuentra",
-                            "Verifique su usuario y contraseña");
+                    "Verifique su usuario y contraseña");
             }
         }
     }
