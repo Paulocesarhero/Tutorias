@@ -33,12 +33,8 @@ namespace graphicLayer.Vistas
 
         private void fillData(Problematica fila)
         {
-            SolucionRepository solucionRepository = new SolucionRepository(new TutoriasContext());
-
-            Solucion objetoSolucion = new Solucion();
-            objetoSolucion = solucionRepository.GetSolucion(fila.Id);
-
             problematicaRecibida = fila;
+            Solucion objetoSolucion = problematicaRecibida.Solucion;
             tBoxDescripcionProblematica.Text = fila.Descripcion;
             lblIncidencias.Content = fila.NumAlumnos;
             lblEE.Content = fila.ExperienciaEducativa.Nombre;

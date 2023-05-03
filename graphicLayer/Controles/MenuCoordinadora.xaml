@@ -15,7 +15,7 @@
                 Name="BtnExit"
                 Click="BtnExit_Click"
                 Header="Salir" />
-            <MenuItem Name="BtnAdministrarEstudiante" Header="Estudiantes" />
+
             <MenuItem Name="BtnExperiencias" Header="Experiencias">
                 <MenuItem
                     Name="btnExperiencias"
@@ -30,10 +30,20 @@
                 Name="BtnAdministrarFechasdesesión"
                 Click="BtnAdministrarFechasdesesión_Click"
                 Header="Fechas de sesión de tutoria academica" />
+            <MenuItem Header="Tutores academicos">
+                <MenuItem
+                    Name="BtnasignarTutorAcademicoAEstudiante"
+                    Click="BtnasignarTutorAcademicoAEstudiante_Click"
+                    Header="Asignar tutor academico a estudiante" />
+                <MenuItem
+                    Name="BtnModificaAsignacionTutorAcademicoEstudiante"
+                    Click="BtnModificaAsignacionTutorAcademicoEstudiante_Click"
+                    Header="Modificar asignación tutores academicos" />
+            </MenuItem>
             <MenuItem
-                Name="BtnAdministrarTutoresAcademicos"
-                Click="BtnAdministrarTutoresAcademicos_Click"
-                Header="Tutores academicos" />
+                Name="BtnSoluciones"
+                Click="BtnSoluciones_Click"
+                Header="Soluciones" />
         </Menu>
     </Grid>
 </UserControl>

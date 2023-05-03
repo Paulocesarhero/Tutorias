@@ -68,8 +68,9 @@ namespace graphicLayer.Vistas
                     MessageBoxButton.OKCancel);
             }
 
-            periodosEscolares.FirstOrDefault().FechaDeInicio.GetDateTimeFormats();
-            PeriodosEscolaresObservableCollection = new ObservableCollection<Periodo_Escolar>(periodosEscolares);
+            List<Periodo_Escolar> periodoEscolarSeleccionados = periodosEscolares.OrderBy(x => x.FechaDeInicio).ToList();
+
+            PeriodosEscolaresObservableCollection = new ObservableCollection<Periodo_Escolar>(periodoEscolarSeleccionados);
         }
 
         private void BuscarReporteCommand()
@@ -78,7 +79,8 @@ namespace graphicLayer.Vistas
             ProblematicaRepository problematicaRepository = new ProblematicaRepository(new TutoriasContext());
             problematicas = problematicaRepository.GetProblematicas(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
             ProblematicasObservableCollection.Clear();
-            foreach (var problematica in problematicas) ProblematicasObservableCollection.Add(problematica);
+            List<Problematica> problematicasSinSolucion = problematicas.Where(x => x.Solucion != null).ToList();
+            foreach (var problematica in problematicasSinSolucion) ProblematicasObservableCollection.Add(problematica);
         }
 
     }
