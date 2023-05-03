@@ -51,11 +51,36 @@ namespace graphicLayer.Vistas
 
         private void BtnAddProblematica_Click(object sender, RoutedEventArgs e)
         {
-            LlenarProblematicas llenarProblematicas = new LlenarProblematicas();
-            llenarProblematicas.FechaDeTutoria = fechaDeTutoria;
-            llenarProblematicas.TutorAcademico = tutorAcademico;
-            llenarProblematicas.FillProblematicas();
-            this.NavigationService.Navigate(llenarProblematicas);
+            ReporteDeTutoriaRepository reporteDeTutoriaRepository = new ReporteDeTutoriaRepository(new TutoriasContext());
+            Reporte_De_Tutoria findReporteDeTutoria = new Reporte_De_Tutoria();
+            try
+            {
+                 findReporteDeTutoria = reporteDeTutoriaRepository.GetReporteDeTutoria(tutorAcademico, fechaDeTutoria);
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,
+                    "Error en la conexión con la base de datos",
+                    MessageBoxButton.OK);
+            }
+
+            if (findReporteDeTutoria != null)
+            {
+                LlenarProblematicas llenarProblematicas = new LlenarProblematicas();
+                llenarProblematicas.FechaDeTutoria = fechaDeTutoria;
+                llenarProblematicas.TutorAcademico = tutorAcademico;
+                llenarProblematicas.FillProblematicas();
+                this.NavigationService.Navigate(llenarProblematicas);
+            }
+            else
+            {
+                MessageBox.Show("Primero tiene que guardar el reporte de tutoria antes de agregar las problematicas",
+                    "Guarde su reporte de tutoria academica ",
+                    MessageBoxButton.OK);
+            }
+
+            
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -91,6 +116,12 @@ namespace graphicLayer.Vistas
             }
 
             
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            NavigationService.Navigate(login);
         }
     }
 
