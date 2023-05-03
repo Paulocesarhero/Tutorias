@@ -56,6 +56,26 @@ namespace graphicLayer.Controles
             Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
             pg.NavigationService.Navigate(administrarfechas);
         }
+
+        private void BtnSoluciones_Click(object sender, RoutedEventArgs e)
+        {
+            ConsultarSolucionProblematica consultarSolucion = new ConsultarSolucionProblematica();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(consultarSolucion);
+        }
+        private void BtnasignarTutorAcademicoAEstudiante_Click(object sender, RoutedEventArgs e)
+        {
+            AsignarTutorAEstudiante asignarTutorAEstudiante = new AsignarTutorAEstudiante();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(asignarTutorAEstudiante);
+        }
+
+        private void BtnModificaAsignacionTutorAcademicoEstudiante_Click(object sender, RoutedEventArgs e)
+        {
+            ModificarAsignacionTutorEstudiante modificarAsignacion = new ModificarAsignacionTutorEstudiante();
+            Page pg = GetDependencyObjectFromVisualTree(this, typeof(Page)) as Page;
+            pg.NavigationService.Navigate(modificarAsignacion);
+        }
         /// <summary>
 
         /// Walk visual tree to find the first DependencyObject  of the specific type.
@@ -85,6 +105,7 @@ namespace graphicLayer.Controles
 
             return parent;
         }
+
 
         
     }
