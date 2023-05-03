@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataAccess.BussinesLogic.EntityRepository;
+using Tutorias.Service.DatabaseContext;
 
 namespace graphicLayer.Vistas.AdministrarFechas
 {
@@ -20,6 +22,7 @@ namespace graphicLayer.Vistas.AdministrarFechas
     /// </summary>
     public partial class AgregarPeriodoEscolar : Page
     {
+        public Periodo_Escolar _PeriodoEscolar { get; set; } = new Periodo_Escolar();
         public AgregarPeriodoEscolar()
         {
             InitializeComponent();
@@ -29,15 +32,68 @@ namespace graphicLayer.Vistas.AdministrarFechas
         {
             List<int> years = Enumerable.Range(2000, 31).ToList();
             CbYearInit.ItemsSource = years;
-            CbYearInit.SelectedIndex = years.IndexOf(DateTime.Now.Year);
             CbLastYear.ItemsSource = years;
-            CbLastYear.SelectedIndex = years.IndexOf(DateTime.Now.Year + 1);
-            CbMesFin.SelectedIndex = 0;
+
+            if (_PeriodoEscolar.Id == 0)
+            {
+                CbYearInit.SelectedIndex = years.IndexOf(DateTime.Now.Year);
+                CbLastYear.SelectedIndex = years.IndexOf(DateTime.Now.Year + 1);
+                CbMesFin.SelectedIndex = 0;
+            }
+            else
+            {
+                CbYearInit.SelectedItem = years.IndexOf(_PeriodoEscolar.FechaDeInicio.Year);
+                CbLastYear.SelectedItem = years.IndexOf(_PeriodoEscolar.FechaDeFin.Year);
+                if (_PeriodoEscolar.FechaDeFin.Month == 1)
+                {
+                    CbMesFin.SelectedIndex = 1;
+                }
+                else
+                {
+                    CbMesFin.SelectedIndex = 0;
+                }
+                
+
+            }
+
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            PeriodoEscolarRepository peroEscolarRepository = new PeriodoEscolarRepository(new TutoriasContext());
+
+            _PeriodoEscolar.FechaDeInicio = new DateTime((int)CbYearInit.SelectedItem, GetMesDeFechaDeInicio(), 1);
+            _PeriodoEscolar.FechaDeFin = new DateTime((int)CbLastYear.SelectedItem, GetMesDeFechaDeFin(), 1);
+            try
+            {
+                peroEscolarRepository.AddPeriodoEscolar(_PeriodoEscolar);
+                MessageBox.Show("Periodo escolar agregado",
+                    "El periodo escolar ha sido agregado",
+                    MessageBoxButton.OK);
+                AdministrarFechasDeEntrega administrarFechasDeEntrega = new AdministrarFechasDeEntrega();
+                administrarFechasDeEntrega.FillPeriodosEscolares();
+                NavigationService.Navigate(administrarFechasDeEntrega);
+
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,
+                    "Error en la conexión con la base de datos",
+                    MessageBoxButton.OK);
+            }
+
+        }
+
+        private int GetMesDeFechaDeInicio()
+        {
+            return (CbMesInicio.SelectedItem == "Febrero") ? 2 : 8;
+
+        }
+        private int GetMesDeFechaDeFin()
+        {
+            return (CbMesFin.SelectedItem == "Enero") ? 1 : 7;
+
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
