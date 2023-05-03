@@ -18,10 +18,10 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
 
         private Estudiante estudiante = new Estudiante()
         {
-            Nombres = "GOKU",
-            Apellidos = "ULTRA INSTINCT",
+            Nombres = "Escanor",
+            Apellidos = "EL septimo pecado capital",
             Matricula = "S212320054",
-            TutorAcademico = tutorAcademicoRepository.GetTutorAcademico(3)
+            //TutorAcademico = tutorAcademicoRepository.GetTutorAcademico(3)
         };
 
         [TestMethod()]

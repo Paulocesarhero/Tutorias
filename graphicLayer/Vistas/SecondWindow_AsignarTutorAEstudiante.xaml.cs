@@ -46,10 +46,8 @@ namespace graphicLayer.Vistas
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
+            AsignarTutorAEstudiante asignar = new AsignarTutorAEstudiante();
+            NavigationService.Navigate(asignar);
         }
 
         private void btnCreateAssignment_Click_1(object sender, RoutedEventArgs e)
@@ -96,6 +94,8 @@ namespace graphicLayer.Vistas
                 if (estudiantesSeleccionados.Count() == counter)
                 {
                     MessageBox.Show("Asignación de estudiantes exitosa");
+                    AsignarTutorAEstudiante asignar = new AsignarTutorAEstudiante();
+                    NavigationService.Navigate(asignar);
                 }
                 else
                 {
