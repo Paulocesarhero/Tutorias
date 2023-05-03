@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Mysqlx.Session;
 using MySqlX.XDevAPI.Common;
 using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Interface;
@@ -13,6 +14,8 @@ namespace Tutorias.BussinesLogic.Management
 {
 	public class TutoriaManagement : ITutoriaManagement
 	{
+
+
 		public bool AddCatedratico(Catedratico catedratico)
 		{
 			bool status;

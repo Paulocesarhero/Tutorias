@@ -48,6 +48,17 @@ namespace DataAccess.BussinesLogic.EntityRepository
             return result;
         }
 
+        public Solucion GetSolucion(int id)
+        {
+            try
+            {
+                return _context.Set<Solucion>().FirstOrDefault(x => x.Id == id);
+            }
+            catch (DbException dbException)
+            {
+                throw new Exception("Error al obtener la solucion", dbException);
+            }
+        }
 
     }
 }

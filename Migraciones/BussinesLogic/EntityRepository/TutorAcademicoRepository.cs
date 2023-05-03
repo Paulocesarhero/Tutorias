@@ -120,5 +120,74 @@ namespace DataAccess.BussinesLogic.EntityRepository
                 throw new Exception("Error al obtener el tutor academico de la base de datos", e);
             }
         }
+
+        public int getNumberOfMentees(Tutor_Academico objTutor)
+        {
+
+            int number;
+
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    number = context.Estudiantes
+                        .Where(x => x.IdTutorAcademico == objTutor.Id)
+                        .ToList()
+                        .Count();
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return number;
+        }
+
+        public List<Tutor_Academico> GetTutorAcademicosWithTutoradosCount()
+        {
+
+            List<Tutor_Academico> findTutors = new List<Tutor_Academico>();
+            List<Tutor_Academico> listToClient = new List<Tutor_Academico>();
+
+            try
+            {
+                using (TutoriasContext context = new TutoriasContext())
+                {
+                    findTutors = context.TutorAcademico
+                    .ToList();
+                }
+
+                foreach (Tutor_Academico tutor in findTutors)
+                {
+                    tutor.Nombres = tutor.Nombres + " " + tutor.Apellidos;
+                    tutor.Apellidos = "";
+                    tutor.Apellidos = getNumberOfMentees(tutor).ToString();
+                    listToClient.Add(tutor);
+                }
+            }
+            catch (DbException dbException)
+            {
+                throw dbException;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                throw invalidOperationException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return listToClient;
+        }
+
+
     }
 }

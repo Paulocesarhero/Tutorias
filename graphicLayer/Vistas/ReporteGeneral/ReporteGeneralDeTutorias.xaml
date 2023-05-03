@@ -1,17 +1,17 @@
 ﻿<Page
+    Title="ReporteGeneralDeTutorias"
+    d:Background="White"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
     x:Class="graphicLayer.Vistas.ReporteGeneralDeTutorias"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:graphicLayer.Vistas"
     xmlns:localControls="clr-namespace:graphicLayer.Controles"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="ReporteGeneralDeTutorias"
-    d:Background="White"
-    d:DesignHeight="600"
-    d:DesignWidth="800"
-    mc:Ignorable="d">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Page.DataContext>
         <local:ReporteGeneralViewModel />
     </Page.DataContext>
@@ -24,12 +24,12 @@
 
             <StackPanel Orientation="Horizontal">
                 <ComboBox
-                    Name="CbPeriodoEscolar"
-                    Width="391"
-                    materialDesign:HintAssist.Hint="Periodo escolar"
                     ItemsSource="{Binding PeriodosEscolaresObservableCollection}"
+                    Name="CbPeriodoEscolar"
                     SelectedItem="{Binding PeriodoEscolarSeleccionado}"
-                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    Width="391"
+                    materialDesign:HintAssist.Hint="Periodo escolar">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -42,48 +42,48 @@
                     </ComboBox.ItemTemplate>
 
                 </ComboBox>
-                <Separator Width="100" Height="0" />
+                <Separator Height="0" Width="100" />
                 <ComboBox
                     Name="CbSesionDeTutoria"
-                    Width="200"
-                    materialDesign:HintAssist.Hint="Sesión de tutoria academica"
                     SelectedIndex="{Binding NumTutoriaSeleccionada}"
-                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    Width="200"
+                    materialDesign:HintAssist.Hint="Sesión de tutoria academica">
                     <ComboBoxItem Content="Primera sesión" />
                     <ComboBoxItem Content="Segunda sesión" />
                     <ComboBoxItem Content="Tercera sesión" />
                 </ComboBox>
-                <Separator Width="20" Height="0" />
+                <Separator Height="0" Width="20" />
                 <Button
-                    Name="BtnBuscarReporte"
                     Command="{Binding BtnBuscarReporteCommand}"
                     Content="{materialDesign:PackIcon BookSearch}"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Name="BtnBuscarReporte"
                     ToolTip="Icon" />
             </StackPanel>
 
             <Separator Height="12" />
-            <GroupBox Width="Auto" Header="Problematicas academicas">
+            <GroupBox Header="Problematicas academicas" Width="Auto">
                 <DataGrid
-                    Name="DgProblematicas"
-                    Width="auto"
-                    Height="auto"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
+                    Height="auto"
                     IsSelected="True"
                     ItemsSource="{Binding ProblematicasObservableCollection}"
-                    SelectedItem="{Binding ProblematicaSeleccionada}">
+                    Name="DgProblematicas"
+                    SelectedItem="{Binding ProblematicaSeleccionada}"
+                    Width="auto">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Modificar">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button
-                                        Name="BtnMod"
-                                        Width="auto"
-                                        Height="auto"
                                         Click="BtnMod_Click"
                                         Content="{materialDesign:PackIcon ModeEdit}"
-                                        ToolTip="Icon" />
+                                        Height="auto"
+                                        Name="BtnMod"
+                                        ToolTip="Icon"
+                                        Width="auto" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -107,7 +107,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
-            <GroupBox Padding="8" Header="Reporte de tutoria">
+            <GroupBox Header="Reporte de tutoria" Padding="8">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock

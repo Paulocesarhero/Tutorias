@@ -373,3 +373,8 @@ local.properties
 
 # Directory Build overrides for local setups
 Directory.Build.Override.props
+/MaterialDesignInXamlToolkit-master.zip
+/MaterialDesignInXamlToolkit-master/MaterialDesignInXamlToolkit-master
+/graphicLayer/Vistas/Login.xaml.cs
+/graphicLayer/Vistas/ReporteGeneralDeTutorias.xaml
+/graphicLayer/Vistas/ReporteGeneralDeTutorias.xaml.cs

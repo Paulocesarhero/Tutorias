@@ -63,7 +63,7 @@ namespace graphicLayer.Vistas
         public String TotalDeAsistenciasObservable
         {
             get { return (string)GetValue(TotalDeAsistenciasObservableProperty); }
-            set {SetValue(TotalDeAsistenciasObservableProperty, value);}
+            set { SetValue(TotalDeAsistenciasObservableProperty, value); }
         }
 
         public ICommand SelectProblematicaCommand { get; set; }

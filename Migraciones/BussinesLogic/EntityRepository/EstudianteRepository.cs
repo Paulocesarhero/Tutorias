@@ -132,5 +132,85 @@ namespace DataAccess.BussinesLogic.EntityRepository
 
             }
         }
+
+        public List<Estudiante> findEstudiantesWithOutTutor()
+        {
+            try
+            {
+                return _context.Set<Estudiante>().Where(e => e.TutorAcademico == null)
+                    .ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener los estudiantes", e);
+            }
+        }
+
+        public bool updateAssignmentTutorToStudent(Estudiante objetoEstudiante)
+        {
+            bool status = false;
+            using (TutoriasContext context = new TutoriasContext())
+            {
+                try
+                {
+                    context.Estudiantes.Update(objetoEstudiante);
+                    context.SaveChanges();
+                    status = true;
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    throw dbUpdateException;
+                }
+                catch (InvalidOperationException invalidOperationException)
+                {
+                    throw invalidOperationException;
+                }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
+            }
+            return status;
+        }
+
+        public List<Estudiante> getEstudiantesWithTutor(Tutor_Academico tutorRecibido)
+        {
+            try
+            {
+                return _context.Set<Estudiante>().Where(e => e.TutorAcademico.Id == tutorRecibido.Id)
+                    .Include(x => x.TutorAcademico)
+                    .ThenInclude(x => x.Usuario)
+                    .ThenInclude(x => x.ProgramaEducativo)
+                    .ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener los estudiantes", e);
+            }
+        }
+
+        public bool UpdateTutorToEstudiante(Estudiante estudiante)
+        {
+            try
+            {
+                Estudiante exist = _context.Set<Estudiante>()
+                    .FirstOrDefault(x => x.Id == estudiante.Id || x.Matricula == estudiante.Matricula);
+                if (exist == null)
+                {
+                    throw new Exception("Estudiante no encontrado");
+                }
+
+                exist.IdTutorAcademico = estudiante.IdTutorAcademico;
+
+                _context.Set<Estudiante>().Update(exist);
+                return _context.SaveChanges() > 0;
+            }
+            catch (DbUpdateException e)
+            {
+                throw new("Error al actualizar el estudiante", e);
+
+            }
+        }
+
     }
 }

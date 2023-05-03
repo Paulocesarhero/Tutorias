@@ -54,7 +54,6 @@ namespace graphicLayer.Vistas
             try
             {
                 result = usuarioRepository.Login(username, password);
-
             }
             catch (Exception e)
             {
@@ -62,6 +61,7 @@ namespace graphicLayer.Vistas
                     e.Message,
                     MessageBoxButton.OKCancel);
             }
+
             if (result != null)
             {
                 switch (result.TipoUsuario.Tipo)
@@ -91,6 +91,7 @@ namespace graphicLayer.Vistas
 
                             this.NavigationService.Navigate(firstPageTutorAcademico);
                         }
+
                         break;
                     default:
                         MessageBox.Show("El usuario no tiene un tipo de usuario asignado",
@@ -101,7 +102,7 @@ namespace graphicLayer.Vistas
             else
             {
                 MessageBox.Show("El usuario no se encuentra",
-                            "Verifique su usuario y contraseña");
+                    "Verifique su usuario y contraseña");
             }
         }
     }
