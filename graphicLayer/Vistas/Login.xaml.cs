@@ -47,7 +47,8 @@ namespace graphicLayer.Vistas
         private void NavigateToUserWindow()
         {
             Usuario result = null;
-            UsuarioRepository usuarioRepository = new UsuarioRepository(new TutoriasContext()); 
+            UsuarioRepository usuarioRepository = new UsuarioRepository(new TutoriasContext());
+            FechaDeTutoriaRepository fechaDeTutoriaRepository = new FechaDeTutoriaRepository(new TutoriasContext());
             string username = TbUsername.Text;
             string password = PbPassword.Password.ToString();
             try
@@ -78,9 +79,18 @@ namespace graphicLayer.Vistas
                         break;
 
                     case "Tutor academico":
-                        CredencialesUsuario.Instance.Usuario = result;
-                        LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
-                        this.NavigationService.Navigate(firstPageTutorAcademico);
+                        if (fechaDeTutoriaRepository.GetFechaDeTutoriaActual(DateTime.Now) == null)
+                        {
+                            MessageBox.Show("Actualmente no hay ninguna fecha de tutoria abierta",
+                                "Podria comunicarse con la coordinadora para solicitar una prorroga");
+                        }
+                        else
+                        {
+                            CredencialesUsuario.Instance.Usuario = result;
+                            LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
+
+                            this.NavigationService.Navigate(firstPageTutorAcademico);
+                        }
                         break;
                     default:
                         MessageBox.Show("El usuario no tiene un tipo de usuario asignado",

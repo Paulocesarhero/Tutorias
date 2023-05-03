@@ -97,8 +97,11 @@ namespace graphicLayer.Vistas.AdministrarFechas
         {
             FechaDeTutoriaRepository fechaDeTutoriaRepository = new FechaDeTutoriaRepository(new TutoriasContext());
             PrimeraFechaDeTutoria.FechaDeCierre = Convert.ToDateTime(DpFirst.Text);
+            PrimeraFechaDeTutoria.NumDeTutoria = 1;
             SegundaFechaDeTutoria.FechaDeCierre = Convert.ToDateTime(DpSecond.Text);
+            SegundaFechaDeTutoria.NumDeTutoria = 2;
             TerceraFechaDEtutoria.FechaDeCierre = Convert.ToDateTime(DpThird.Text);
+            TerceraFechaDEtutoria.NumDeTutoria = 3;
             if (AreValidateDates() && IsInPeriodos())
             {
                 try
