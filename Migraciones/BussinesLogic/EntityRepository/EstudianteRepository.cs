@@ -34,7 +34,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
             }
             catch (DbUpdateException e)
             {
-                 throw new ("Error al agregar al estudiante", e);
+                throw new("Error al agregar al estudiante", e);
             }
         }
 
@@ -95,7 +95,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Estudiante>().Where(e=> e.TutorAcademico == null).ToList();
+                return _context.Set<Estudiante>().Where(e => e.TutorAcademico == null).ToList();
             }
             catch (DbException e)
             {
@@ -119,28 +119,15 @@ namespace DataAccess.BussinesLogic.EntityRepository
 
         public List<Estudiante> findEstudiantesWithOutTutor()
         {
-            List<Estudiante> result = new List<Estudiante>();
             try
             {
-                using (TutoriasContext context = new TutoriasContext())
-                {
-                    result = context.Estudiantes.Where(estudiante => estudiante.TutorAcademico == null)
-                        .ToList();
-                }
+                return _context.Set<Estudiante>().Where(e => e.TutorAcademico == null)
+                    .ToList();
             }
-            catch (DbException dbException)
+            catch (DbException e)
             {
-                throw dbException;
+                throw new Exception("Error al obtener los estudiantes", e);
             }
-            catch (InvalidOperationException invalidOperationException)
-            {
-                throw invalidOperationException;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return result;
         }
 
         public bool updateAssignmentTutorToStudent(Estudiante objetoEstudiante)
@@ -168,6 +155,45 @@ namespace DataAccess.BussinesLogic.EntityRepository
                 }
             }
             return status;
+        }
+
+        public List<Estudiante> getEstudiantesWithTutor(Tutor_Academico tutorRecibido)
+        {
+            try
+            {
+                return _context.Set<Estudiante>().Where(e => e.TutorAcademico.Id == tutorRecibido.Id)
+                    .Include(x => x.TutorAcademico)
+                    .ThenInclude(x => x.Usuario)
+                    .ThenInclude(x => x.ProgramaEducativo)
+                    .ToList();
+            }
+            catch (DbException e)
+            {
+                throw new Exception("Error al obtener los estudiantes", e);
+            }
+        }
+
+        public bool UpdateTutorToEstudiante(Estudiante estudiante)
+        {
+            try
+            {
+                Estudiante exist = _context.Set<Estudiante>()
+                    .FirstOrDefault(x => x.Id == estudiante.Id || x.Matricula == estudiante.Matricula);
+                if (exist == null)
+                {
+                    throw new Exception("Estudiante no encontrado");
+                }
+
+                exist.IdTutorAcademico = estudiante.IdTutorAcademico;
+
+                _context.Set<Estudiante>().Update(exist);
+                return _context.SaveChanges() > 0;
+            }
+            catch (DbUpdateException e)
+            {
+                throw new("Error al actualizar el estudiante", e);
+
+            }
         }
 
     }

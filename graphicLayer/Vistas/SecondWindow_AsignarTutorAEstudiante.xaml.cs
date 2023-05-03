@@ -50,7 +50,7 @@ namespace graphicLayer.Vistas
             {
                 NavigationService.GoBack();
             }
-        }        
+        }
 
         private void btnCreateAssignment_Click_1(object sender, RoutedEventArgs e)
         {

@@ -17,21 +17,17 @@
             CanUserAddRows="False"
             >
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn 
-                    x:Name="checkboxSeleccionar" 
+                <DataGridCheckBoxColumn
+                    x:Name="checkboxSeleccionar"
                     Header="Seleccionar"
-                 />
-                 <DataGridTextColumn 
-                    Header="Matrícula" 
+                    />
+                <DataGridTextColumn
+                    Header="Matrícula"
                     Binding="{Binding Matricula}"
-                 />
-                <DataGridTextColumn 
-                    Header="Nombre" 
-                    Binding="{Binding Nombres}"
-                />
-                <DataGridTextColumn 
-                    Header="Programa Educativo"
-                />
+                    />
+                <DataGridTextColumn
+                    Header="Nombre"
+                    Binding="{Binding Nombres}" />
 
             </DataGrid.Columns>
         </DataGrid>
@@ -70,13 +66,13 @@
             VerticalAlignment="Top"
             Click="btnBack_Click" Background="#FFD2594D"
             />
-        <Button 
-            x:Name="btnCreateAssignment" 
-            Content="Asignar" 
-            HorizontalAlignment="Left" 
-            Margin="622,398,0,0" 
-            VerticalAlignment="Top" 
+        <Button
+            x:Name="btnCreateAssignment"
+            Content="Asignar"
+            HorizontalAlignment="Left"
+            Margin="622,398,0,0"
+            VerticalAlignment="Top"
             Click="btnCreateAssignment_Click_1"
-        />
+            />
     </Grid>
 </Page>
