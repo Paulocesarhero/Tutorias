@@ -19,6 +19,12 @@
     <StackPanel Margin="15">
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <Button
+                Name="BtnBack"
+                Margin="10"
+                Click="BtnBack_Click"
+                Content="{materialDesign:PackIcon ArrowBack}"
+                ToolTip="Icon" />
+            <Button
                 Name="BtnSave"
                 Margin="10"
                 Click="BtnSave_Click"

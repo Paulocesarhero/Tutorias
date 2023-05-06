@@ -16,85 +16,93 @@
 
     <StackPanel Margin="15,15,15,15">
         <localControls:MenuCoordinadora />
-        <StackPanel Orientation="Horizontal">
-            <ComboBox
-                Name="CbPeriodoEscolar"
-                Width="391"
-                materialDesign:HintAssist.Hint="Periodo escolar"
-                ItemsSource="{Binding PeriodosEscolaresObservableCollection}"
-                SelectedItem="{Binding PeriodoEscolarSeleccionado}"
-                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontWeight="Bold" Text="Inicio: " />
-                            <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio, StringFormat='MMM/yyyy'}" />
-                            <TextBlock FontWeight="Bold" Text=" Fin: " />
-                            <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin, StringFormat='MMM/yyyy'}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
+        <GroupBox Header="Problematicas academicas">
+            <StackPanel>
+                <StackPanel
+                    Width="auto"
+                    Height="auto"
+                    Orientation="Horizontal">
+                    <ComboBox
+                        Name="CbPeriodoEscolar"
+                        Width="391"
+                        materialDesign:HintAssist.Hint="Periodo escolar"
+                        ItemsSource="{Binding PeriodosEscolaresObservableCollection}"
+                        SelectedItem="{Binding PeriodoEscolarSeleccionado}"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold" Text="Inicio: " />
+                                    <TextBlock FontWeight="Bold" Text="{Binding FechaDeInicio, StringFormat='MMM/yyyy'}" />
+                                    <TextBlock FontWeight="Bold" Text=" Fin: " />
+                                    <TextBlock FontWeight="Bold" Text="{Binding FechaDeFin, StringFormat='MMM/yyyy'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
 
-            </ComboBox>
-            <Separator Width="100" Height="0" />
-            <ComboBox
-                Name="CbSesionDeTutoria"
-                Width="200"
-                materialDesign:HintAssist.Hint="Sesión de tutoria academica"
-                SelectedIndex="{Binding NumTutoriaSeleccionada}"
-                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                <ComboBoxItem Content="Primera sesión" />
-                <ComboBoxItem Content="Segunda sesión" />
-                <ComboBoxItem Content="Tercera sesión" />
-            </ComboBox>
-            <Separator Width="20" Height="0" />
-            <Button
-                Name="BtnBuscarReporte"
-                Command="{Binding BtnBuscarReporteCommand}"
-                Content="{materialDesign:PackIcon BookSearch}"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                ToolTip="Icon" />
-        </StackPanel>
-        <TextBlock
-            FontSize="32"
-            Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-            Text="Problematicas academicas" />
-        <DataGrid
-            Name="DgProblematicas"
-            Width="774"
-            Height="201"
-            AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            ItemsSource="{Binding ProblematicasObservableCollection}"
-            SelectedItem="{Binding ProblematicaSeleccionada}">
-            <DataGrid.Columns>
+                    </ComboBox>
+                    <Separator Width="100" Height="0" />
+                    <ComboBox
+                        Name="CbSesionDeTutoria"
+                        Width="200"
+                        materialDesign:HintAssist.Hint="Sesión de tutoria academica"
+                        SelectedIndex="{Binding NumTutoriaSeleccionada}"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBoxItem Content="Primera sesión" />
+                        <ComboBoxItem Content="Segunda sesión" />
+                        <ComboBoxItem Content="Tercera sesión" />
+                    </ComboBox>
+                    <Separator Width="20" Height="0" />
+                    <Button
+                        Name="BtnBuscarReporte"
+                        Command="{Binding BtnBuscarReporteCommand}"
+                        Content="{materialDesign:PackIcon BookSearch}"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        ToolTip="Icon" />
+                </StackPanel>
+                <Separator Width="0" Height="20" />
+                <DataGrid
+                    Name="DgProblematicas"
+                    Width="auto"
+                    Height="auto"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    ItemsSource="{Binding ProblematicasObservableCollection}"
+                    SelectedItem="{Binding ProblematicaSeleccionada}">
+                    <DataGrid.Columns>
 
-                <DataGridTemplateColumn Header="Acciones">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Click="VerDetalles" Content="Ver Detalles" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Acciones">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="VerDetalles" Content="Ver Detalles" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                <DataGridTextColumn
-                    Binding="{Binding Descripcion}"
-                    Header="Descripción"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding ExperienciaEducativa.Nombre}"
-                    Header="Experiencia educativa"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
-                    Header="Profesor"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding NumAlumnos}"
-                    Header="Alumnos afectados"
-                    IsReadOnly="True" />
-            </DataGrid.Columns>
-        </DataGrid>
+                        <DataGridTextColumn
+                            Binding="{Binding Descripcion}"
+                            Header="Descripción"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Nombre}"
+                            Header="Experiencia educativa"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding ExperienciaEducativa.Catedratico.NombreCompleto}"
+                            Header="Profesor"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Binding="{Binding NumAlumnos}"
+                            Header="Alumnos afectados"
+                            IsReadOnly="True" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+
+        </GroupBox>
+
+
     </StackPanel>
 
 </Page>

@@ -13,13 +13,12 @@
     mc:Ignorable="d">
     <StackPanel>
         <localControls:MenuCoordinadora />
-        <Separator Width="0" Height="60" />
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-
+        <Separator Width="0" Height="0" />
+        <GroupBox Header="Tutores academicos">
             <DataGrid
                 Name="DgTutores"
-                Width="774"
-                Height="201"
+                Width="auto"
+                Height="auto"
                 AutoGenerateColumns="False"
                 CanUserAddRows="False">
                 <DataGrid.Columns>
@@ -36,15 +35,7 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock
-                Width="321"
-                Margin="0,-69,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                FontSize="48"
-                Text="Tutores"
-                TextWrapping="Wrap" />
-        </Grid>
+        </GroupBox>
 
     </StackPanel>
 
