@@ -16,17 +16,22 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         private EstudianteRepository estudianteRepository = new EstudianteRepository(context);
         private static TutorAcademicoRepository tutorAcademicoRepository = new TutorAcademicoRepository(context);
 
+        private static ProgramaEducativoRepository programaEducativoRepository =
+            new ProgramaEducativoRepository(context);
+
         private Estudiante estudiante = new Estudiante()
         {
-            Nombres = "Escanor",
-            Apellidos = "EL septimo pecado capital",
-            Matricula = "S212320054",
+            Nombres = "Juantito",
+            Apellidos = "Del mar",
+            Matricula = "S20020843",
+            ProgramaEducativo = programaEducativoRepository.GetProgramasEducativos().Last()
             //TutorAcademico = tutorAcademicoRepository.GetTutorAcademico(3)
         };
 
         [TestMethod()]
         public void AddEstudianteTest()
         {
+            
             Assert.IsTrue(estudianteRepository.AddEstudiante(estudiante));
         }
 
