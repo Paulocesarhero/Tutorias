@@ -41,6 +41,8 @@ namespace graphicLayer.Vistas
         public void fillTable()
         {
             EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
+            List<Estudiante> estudiantesSinTutor = estudianteRepository.findEstudiantesWithOutTutor();
+            estudiantesSinTutor.Where(x => x.)
             DgEstudiantes.ItemsSource = estudianteRepository.findEstudiantesWithOutTutor();
         }
 

@@ -174,7 +174,7 @@ namespace graphicLayer.Vistas
             fechaDeTutoria = fechaDeTutoriaRepository.GetFechaDeTutoriaActual(DateTime.Now);
             listaDeAsistencias = asistenciaRepository.GetAsistencias(tutorAcademico, fechaDeTutoria
                 );
-            if (listaDeAsistencias == null)
+            if (listaDeAsistencias.Count == 0)
             {
                 foreach (Estudiante estudiante in estudiantes)
                 {
