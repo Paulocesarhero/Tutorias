@@ -16,6 +16,7 @@ using Tutorias.BussinesLogic.Management;
 using System.Windows.Controls;
 using Tutorias.Service.DatabaseContext;
 using DataAccess.BussinesLogic.EntityRepository;
+using Sistema_De_Tutorias.Utility;
 
 namespace graphicLayer.Vistas
 {
@@ -42,8 +43,9 @@ namespace graphicLayer.Vistas
         {
             EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
             List<Estudiante> estudiantesSinTutor = estudianteRepository.findEstudiantesWithOutTutor();
-            estudiantesSinTutor.Where(x => x.)
-            DgEstudiantes.ItemsSource = estudianteRepository.findEstudiantesWithOutTutor();
+            List<Estudiante> estudiantesPrograma = estudiantesSinTutor.Where(
+                x => x.ProgramaEducativo.ProgramaEducativo == CredencialesUsuario.Instance.Usuario.ProgramaEducativo.ProgramaEducativo).ToList();
+            DgEstudiantes.ItemsSource = estudiantesPrograma;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
