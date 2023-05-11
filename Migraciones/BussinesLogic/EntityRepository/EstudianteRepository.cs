@@ -138,6 +138,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
             try
             {
                 return _context.Set<Estudiante>().Where(e => e.TutorAcademico == null)
+                    .Include(x => x.ProgramaEducativo)
                     .ToList();
             }
             catch (DbException e)
