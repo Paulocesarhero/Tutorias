@@ -5,7 +5,7 @@ using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
-//CreateDB();
+CreateDB();
 InsertData();
 
 static void CreateDB()
@@ -29,7 +29,7 @@ static bool InsertData()
         AddCoordinadora();
         addExperienciaEducativa();
         addProblematica1();
-        addEstudiante();
+        // addEstudiante();
 
         
 
