@@ -2,129 +2,113 @@
     x:Class="graphicLayer.Vistas.ModificarAsignacionTutorEstudiante"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:graphicLayer.Vistas"
     xmlns:localControls="clr-namespace:graphicLayer.Controles"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:local="clr-namespace:graphicLayer.Vistas"
-    mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="ModificarAsignacionTutorEstudiante"
     d:Background="White"
     d:DesignHeight="600"
     d:DesignWidth="800"
-    Title="ModificarAsignacionTutorEstudiante">
+    mc:Ignorable="d">
 
     <Grid>
-        <StackPanel
-            Margin="15,15,15,15">
+        <StackPanel Margin="15,15,15,15">
             <localControls:MenuCoordinadora />
+            <GroupBox Header="Modificar tutor-estudiante">
+                <StackPanel>
+                    <Separator Width="0" Height="20" />
 
+                    <StackPanel Height="42" Orientation="Horizontal">
 
-            <Separator
-                Width="0"
-                Height="20" />
+                        <ComboBox
+                            x:Name="cbTutores"
+                            Width="501"
+                            materialDesign:HintAssist.Hint="Selecciona al Tutor"
+                            DisplayMemberPath="Nombres"
+                            SelectionChanged="cbTutores_SelectionChanged" />
 
-            <StackPanel
-                Orientation="Horizontal"
-                Height="42">
+                        <Separator Width="90" Height="0" />
 
-                <ComboBox
-                    x:Name="cbTutores"
-                    materialDesign:HintAssist.Hint="Selecciona al Tutor"
-                    DisplayMemberPath="Nombres"
-                    Width="501"
-                    SelectionChanged="cbTutores_SelectionChanged" />
+                        <Button
+                            x:Name="btnSearch"
+                            Width="144"
+                            Height="29"
+                            Click="btnSearch_Click"
+                            Content="Buscar Tutorados" />
+                    </StackPanel>
 
-                <Separator
-                    Width="90"
-                    Height="0" />
+                    <Separator Width="0" Height="20" />
 
-                <Button
-                    x:Name="btnSearch"
-                    Content="Buscar Tutorados"
-                    Click="btnSearch_Click"
-                    Width="144"
-                    Height="29" />
-            </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <DataGrid
+                            x:Name="DgTutorados"
+                            Width="774"
+                            Height="278"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn x:Name="checkboxSeleccionar" Header="Seleccionar Estudiante" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Matricula}"
+                                    Header="Matrícula"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Nombres}"
+                                    Header="Nombre"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding TutorAcademico.Usuario.ProgramaEducativo.ProgramaEducativo}"
+                                    Header="Programa Educativo"
+                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
 
-            <Separator
-                Width="0"
-                Height="20" />
+                    <Separator Width="0" Height="20" />
 
-            <StackPanel
-                Orientation="Vertical">
-                <DataGrid
-                    x:Name="DgTutorados"
-                    Width="774"
-                    AutoGenerateColumns="False"
-                    CanUserAddRows="False"
-                    Height="278">
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn
-                            x:Name="checkboxSeleccionar"
-                            Header="Seleccionar Estudiante" />
-                        <DataGridTextColumn
-                            IsReadOnly="True"
-                            Header="Matrícula"
-                            Binding="{Binding Matricula}" />
-                        <DataGridTextColumn
-                            IsReadOnly="True"
-                            Header="Nombre"
-                            Binding="{Binding Nombres}" />
-                        <DataGridTextColumn
-                            IsReadOnly="True"
-                            Header="Programa Educativo"
-                            Binding="{Binding TutorAcademico.Usuario.ProgramaEducativo.ProgramaEducativo}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox
+                            Width="357"
+                            Height="46"
+                            FontWeight="Bold"
+                            IsEnabled="False"
+                            Text="Marca la casilla para seleccionar al Estudiante a reasignar, y de la lista a la derecha elige a su nuevo Tutor."
+                            TextWrapping="Wrap" />
 
-            <Separator
-                Width="0"
-                Height="20" />
+                        <Separator Width="30" Height="0" />
 
-            <StackPanel
-                Orientation="Horizontal">
-                <TextBox
-                    TextWrapping="Wrap"
-                    Text="Marca la casilla para seleccionar al Estudiante a reasignar, y de la lista a la derecha elige a su nuevo Tutor."
-                    IsEnabled="False"
-                    FontWeight="Bold"
-                    Height="46"
-                    Width="357" />
+                        <ComboBox
+                            x:Name="cbTutoresAElegir"
+                            Width="366"
+                            materialDesign:HintAssist.Hint="Selecciona al nuevo Tutor"
+                            DisplayMemberPath="Nombres" />
+                    </StackPanel>
 
-                <Separator
-                    Width="30"
-                    Height="0" />
+                    <Separator Width="0" Height="50" />
 
-                <ComboBox
-                    x:Name="cbTutoresAElegir"
-                    materialDesign:HintAssist.Hint="Selecciona al nuevo Tutor"
-                    DisplayMemberPath="Nombres"
-                    Width="366" />
-            </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            x:Name="btnBack"
+                            Background="#FFD2594D"
+                            Content="Regresar" />
 
-            <Separator
-                Width="0"
-                Height="50" />
+                        <Separator Width="538" Height="0" />
+                        <Button
+                            x:Name="btnReasignar"
+                            Width="134"
+                            Background="#FF946BDC"
+                            Click="btnReasignar_Click"
+                            Content="Reasignar Tutor" />
 
-            <StackPanel
-                Orientation="Horizontal">
-                <Button
-                    x:Name="btnBack"
-                    Content="Regresar"
-                    Background="#FFD2594D" />
+                    </StackPanel>
+                </StackPanel>
 
-                <Separator
-                    Width="538"
-                    Height="0" />
-                <Button
-                    x:Name="btnReasignar"
-                    Content="Reasignar Tutor"
-                    Background="#FF946BDC"
-                    Click="btnReasignar_Click"
-                    Width="134" />
-
-            </StackPanel>
+            </GroupBox>
         </StackPanel>
+
+
+
     </Grid>
 </Page>

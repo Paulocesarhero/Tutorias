@@ -51,6 +51,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.HasKey(e => e.Id);
                 entity.HasMany(e => e.ExperienciaEducativas).WithOne(p => p.ProgramaEducativo);
                 entity.HasMany(u => u.Usuarios).WithOne(u => u.ProgramaEducativo);
+                entity.HasMany(x => x.Estudiantes).WithOne(x => x.ProgramaEducativo);
             });
             modelBuilder.Entity<Academia>(entity =>
             {
@@ -131,6 +132,7 @@ namespace Tutorias.Service.DatabaseContext
                 entity.Property(e => e.Apellidos).IsRequired();
                 entity.HasOne(e => e.TutorAcademico).WithMany(tutor => tutor.Estudiantes).HasForeignKey(e => e.IdTutorAcademico);
                 entity.HasMany(e => e.Asistencias).WithOne(p => p.Estudiante);
+                entity.HasOne(e => e.ProgramaEducativo).WithMany(x => x.Estudiantes);
             });
             modelBuilder.Entity<Asistencia>(entity =>
             {
@@ -227,6 +229,8 @@ namespace Tutorias.Service.DatabaseContext
         public virtual ICollection<Experiencia_Educativa> ExperienciaEducativas { get; set; }
 
         public virtual ICollection<Usuario> Usuarios {get; set; }
+
+        public virtual ICollection<Estudiante> Estudiantes {get; set; }
     }
 
     public class Problematica
@@ -445,6 +449,8 @@ namespace Tutorias.Service.DatabaseContext
 
         public int? IdTutorAcademico { get; set; }
         public virtual Tutor_Academico TutorAcademico { get; set; }
+
+        public virtual Programa_Educativo ProgramaEducativo { get; set; }
 
         public virtual ICollection<Asistencia> Asistencias { get; set; }
     }

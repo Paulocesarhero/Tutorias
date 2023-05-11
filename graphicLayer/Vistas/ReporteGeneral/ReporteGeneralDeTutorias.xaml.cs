@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using DataAccess.BussinesLogic.EntityRepository;
 using Tutorias.BussinesLogic.Management;
@@ -147,9 +148,9 @@ namespace graphicLayer.Vistas
                     "No hay conexión a la base de datos en estos momentos",
                     MessageBoxButton.OKCancel);
             }
+            List<Periodo_Escolar> periodosEscolarOrder = periodosEscolares.OrderBy(x => x.FechaDeInicio).ToList();
 
-            periodosEscolares.FirstOrDefault().FechaDeInicio.GetDateTimeFormats();
-            PeriodosEscolaresObservableCollection = new ObservableCollection<Periodo_Escolar>(periodosEscolares);
+            PeriodosEscolaresObservableCollection = new ObservableCollection<Periodo_Escolar>(periodosEscolarOrder);
         }
     }
 }
