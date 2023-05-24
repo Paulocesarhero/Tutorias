@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataAccess.BussinesLogic.EntityRepository;
+using Sistema_De_Tutorias.Utility;
 using Tutorias.Service.DatabaseContext;
 
 namespace graphicLayer.Vistas.LlenarReporte
@@ -31,6 +32,8 @@ namespace graphicLayer.Vistas.LlenarReporte
 
         public Tutor_Academico TutorAcademico { get; set; }
         public Fecha_De_Tutoria fecha { get; set; }
+
+        public int NumTutorados { get; set; }
         public AgregarProblematica()
         {
             InitializeComponent();
@@ -43,6 +46,24 @@ namespace graphicLayer.Vistas.LlenarReporte
             TbNumeroDeAlumnosAfectados.MaxLength = 3;
             TbNumeroDeAlumnosAfectados.SetValue(RangeBase.MinimumProperty, Convert.ToDouble(1));
             TbNumeroDeAlumnosAfectados.SetValue(RangeBase.MaximumProperty, Convert.ToDouble(TutorAcademico.Estudiantes.Count));
+            EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
+            TutorAcademicoRepository tutorAcademicoRepository = new TutorAcademicoRepository(new TutoriasContext());
+            Tutor_Academico tutorAcademico = new Tutor_Academico();
+            try
+            {
+                tutorAcademico = tutorAcademicoRepository.GetTutorAcademicoByUser(CredencialesUsuario.Instance.Usuario);
+
+                NumTutorados = estudianteRepository.GetEstudiantesByTutorAcademico(tutorAcademico).ToList().Count;
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,
+                    "Error en la conexión con la base de datos",
+                    MessageBoxButton.OK);
+            }
+
+
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -86,6 +107,25 @@ namespace graphicLayer.Vistas.LlenarReporte
             if (!char.IsDigit(e.Text, e.Text.Length - 1))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void txtNumero_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!int.TryParse(TbNumeroDeAlumnosAfectados.Text, out int numero))
+            {
+                // No es un número válido, puedes mostrar un mensaje de error o realizar alguna acción adecuada.
+                return;
+            }
+
+            // Define el rango permitido
+            int valorMinimo = 1;
+            int valorMaximo = NumTutorados;
+
+            if (numero < valorMinimo || numero > valorMaximo)
+            {
+                // El número está fuera del rango permitido, puedes mostrar un mensaje de error o realizar alguna acción adecuada.
+                return;
             }
         }
     }

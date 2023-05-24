@@ -39,6 +39,7 @@
             AcceptsReturn="True"
             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
             PreviewTextInput="TextBox_PreviewTextInput"
+            TextChanged="txtNumero_TextChanged"
             Style="{StaticResource MaterialDesignFilledTextBox}"
             TextWrapping="Wrap" />
         <ComboBox
@@ -55,6 +56,7 @@
                         <TextBlock Margin="5" Text="{Binding Nombre, StringFormat='{}Nombre: {0}'}" />
                         <TextBlock Margin="5" Text="{Binding Nrc, StringFormat='{}Nrc: {0}'}" />
                         <TextBlock Margin="5" Text="{Binding Catedratico.NombreCompleto, StringFormat='{}Catedratico: {0}'}" />
+                        <TextBlock Margin="5" Text="{Binding ProgramaEducativo.ProgramaEducativo, StringFormat='{}Programa educativo: {0}'}" />
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
