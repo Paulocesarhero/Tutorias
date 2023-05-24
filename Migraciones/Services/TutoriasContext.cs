@@ -322,6 +322,9 @@ namespace Tutorias.Service.DatabaseContext
     {
         public int Id { get; set; }
         public DateTime FechaDeCierre { get; set; }
+
+        public DateTime FechaDeInicionSesion { get; set; }
+
         public int NumDeTutoria { get; set; }
         public virtual Periodo_Escolar PeriodoEscolar { get; set; }
 
