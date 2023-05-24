@@ -29,24 +29,26 @@ namespace graphicLayer.Vistas.LlenarReporte
         public ObservableCollection<Experiencia_Educativa> ExperienciaEducativas { get; set; } =
             new ObservableCollection<Experiencia_Educativa>();
 
-        public Reporte_De_Tutoria reporteDeTutoria {get; set; }
+        public Reporte_De_Tutoria reporteDeTutoria { get; set; }
 
         public Tutor_Academico TutorAcademico { get; set; }
         public Fecha_De_Tutoria fecha { get; set; }
 
         public int NumTutorados { get; set; }
+
         public AgregarProblematica()
         {
             InitializeComponent();
             DataContext = new AgregarProblematicasViewModel();
-         
+
         }
 
         public void FillData()
         {
             TbNumeroDeAlumnosAfectados.MaxLength = 3;
             TbNumeroDeAlumnosAfectados.SetValue(RangeBase.MinimumProperty, Convert.ToDouble(1));
-            TbNumeroDeAlumnosAfectados.SetValue(RangeBase.MaximumProperty, Convert.ToDouble(TutorAcademico.Estudiantes.Count));
+            TbNumeroDeAlumnosAfectados.SetValue(RangeBase.MaximumProperty,
+                Convert.ToDouble(TutorAcademico.Estudiantes.Count));
             EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
             TutorAcademicoRepository tutorAcademicoRepository = new TutorAcademicoRepository(new TutoriasContext());
             Tutor_Academico tutorAcademico = new Tutor_Academico();
@@ -66,13 +68,14 @@ namespace graphicLayer.Vistas.LlenarReporte
 
 
         }
+
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             TutoriasContext tutoriasContext = new TutoriasContext();
             ProblematicaRepository problematicaRepository = new ProblematicaRepository(tutoriasContext);
             ReporteDeTutoriaRepository reporteDeTutoriaRepository =
                 new ReporteDeTutoriaRepository(tutoriasContext);
-            Reporte_De_Tutoria reporteDeTutoria = reporteDeTutoriaRepository.GetReporteDeTutoria(TutorAcademico,fecha);
+            Reporte_De_Tutoria reporteDeTutoria = reporteDeTutoriaRepository.GetReporteDeTutoria(TutorAcademico, fecha);
             Problematica problematicatoAdd = new Problematica()
             {
                 Descripcion = TbDescripcion.Text,
@@ -99,7 +102,7 @@ namespace graphicLayer.Vistas.LlenarReporte
                     "Error en la conexión con la base de datos",
                     MessageBoxButton.OK);
             }
-            
+
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -107,51 +110,54 @@ namespace graphicLayer.Vistas.LlenarReporte
             Regex regex = new Regex("[^1-9]+");
             if (regex.IsMatch(e.Text))
             {
-                e.Handled = true; 
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(e.Text))
-                {
-                    int number;
-                    bool isNumeric = int.TryParse(e.Text, out number);
-                    if (isNumeric && (number < NumTutorados || number > NumTutorados)) 
-                    {
-                        e.Handled = true; 
-                    }
-                }
+                e.Handled = true;
             }
         }
 
-        
+        private void txtNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = TbNumeroDeAlumnosAfectados.Text;
+
+            if (text != "")
+            {
+                if (!int.TryParse(text, out int number) || number < 1 || number > NumTutorados)
+                {
+                    int caretIndex = TbNumeroDeAlumnosAfectados.CaretIndex;
+                    TbNumeroDeAlumnosAfectados.Text = text.Substring(0, caretIndex - 1) + text.Substring(caretIndex);
+                    TbNumeroDeAlumnosAfectados.CaretIndex = caretIndex - 1;
+                }
+            }
+            
+        }
     }
 
     public class AgregarProblematicasViewModel
-    {
-        public ObservableCollection<Experiencia_Educativa> ExperienciaEducativas { get; set; } =
-            new ObservableCollection<Experiencia_Educativa>();
-
-        public AgregarProblematicasViewModel()
         {
-            FillExperienciasEducativas();
-        }
+            public ObservableCollection<Experiencia_Educativa> ExperienciaEducativas { get; set; } =
+                new ObservableCollection<Experiencia_Educativa>();
 
-        private void FillExperienciasEducativas()
-        {
-            ExperienciaEducativaRepository experienciaEducativaRepository =
-                new ExperienciaEducativaRepository(new TutoriasContext());
-            List<Experiencia_Educativa> result = new List<Experiencia_Educativa>();
-            try
+            public AgregarProblematicasViewModel()
             {
-                result = experienciaEducativaRepository.GetExperienciasEducativas();
+                FillExperienciasEducativas();
             }
-            catch (Exception e)
+
+            private void FillExperienciasEducativas()
             {
-                MessageBox.Show(e.Message,
-                    "Error en la conexión con la base de datos",
-                    MessageBoxButton.OK);
+                ExperienciaEducativaRepository experienciaEducativaRepository =
+                    new ExperienciaEducativaRepository(new TutoriasContext());
+                List<Experiencia_Educativa> result = new List<Experiencia_Educativa>();
+                try
+                {
+                    result = experienciaEducativaRepository.GetExperienciasEducativas();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message,
+                        "Error en la conexión con la base de datos",
+                        MessageBoxButton.OK);
+                }
+
+                foreach (Experiencia_Educativa exp in result) ExperienciaEducativas.Add(exp);
             }
-            foreach (Experiencia_Educativa exp in result) ExperienciaEducativas.Add(exp);
         }
-    }
 }
