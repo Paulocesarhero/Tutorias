@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataAccess.BussinesLogic.EntityRepository;
+using Microsoft.EntityFrameworkCore;
 using Tutorias.Service.DatabaseContext;
 
 namespace graphicLayer.Vistas.AdministrarFechas
@@ -26,6 +28,7 @@ namespace graphicLayer.Vistas.AdministrarFechas
         private Fecha_De_Tutoria PrimeraFechaDeTutoria { get; set; } = new Fecha_De_Tutoria();
         private Fecha_De_Tutoria SegundaFechaDeTutoria { get; set; } = new Fecha_De_Tutoria();
         private Fecha_De_Tutoria TerceraFechaDEtutoria { get; set; } = new Fecha_De_Tutoria();
+
         
         public AdministrarFechasDeEntrega()
         {
@@ -79,12 +82,20 @@ namespace graphicLayer.Vistas.AdministrarFechas
                 DpFirst.Text = PrimeraFechaDeTutoria.FechaDeCierre.ToShortDateString();
                 DpSecond.Text = SegundaFechaDeTutoria.FechaDeCierre.ToShortDateString();
                 DpThird.Text = TerceraFechaDEtutoria.FechaDeCierre.ToShortDateString();
+
+                DpFirstOpen.Text = PrimeraFechaDeTutoria.FechaDeInicionSesion.ToShortDateString();
+                DpSecondOpen.Text = SegundaFechaDeTutoria.FechaDeInicionSesion.ToShortDateString();
+                DpThirdOpen.Text = TerceraFechaDEtutoria.FechaDeInicionSesion.ToShortDateString();
             }
             else
             {
                 DpFirst.Text = "";
                 DpSecond.Text = "";
                 DpThird.Text = "";
+
+                DpFirstOpen.Text = "";
+                DpSecondOpen.Text = "";
+                DpThirdOpen.Text = "";
             }
 
             PrimeraFechaDeTutoria.PeriodoEscolar = periodoSeleccionado;
@@ -96,16 +107,20 @@ namespace graphicLayer.Vistas.AdministrarFechas
         private void BtnSaveDates_Click(object sender, RoutedEventArgs e)
         {
             FechaDeTutoriaRepository fechaDeTutoriaRepository = new FechaDeTutoriaRepository(new TutoriasContext());
-            PrimeraFechaDeTutoria.FechaDeCierre = Convert.ToDateTime(DpFirst.Text);
-            PrimeraFechaDeTutoria.NumDeTutoria = 1;
-            SegundaFechaDeTutoria.FechaDeCierre = Convert.ToDateTime(DpSecond.Text);
-            SegundaFechaDeTutoria.NumDeTutoria = 2;
-            TerceraFechaDEtutoria.FechaDeCierre = Convert.ToDateTime(DpThird.Text);
-            TerceraFechaDEtutoria.NumDeTutoria = 3;
-            if (AreValidateDates() && IsInPeriodos())
+           
+            if (AreValidateDates() && IsInPeriodos() && NotNullValues())
             {
                 try
                 {
+                    PrimeraFechaDeTutoria.FechaDeCierre = Convert.ToDateTime(DpFirst.Text);
+                    PrimeraFechaDeTutoria.FechaDeInicionSesion = Convert.ToDateTime(DpFirstOpen.Text);
+                    PrimeraFechaDeTutoria.NumDeTutoria = 1;
+                    SegundaFechaDeTutoria.FechaDeCierre = Convert.ToDateTime(DpSecond.Text);
+                    SegundaFechaDeTutoria.FechaDeInicionSesion = Convert.ToDateTime(DpSecondOpen.Text);
+                    SegundaFechaDeTutoria.NumDeTutoria = 2;
+                    TerceraFechaDEtutoria.FechaDeCierre = Convert.ToDateTime(DpThird.Text);
+                    TerceraFechaDEtutoria.FechaDeInicionSesion = Convert.ToDateTime(DpThirdOpen.Text);
+                    TerceraFechaDEtutoria.NumDeTutoria = 3;
                     fechaDeTutoriaRepository.AddFechaDeTutoria(PrimeraFechaDeTutoria);
                     fechaDeTutoriaRepository.AddFechaDeTutoria(SegundaFechaDeTutoria);
                     fechaDeTutoriaRepository.AddFechaDeTutoria(TerceraFechaDEtutoria);
@@ -134,10 +149,24 @@ namespace graphicLayer.Vistas.AdministrarFechas
             }
         }
 
+        private bool NotNullValues()
+        {
+            return DpFirst.Text != "" || DpSecond.Text != "" ||
+                DpThird.Text != "" || DpFirstOpen.Text != "" || 
+                DpSecondOpen.Text != "" || DpThird.Text != "" ;
+        }
+
         private bool AreValidateDates()
         {
             if (PrimeraFechaDeTutoria.FechaDeCierre > SegundaFechaDeTutoria.FechaDeCierre
                 || SegundaFechaDeTutoria.FechaDeCierre > TerceraFechaDEtutoria.FechaDeCierre)
+            {
+                return false;
+            }
+
+            if (PrimeraFechaDeTutoria.FechaDeCierre > PrimeraFechaDeTutoria.FechaDeInicionSesion
+                || SegundaFechaDeTutoria.FechaDeCierre > SegundaFechaDeTutoria.FechaDeInicionSesion
+                || TerceraFechaDEtutoria.FechaDeCierre > TerceraFechaDEtutoria.FechaDeInicionSesion)
             {
                 return false;
             }
@@ -147,6 +176,11 @@ namespace graphicLayer.Vistas.AdministrarFechas
         private bool IsInPeriodos()
         {
             Periodo_Escolar periodoSeleccionado = CbPeriodosEscolares.SelectedItem as Periodo_Escolar;
+
+            if (periodoSeleccionado == null)
+            {
+                return false;
+            }
             if (PrimeraFechaDeTutoria.FechaDeCierre < periodoSeleccionado.FechaDeInicio || TerceraFechaDEtutoria.FechaDeCierre > periodoSeleccionado.FechaDeFin)
             {
                 return false;
