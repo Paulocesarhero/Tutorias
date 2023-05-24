@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -103,31 +104,26 @@ namespace graphicLayer.Vistas.LlenarReporte
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Comprueba si el carácter es un número
-            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            Regex regex = new Regex("[^1-9]+");
+            if (regex.IsMatch(e.Text))
             {
-                e.Handled = true;
+                e.Handled = true; 
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(e.Text))
+                {
+                    int number;
+                    bool isNumeric = int.TryParse(e.Text, out number);
+                    if (isNumeric && (number < NumTutorados || number > NumTutorados)) 
+                    {
+                        e.Handled = true; 
+                    }
+                }
             }
         }
 
-        private void txtNumero_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!int.TryParse(TbNumeroDeAlumnosAfectados.Text, out int numero))
-            {
-                // No es un número válido, puedes mostrar un mensaje de error o realizar alguna acción adecuada.
-                return;
-            }
-
-            // Define el rango permitido
-            int valorMinimo = 1;
-            int valorMaximo = NumTutorados;
-
-            if (numero < valorMinimo || numero > valorMaximo)
-            {
-                // El número está fuera del rango permitido, puedes mostrar un mensaje de error o realizar alguna acción adecuada.
-                return;
-            }
-        }
+        
     }
 
     public class AgregarProblematicasViewModel

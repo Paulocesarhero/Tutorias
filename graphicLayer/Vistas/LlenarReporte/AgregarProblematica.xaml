@@ -39,7 +39,6 @@
             AcceptsReturn="True"
             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}"
             PreviewTextInput="TextBox_PreviewTextInput"
-            TextChanged="txtNumero_TextChanged"
             Style="{StaticResource MaterialDesignFilledTextBox}"
             TextWrapping="Wrap" />
         <ComboBox
