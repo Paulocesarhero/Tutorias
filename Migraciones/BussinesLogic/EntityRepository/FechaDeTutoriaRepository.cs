@@ -24,7 +24,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                return _context.Set<Fecha_De_Tutoria>().FirstOrDefault(x => x.FechaDeCierre > fechaDeHoy);
+                return _context.Set<Fecha_De_Tutoria>().FirstOrDefault(x => x.FechaDeCierre > fechaDeHoy && x.FechaDeInicionSesion < fechaDeHoy);
             }
             catch (DbException e)
             {

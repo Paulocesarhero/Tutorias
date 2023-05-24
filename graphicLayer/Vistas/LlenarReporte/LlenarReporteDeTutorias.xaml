@@ -51,6 +51,8 @@
         <GroupBox Name="GbReporteDeTutoria" Margin="15">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="White" Text="Fecha de Inicio: " />
+                    <TextBlock Foreground="White" Text="{Binding fechaDeTutoria.FechaDeInicionSesion, StringFormat='dd/MM/yyyy'}" />
                     <TextBlock Foreground="White" Text="Fecha de cierre: " />
                     <TextBlock Foreground="White" Text="{Binding fechaDeTutoria.FechaDeCierre, StringFormat='dd/MM/yyyy'}" />
                     <TextBlock Foreground="White" Text=" Fecha de hoy: " />
