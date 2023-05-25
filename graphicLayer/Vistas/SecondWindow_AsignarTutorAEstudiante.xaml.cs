@@ -40,17 +40,23 @@ namespace graphicLayer.Vistas
         }
 
         public void fillTable()
-        {
+        {            
             EstudianteRepository estudianteRepository = new EstudianteRepository(new TutoriasContext());
             List<Estudiante> estudiantesSinTutor = estudianteRepository.findEstudiantesWithOutTutor();
             List<Estudiante> estudiantesPrograma = estudiantesSinTutor.Where(
                 x => x.ProgramaEducativo.ProgramaEducativo == CredencialesUsuario.Instance.Usuario.ProgramaEducativo.ProgramaEducativo).ToList();
             DgEstudiantes.ItemsSource = estudiantesPrograma;
-        }
+
+            if (DgEstudiantes.Items.IsEmpty || DgEstudiantes.Items.Count == 0)
+            {                                
+                MessageBox.Show("No se encontraron estudiantes sin tutor registrado");                
+            }
+        }        
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             AsignarTutorAEstudiante asignar = new AsignarTutorAEstudiante();
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
             NavigationService.Navigate(asignar);
         }
 
