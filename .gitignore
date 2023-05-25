@@ -378,3 +378,5 @@ Directory.Build.Override.props
 /graphicLayer/Vistas/Login.xaml.cs
 /graphicLayer/Vistas/ReporteGeneralDeTutorias.xaml
 /graphicLayer/Vistas/ReporteGeneralDeTutorias.xaml.cs
+/graphicLayer/Vistas/Login.xaml.cs
+/Migraciones/Program.cs
