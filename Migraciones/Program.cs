@@ -56,16 +56,19 @@ static bool addPeriodoEscolares()
             new()
             {
                 NumDeTutoria = 1,
+                FechaDeInicionSesion = new DateTime(2023,03,20),
                 FechaDeCierre = new DateTime(2023, 03, 24)
             },
             new()
             {
                 NumDeTutoria = 2,
+                FechaDeInicionSesion = new DateTime(2023,04,20),
                 FechaDeCierre = new DateTime(2023, 04, 28)
             },
             new()
             {
                 NumDeTutoria = 3,
+                FechaDeInicionSesion = new DateTime(2023,05,20),
                 FechaDeCierre = new DateTime(2023, 05, 31)
             }
         }

@@ -23,14 +23,14 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                Tutor_Academico exist =  _context.Set<Tutor_Academico>()
-                    .FirstOrDefault(x => (x.Nombres == tutorAcademico.Nombres) && (x.Apellidos == tutorAcademico.Apellidos) || x.Id == tutorAcademico.Id);
-                if (exist != null)
-                {
-                    return true;
-                }
+                // Tutor_Academico exist =  _context.Set<Tutor_Academico>()
+                //     .FirstOrDefault(x => (x.Nombres == tutorAcademico.Nombres) && (x.Apellidos == tutorAcademico.Apellidos) || x.Id == tutorAcademico.Id);
+                // if (exist != null)
+                // {
+                //     return true;
+                // }
 
-                _context.Add(tutorAcademico);
+                _context.Update(tutorAcademico);
                 return _context.SaveChanges() > 0;
             }
             catch (DbUpdateException e)

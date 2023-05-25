@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using DataAccess.BussinesLogic.EntityRepository;
+using Sistema_De_Tutorias.Utility;
 using Tutorias.BussinesLogic.Management;
 using Tutorias.Service.DatabaseContext;
 
@@ -97,10 +98,14 @@ namespace graphicLayer.Vistas
             ProblematicaRepository problematicaRepository = new ProblematicaRepository(new TutoriasContext());
             AsistenciaRepository asistenciaRepository = new AsistenciaRepository(new TutoriasContext());
             List<Problematica> problematicas = new List<Problematica>();
+            List<Problematica> problematicasDelJefDeCarrera = new List<Problematica>();
             int totalAsistencias = 0;
             try
             {
                 problematicas = problematicaRepository.GetProblematicas(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
+                problematicasDelJefDeCarrera = problematicas.Where(x =>
+                    x.ExperienciaEducativa.ProgramaEducativo.ProgramaEducativo ==
+                    CredencialesUsuario.Instance.Usuario.ProgramaEducativo.ProgramaEducativo).ToList();
                  totalAsistencias =
                     asistenciaRepository.GetTotalDeAsistencias(PeriodoEscolarSeleccionado, NumTutoriaSeleccionada + 1);
             }
@@ -120,7 +125,7 @@ namespace graphicLayer.Vistas
                 TotalDeAsistenciasObservable = "0";
             }
             ProblematicasObservableCollection.Clear();
-            foreach (var problematica in problematicas) ProblematicasObservableCollection.Add(problematica);
+            foreach (var problematica in problematicasDelJefDeCarrera) ProblematicasObservableCollection.Add(problematica);
 
         }
 
