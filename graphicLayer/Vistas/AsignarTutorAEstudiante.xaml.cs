@@ -30,6 +30,5 @@ namespace graphicLayer.Vistas
             SecondWindow_AsignarTutorAEstudiante secondWindow = new SecondWindow_AsignarTutorAEstudiante(fila);
             this.NavigationService.Navigate(secondWindow);
         }
-
     }
 }

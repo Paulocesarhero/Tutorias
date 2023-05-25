@@ -39,7 +39,6 @@ namespace graphicLayer.Vistas
 
     public partial class ConsultarSolucionProblematicaViewModel : DependencyObject
     {
-        ConsultarSolucionProblematica objetoPage = new ConsultarSolucionProblematica();
         public Periodo_Escolar PeriodoEscolarSeleccionado { get; set; }
         public int NumTutoriaSeleccionada { get; set; }
         public ObservableCollection<Periodo_Escolar> PeriodosEscolaresObservableCollection { get; private set; }
@@ -81,18 +80,15 @@ namespace graphicLayer.Vistas
 
             if (problematicas == null || !problematicas.OfType<Problematica>().Any())
             {
-                MessageBox.Show("No hay problematicas registradas acorde el período y sesión elegidos");
+                MessageBox.Show("No hay problematicas registradas acorde el período y sesión elegidos. O no has seleccionado un período escolar");
                 ProblematicasObservableCollection.Clear();
-                objetoPage.CbPeriodoEscolar.SelectedItem = null;
-            }
+            }            
             else
             {
                 ProblematicasObservableCollection.Clear();
                 List<Problematica> problematicasSinSolucion = problematicas.Where(x => x.Solucion != null).ToList();
                 foreach (var problematica in problematicasSinSolucion) ProblematicasObservableCollection.Add(problematica);
-            }            
-
+            } 
         }
-
     }
 }

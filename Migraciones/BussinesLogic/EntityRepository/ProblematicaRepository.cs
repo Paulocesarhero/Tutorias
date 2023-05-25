@@ -122,6 +122,7 @@ namespace DataAccess.BussinesLogic.EntityRepository
                     .Include(e => e.ExperienciaEducativa)
                     .ThenInclude(c => c.Academia)
                     .Include(c => c.ReporteDeTutoria)
+                    .ThenInclude(c => c.TutorAcademico)
                     .Include(c => c.Solucion)
                     .ToList();
             }
