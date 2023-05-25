@@ -22,9 +22,14 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
             {
                 Username = "Juanli",
                 Password = Security.HashSHA256("lolopol"),
-                ProgramaEducativo = new Programa_Educativo("Ingenieria de software"),
+                ProgramaEducativo = new Programa_Educativo()
+                {
+                    Id = 1,
+                    ProgramaEducativo = "Ingenieria de software"
+                },
                 TipoUsuario = new TipoUsuario()
                 {
+                    Id = 1,
                     Tipo = "Tutor academico"
                 }
             }

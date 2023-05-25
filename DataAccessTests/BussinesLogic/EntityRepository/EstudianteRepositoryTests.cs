@@ -21,9 +21,9 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
 
         private Estudiante estudiante = new Estudiante()
         {
-            Nombres = "Juantito",
-            Apellidos = "Del mar",
-            Matricula = "S20020843",
+            Nombres = "Ana Gabriela",
+            Apellidos = "Vazquez Sol",
+            Matricula = "S20020923",
             ProgramaEducativo = programaEducativoRepository.GetProgramasEducativos().Last()
             //TutorAcademico = tutorAcademicoRepository.GetTutorAcademico(3)
         };
