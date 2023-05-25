@@ -42,6 +42,7 @@ namespace graphicLayer.Vistas
             lblNRC.Content = fila.ExperienciaEducativa.Nrc;
             tBoxSolucionProblematica.Text = objetoSolucion.Descripcion;
             lblTitulo.Content = objetoSolucion.Titulo;
+            lblTutorQueReporta.Content = problematicaRecibida.ReporteDeTutoria.TutorAcademico.Nombres + " " + problematicaRecibida.ReporteDeTutoria.TutorAcademico.Apellidos; 
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
