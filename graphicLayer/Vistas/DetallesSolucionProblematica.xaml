@@ -84,7 +84,6 @@
             FontSize="16"
             Height="29" />
         <Label
-            Content="NRC de EE:"
             HorizontalAlignment="Left"
             Margin="95,85,0,0"
             VerticalAlignment="Top"
@@ -92,7 +91,17 @@
             FontSize="16"
             FontWeight="Bold"
             Grid.Column="1"
-            Height="29" />
+            Height="29">
+            <Label
+                Content="Solución de Problemática:"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="244"
+                FontSize="16"
+                FontWeight="Bold"
+                Height="30"
+                Foreground="#DD313131" />
+        </Label>
         <Label
             x:Name="lblNRC"
             Grid.Column="1"
@@ -143,7 +152,7 @@
         <Label
             Content="Solución de Problemática:"
             HorizontalAlignment="Left"
-            Margin="88,125,0,0"
+            Margin="88,182,0,0"
             VerticalAlignment="Top"
             Width="244"
             FontSize="16"
@@ -154,12 +163,12 @@
         <TextBlock
             x:Name="tBoxSolucionProblematica"
             HorizontalAlignment="Left"
-            Margin="20,156,0,0"
+            Margin="20,215,0,0"
             TextWrapping="Wrap"
             Text="TextBlock"
             VerticalAlignment="Top"
             Width="380"
-            Height="213"
+            Height="154"
             Grid.Column="1" />
         <Button
             x:Name="btnDownload"
@@ -168,5 +177,25 @@
             HorizontalAlignment="Left"
             Margin="273,408,0,0"
             VerticalAlignment="Top" />
+        <Label
+            Content="Tutor que reportó problemática:"
+            HorizontalAlignment="Left"
+            Margin="95,134,0,0"
+            VerticalAlignment="Top"
+            Width="255"
+            FontSize="16"
+            FontWeight="Bold"
+            Height="30"
+            Grid.Column="1"
+            Foreground="#DD313131" />
+        <Label
+            x:Name="lblTutorQueReporta"
+            Grid.Column="1"
+            Content="Label"
+            HorizontalAlignment="Left"
+            Margin="100,154,0,0"
+            VerticalAlignment="Top"
+            Width="244"
+            FontSize="16" />
     </Grid>
 </Page>
