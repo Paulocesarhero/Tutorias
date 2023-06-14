@@ -64,6 +64,7 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <DataGrid
                     Name="DgAsistencias"
+                    SelectionChanged="DgAsistencias_SelectionChanged"
                     Width="auto"
                     Height="auto"
                     AutoGenerateColumns="False"

@@ -58,21 +58,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Eliminar">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button
-                                        Name="BtnEliminar"
-                                        Width="auto"
-                                        Height="auto"
-                                        Background="Red"
-                                        Click="BtnEliminar_Click"
-                                        Command="{Binding BtnBuscarReporteCommand}"
-                                        Content="{materialDesign:PackIcon Delete}"
-                                        ToolTip="Icon" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+
 
 
                         <DataGridTextColumn

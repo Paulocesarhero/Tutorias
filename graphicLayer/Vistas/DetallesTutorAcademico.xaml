@@ -27,15 +27,6 @@
                     Content="{materialDesign:PackIcon Add}"
                     ToolTip="Icon" />
                 <Separator Width="100" Height="0" />
-                <Button
-                    Name="BtnEliminar"
-                    Width="45"
-                    Height="45"
-                    Background="Red"
-                    Click="BtnEliminar_Click"
-                    Command="{Binding BtnBuscarReporteCommand}"
-                    Content="{materialDesign:PackIcon Delete}"
-                    ToolTip="Icon" />
                 <Separator Width="100" Height="0" />
                 <Button
                     Name="BtnBack"

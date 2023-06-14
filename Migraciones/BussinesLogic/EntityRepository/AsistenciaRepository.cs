@@ -38,18 +38,9 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                Asistencia exist = _context.Set<Asistencia>().FirstOrDefault(x => x.Estudiante == asistencia.Estudiante && x.FechaDeTutoria == asistencia.FechaDeTutoria);
-                if (exist == null)
-                {
-                    _context.Set<Asistencia>().Add(asistencia);
-                }
-                else
-                {
-                 
-                    _context.Attach(exist);
-                    _context.Entry(exist).CurrentValues.SetValues(asistencia);
-                }
-                
+                _context.Set<Asistencia>().Attach(asistencia);
+                _context.Entry(asistencia).State = EntityState.Modified;
+
                 return _context.SaveChanges() > 0;
             }
             catch (DbException e)

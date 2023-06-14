@@ -49,8 +49,8 @@ static bool addPeriodoEscolares()
     var tutoriaManagement = new TutoriaManagement();
     var periodoEscolar = new Periodo_Escolar
     {
-        FechaDeFin = new DateTime(2023, 02, 04),
-        FechaDeInicio = new DateTime(2023, 06, 24),
+        FechaDeFin = new DateTime(2023, 07, 01),
+        FechaDeInicio = new DateTime(2023, 02, 24),
         FechasDeTutorias = new List<Fecha_De_Tutoria>
         {
             new()

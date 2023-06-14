@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using DataAccess.BussinesLogic.EntityRepository;
+using graphicLayer.Vistas.LlenarReporte;
 using Sistema_De_Tutorias.Utility;
 using Tutorias.Service.DatabaseContext;
 
@@ -122,6 +123,13 @@ namespace graphicLayer.Vistas
         {
             Login login = new Login();
             NavigationService.Navigate(login);
+        }
+
+        private void DgAsistencias_SelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+        {
+            AgendarCita agendarCita = new AgendarCita();
+            agendarCita._Asistencia = DgAsistencias.SelectedItem as Asistencia;
+            NavigationService.Navigate(agendarCita);
         }
     }
 
