@@ -39,7 +39,6 @@ namespace graphicLayer.Vistas
 
     public partial class ConsultarSolucionProblematicaViewModel : DependencyObject
     {
-        ConsultarSolucionProblematica objetoPage = new ConsultarSolucionProblematica();
         public Periodo_Escolar PeriodoEscolarSeleccionado { get; set; }
         public int NumTutoriaSeleccionada { get; set; }
         public ObservableCollection<Periodo_Escolar> PeriodosEscolaresObservableCollection { get; private set; }
@@ -83,7 +82,6 @@ namespace graphicLayer.Vistas
             {
                 MessageBox.Show("No hay problematicas registradas acorde el período y sesión elegidos");
                 ProblematicasObservableCollection.Clear();
-                objetoPage.CbPeriodoEscolar.SelectedItem = null;
             }
             else
             {
