@@ -97,7 +97,7 @@ namespace graphicLayer.Vistas
                         MessageBox.Show("El usuario no tiene un tipo de usuario asignado",
                             "Contacte al administrador para concederle los permisos adecuados");
                         break;
-                }
+                }*/
             }
             else
             {
