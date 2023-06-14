@@ -75,9 +75,9 @@ namespace graphicLayer.Vistas.AdministrarFechas
             List<Fecha_De_Tutoria> fechasDeTutoriasDelPeriodo = periodoSeleccionado.FechasDeTutorias.ToList();
             if (fechasDeTutoriasDelPeriodo.Count != 0)
             {
-                PrimeraFechaDeTutoria = fechasDeTutoriasDelPeriodo.First();
-                SegundaFechaDeTutoria = fechasDeTutoriasDelPeriodo.ElementAt(1);
-                TerceraFechaDEtutoria = fechasDeTutoriasDelPeriodo.ElementAt(2);
+                PrimeraFechaDeTutoria = fechasDeTutoriasDelPeriodo.Where(x => x.NumDeTutoria == 1).FirstOrDefault();
+                SegundaFechaDeTutoria = fechasDeTutoriasDelPeriodo.Where(x => x.NumDeTutoria == 2).FirstOrDefault();
+                TerceraFechaDEtutoria = fechasDeTutoriasDelPeriodo.Where(x => x.NumDeTutoria == 3).FirstOrDefault();
 
                 DpFirst.Text = PrimeraFechaDeTutoria.FechaDeCierre.ToShortDateString();
                 DpSecond.Text = SegundaFechaDeTutoria.FechaDeCierre.ToShortDateString();
@@ -164,9 +164,9 @@ namespace graphicLayer.Vistas.AdministrarFechas
                 return false;
             }
 
-            if (PrimeraFechaDeTutoria.FechaDeCierre > PrimeraFechaDeTutoria.FechaDeInicionSesion
-                || SegundaFechaDeTutoria.FechaDeCierre > SegundaFechaDeTutoria.FechaDeInicionSesion
-                || TerceraFechaDEtutoria.FechaDeCierre > TerceraFechaDEtutoria.FechaDeInicionSesion)
+            if (PrimeraFechaDeTutoria.FechaDeCierre < PrimeraFechaDeTutoria.FechaDeInicionSesion
+                || SegundaFechaDeTutoria.FechaDeCierre < SegundaFechaDeTutoria.FechaDeInicionSesion
+                || TerceraFechaDEtutoria.FechaDeCierre < TerceraFechaDEtutoria.FechaDeInicionSesion)
             {
                 return false;
             }
