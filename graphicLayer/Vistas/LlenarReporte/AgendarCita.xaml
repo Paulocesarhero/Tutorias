@@ -46,15 +46,27 @@
                     Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
 
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button
+                    Name="BtnEnviar"
+                    Click="BtnEnviar_Click"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
+                    ToolTip="MaterialDesignIconForegroundButton">
+                    <materialDesign:PackIcon Kind="Send" />
+                </Button>
+                <Separator Width="40" Height="0"></Separator>
+                <Button
+                    Name="BtnBack"
+                    Click="BtnBack_Click"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
+                    ToolTip="MaterialDesignIconForegroundButton">
+                    <materialDesign:PackIcon Kind="ArrowBack" />
+                </Button>
+
+            </StackPanel>
 
 
-            <Button
-                Name="BtnEnviar"
-                Click="BtnEnviar_Click"
-                Style="{StaticResource MaterialDesignIconForegroundButton}"
-                ToolTip="MaterialDesignIconForegroundButton">
-                <materialDesign:PackIcon Kind="Send" />
-            </Button>
+           
 
         </StackPanel>
     </Grid>
