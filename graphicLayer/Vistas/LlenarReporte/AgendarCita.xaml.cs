@@ -96,5 +96,11 @@ namespace graphicLayer.Vistas.LlenarReporte
             }
 
         }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            LlenarReporteDeTutorias firstPageTutorAcademico = new LlenarReporteDeTutorias();
+            this.NavigationService.Navigate(firstPageTutorAcademico);
+        }
     }
 }

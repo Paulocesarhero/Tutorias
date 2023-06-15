@@ -38,8 +38,17 @@ namespace DataAccess.BussinesLogic.EntityRepository
         {
             try
             {
-                _context.Set<Asistencia>().Attach(asistencia);
-                _context.Entry(asistencia).State = EntityState.Modified;
+                Asistencia exist = _context.Set<Asistencia>().FirstOrDefault(x => x.Estudiante == asistencia.Estudiante && x.FechaDeTutoria == asistencia.FechaDeTutoria);
+                if (exist == null)
+                {
+                    _context.Set<Asistencia>().Add(asistencia);
+                }
+                else
+                {
+
+                    _context.Attach(exist);
+                    _context.Entry(exist).CurrentValues.SetValues(asistencia);
+                }
 
                 return _context.SaveChanges() > 0;
             }

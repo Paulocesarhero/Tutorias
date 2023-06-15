@@ -16,11 +16,11 @@ namespace DataAccess.BussinesLogic.EntityRepository.Tests
         private TutorAcademicoRepository tutorAcademicoRepository = new TutorAcademicoRepository(new TutoriasContext());
         Tutor_Academico tutorAcademico = new Tutor_Academico()
         {
-            Nombres = "JUAN",
-            Apellidos = "LOPEZ  VEGA",
+            Nombres = "El PEPE",
+            Apellidos = "MARCO AURELIO",
             Usuario = new Usuario()
             {
-                Username = "Juanli",
+                Username = "Pepe",
                 Password = Security.HashSHA256("lolopol"),
                 ProgramaEducativo = new Programa_Educativo()
                 {
